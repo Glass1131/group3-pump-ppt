@@ -18,6 +18,18 @@
                 extend: {
                     fontFamily: {
                         sans: ['"Noto Sans KR"', 'Inter', 'sans-serif'],
+                    },
+                    fontSize: {
+                        xs: ['0.875rem', { lineHeight: '1.25rem' }],
+                        sm: ['1rem', { lineHeight: '1.5rem' }],
+                        base: ['1.125rem', { lineHeight: '1.75rem' }],
+                        lg: ['1.25rem', { lineHeight: '1.75rem' }],
+                        xl: ['1.375rem', { lineHeight: '1.875rem' }],
+                        '2xl': ['1.625rem', { lineHeight: '2.125rem' }],
+                        '3xl': ['2rem', { lineHeight: '2.375rem' }],
+                        '4xl': ['2.375rem', { lineHeight: '2.625rem' }],
+                        '5xl': ['3.125rem', { lineHeight: '1.15' }],
+                        '6xl': ['3.875rem', { lineHeight: '1.1' }],
                     }
                 }
             }
@@ -38,9 +50,10 @@
                 transform: translateY(0);
             }
         }
-        /* 가로 스크롤 방지 */
+        /* 가로 스크롤 방지 및 기본 글자 크기 +2px */
         body {
             overflow-x: hidden;
+            font-size: 18px;
         }
         /* 발표자 뷰 전용 스크롤바 */
         .custom-scroll::-webkit-scrollbar {
@@ -121,7 +134,7 @@
             <span class="px-2.5 py-1 rounded-full bg-indigo-600 text-white text-xs font-bold tracking-wide">3모둠</span>
             <h1 class="text-slate-100 text-sm sm:text-base font-bold truncate max-w-[150px] sm:max-w-none">자전거 펌프와 열역학 제1법칙</h1>
             <!-- 실시간 태블릿 연결 상태 배지 -->
-            <button id="host-status-badge" type="button" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-[11px] font-bold transition" title="클릭해서 조원 연결 현황 보기">
+            <button id="host-status-badge" type="button" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-[13px] font-bold transition" title="클릭해서 조원 연결 현황 보기">
                 <span id="host-status-dot" class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                 <span id="host-status-text">송출 방 준비 중...</span>
             </button>
@@ -130,12 +143,12 @@
         <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
             <!-- 조원 연결 현황 모달 -->
             <button id="btn-open-link-modal" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-100 text-xs sm:text-sm font-bold transition">
-                👥 연결 현황
+                연결 현황
             </button>
 
             <!-- 핵심: 순수 PPT 모드 시작 (모든 버튼·바 완전 숨김 + 전체화면) -->
             <button id="btn-start-clean" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-rose-600 hover:from-indigo-500 hover:to-rose-500 text-white text-xs sm:text-sm font-black shadow-lg transition flex items-center gap-1">
-                🎬 발표 시작 (버튼 전부 숨김)
+                발표 시작 (버튼 전부 숨김)
             </button>
         </div>
     </header>
@@ -155,14 +168,14 @@
             <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-extrabold text-slate-700">태블릿 접속 링크 (고정 방: <span id="modal-room-code" class="text-indigo-600">pump3</span>)</span>
-                    <span class="text-[11px] font-bold text-emerald-600">PIN 입력 불필요</span>
+                    <span class="text-[13px] font-bold text-emerald-600">PIN 입력 불필요</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <input id="share-url-input" type="text" readonly class="flex-1 text-xs bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-slate-700 font-mono truncate">
                     <button id="btn-copy-url" class="px-3.5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shrink-0 transition">링크 복사</button>
                 </div>
                 <!-- file:// 경고 (로컬 파일로 열었을 때만 표시) -->
-                <p id="file-protocol-warning" class="hidden text-[11px] text-rose-600 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2 font-semibold leading-relaxed">
+                <p id="file-protocol-warning" class="hidden text-[13px] text-rose-600 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2 font-semibold leading-relaxed">
                     현재 내 컴퓨터 파일(file://)로 열려 있습니다. GitHub Pages에 올려서 접속하면 카톡방 링크로 태블릿 5대가 자동 연결됩니다. (테스트하려면 주소 뒤에 ?mode=tablet 을 붙여 접속해 보세요!)
                 </p>
             </div>
@@ -171,7 +184,6 @@
             <div>
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-xs font-extrabold text-slate-700">실시간 태블릿 연결 상태</span>
-                    <span class="text-[11px] font-bold text-purple-600">👑 마스터: 장민서</span>
                 </div>
                 <div id="members-status-grid" class="grid grid-cols-5 gap-2">
                     <!-- 동적 생성 -->
@@ -180,46 +192,28 @@
 
             <!-- 순수 PPT 모드 안내 -->
             <div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-3.5 text-xs text-indigo-900 leading-relaxed">
-                <strong>💡 발표 시작 팁:</strong> 애들 태블릿 연결을 확인한 뒤 아래 <strong>[🎬 순수 PPT 모드로 발표 시작]</strong>을 누르면 모든 버튼·상단바·하단바가 완전히 사라집니다.<br>
-                (발표 도중 메뉴를 다시 꺼내려면 키보드 <kbd class="px-1.5 py-0.5 rounded bg-white border border-indigo-300 font-bold">M</kbd> 또는 <kbd class="px-1.5 py-0.5 rounded bg-white border border-indigo-300 font-bold">ESC</kbd>, 또는 장민서 마스터 태블릿으로 제어 가능!)
+                <strong>발표 시작 팁:</strong> 애들 태블릿 연결을 확인한 뒤 아래 <strong>[순수 PPT 모드로 발표 시작]</strong>을 누르면 모든 버튼·상단바·하단바가 완전히 사라집니다.<br>
+                (발표 도중 메뉴를 다시 꺼내려면 키보드 <kbd class="px-1.5 py-0.5 rounded bg-white border border-indigo-300 font-bold">M</kbd> 또는 <kbd class="px-1.5 py-0.5 rounded bg-white border border-indigo-300 font-bold">ESC</kbd>, 또는 장민서 태블릿으로 제어 가능!)
             </div>
 
             <div class="flex items-center justify-end gap-2 pt-1">
                 <button id="close-link-modal-btn" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold transition">닫기</button>
-                <button id="modal-start-clean-btn" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-rose-600 hover:from-indigo-500 hover:to-rose-500 text-white text-sm font-black shadow transition">🎬 순수 PPT 모드로 발표 시작</button>
+                <button id="modal-start-clean-btn" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-rose-600 hover:from-indigo-500 hover:to-rose-500 text-white text-sm font-black shadow transition">순수 PPT 모드로 발표 시작</button>
             </div>
         </div>
     </div>
 
-    <!-- ==================== [태블릿 전용] 5인 발표자 리모컨 & 장민서 마스터 컨트롤러 ==================== -->
+    <!-- ==================== [태블릿 전용] 5인 발표자 리모컨 ==================== -->
     <div id="tablet-controller" class="hidden fixed inset-0 bg-slate-950 text-slate-100 flex-col z-50 overflow-hidden">
 
-        <!-- [STEP 1] 이름 선택 화면 (카톡 링크로 들어오면 PIN 입력 없이 바로 이름만 선택!) -->
+        <!-- [STEP 1] 이름 선택 화면 -->
         <div id="tablet-join-screen" class="flex-1 overflow-y-auto p-5 sm:p-8 flex flex-col items-center justify-center">
             <div class="w-full max-w-md space-y-6">
-                <div class="text-center space-y-2">
-                    <span class="inline-block px-3 py-1 rounded-full bg-indigo-600/30 border border-indigo-500/50 text-indigo-300 text-xs font-extrabold">3모둠 발표 태블릿 리모컨</span>
-                    <h2 class="text-2xl sm:text-3xl font-black text-white">내 이름을 터치하세요</h2>
-                    <p class="text-xs sm:text-sm text-slate-400">학교 화면과 자동으로 연결되며, 내 차례에 조작 버튼이 열립니다.</p>
-                </div>
-
                 <!-- 5명 이름 선택 버튼 -->
                 <div class="space-y-2.5">
                     <div id="tablet-name-list" class="grid grid-cols-1 gap-2.5">
                         <!-- JS로 5명 버튼 렌더링 -->
                     </div>
-                </div>
-
-                <!-- 고급 설정: 혹시 방 코드를 바꿔야 할 때만 펼쳐서 수정 -->
-                <details class="bg-slate-900/70 border border-slate-800 rounded-2xl p-3 text-xs text-slate-400">
-                    <summary class="cursor-pointer font-bold text-slate-400 hover:text-slate-200">⚙️ 방 코드 설정 (기본값: pump3 · 건드리지 않아도 됨)</summary>
-                    <div class="mt-2.5 flex items-center gap-2">
-                        <input id="tablet-room-input" type="text" value="pump3" class="flex-1 bg-slate-950 border border-slate-700 focus:border-indigo-500 rounded-xl px-3 py-2 text-center font-mono font-bold text-amber-400 outline-none">
-                    </div>
-                </details>
-
-                <div class="text-center pt-1">
-                    <button id="btn-back-to-host" class="text-xs text-slate-400 hover:text-white underline underline-offset-4">← 학교 송출 화면(PPT)으로 전환하기</button>
                 </div>
             </div>
         </div>
@@ -231,10 +225,10 @@
                 <div class="flex items-center gap-2 min-w-0">
                     <span id="t-conn-dot" class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse shrink-0"></span>
                     <span id="t-my-badge" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black truncate">이름</span>
-                    <span id="t-conn-label" class="text-[11px] font-semibold text-slate-400 truncate">연결 중...</span>
+                    <span id="t-conn-label" class="text-[13px] font-semibold text-slate-400 truncate">연결 중...</span>
                 </div>
                 <div class="flex items-center gap-1.5 shrink-0">
-                    <button id="t-btn-reconnect" class="hidden px-2.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold">🔄 재연결</button>
+                    <button id="t-btn-reconnect" class="hidden px-2.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold">재연결</button>
                     <button id="t-btn-change-user" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold">이름 변경</button>
                 </div>
             </header>
@@ -248,12 +242,12 @@
                         <div class="flex items-center gap-2 flex-wrap">
                             <span id="t-slide-num" class="text-lg sm:text-xl font-black text-white">01 / 06</span>
                             <span id="t-current-speaker" class="px-2.5 py-0.5 rounded-lg bg-white/15 text-white text-xs sm:text-sm font-black">발표자: 이승호</span>
-                            <span id="t-slide-time" class="text-[11px] font-bold px-2 py-0.5 rounded bg-black/25 text-white/90">30~40초</span>
+                            <span id="t-slide-time" class="text-[13px] font-bold px-2 py-0.5 rounded bg-black/25 text-white/90">30~40초</span>
                         </div>
                         <p id="t-turn-msg" class="text-xs sm:text-sm font-bold mt-1.5">상태 확인 중...</p>
                     </div>
                     <div class="text-right shrink-0">
-                        <span class="text-[10px] text-white/70 block">다음 차례</span>
+                        <span class="text-[12px] text-white/70 block">다음 차례</span>
                         <span id="t-next-speaker" class="text-xs sm:text-sm font-black text-amber-300">송유호</span>
                     </div>
                 </div>
@@ -274,7 +268,7 @@
                         <span class="text-xs font-extrabold text-amber-400 flex items-center gap-1.5">
                             ✨ 화면 강조 하이라이트 (학교 화면 실시간 강조)
                         </span>
-                        <button id="t-hl-reset" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-slate-300 border border-slate-700 transition">
+                        <button id="t-hl-reset" class="text-[13px] font-bold px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-slate-300 border border-slate-700 transition">
                             강조 끄기
                         </button>
                     </div>
@@ -283,18 +277,18 @@
                     </div>
                 </div>
 
-                <!-- 4. [장민서 전용] 마스터 제어 패널 -->
+                <!-- 4. [장민서 전용] 진행 제어 패널 -->
                 <div id="t-master-panel" class="hidden bg-gradient-to-br from-purple-950/85 to-indigo-950/65 border border-purple-500/40 rounded-2xl p-3.5 space-y-3">
                     <div class="flex items-center justify-between flex-wrap gap-2">
                         <span class="text-xs font-black text-amber-300 flex items-center gap-1.5">
-                            👑 장민서 마스터 컨트롤
+                            진행 제어
                         </span>
                         <div class="flex items-center gap-1.5 flex-wrap">
                             <button id="t-btn-toggle-clean" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-extrabold shadow transition">
-                                🎬 송출화면 버튼 숨기기
+                                송출화면 버튼 숨기기
                             </button>
                             <button id="t-btn-toggle-lock" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-extrabold shadow transition">
-                                🔒 턴제 잠금: 켜짐
+                                턴제 잠금: 켜짐
                             </button>
                         </div>
                     </div>
@@ -306,7 +300,7 @@
 
                     <!-- 조원 5명 실시간 연결 상태 -->
                     <div class="flex items-center justify-between gap-2 flex-wrap pt-1 border-t border-purple-800/50">
-                        <span class="text-[11px] font-bold text-purple-200">연결된 조원:</span>
+                        <span class="text-[13px] font-bold text-purple-200">연결된 조원:</span>
                         <div id="t-master-members" class="flex items-center gap-1.5 flex-wrap">
                             <!-- 동적 생성 -->
                         </div>
@@ -317,9 +311,9 @@
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col">
                     <div class="flex items-center justify-between border-b border-slate-800 px-2 pt-2 gap-1 flex-wrap">
                         <div class="flex items-center gap-1">
-                            <button data-tab="current" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-extrabold bg-indigo-600 text-white">📖 현재 대본</button>
-                            <button data-tab="mine" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-bold text-slate-400 hover:text-white">🎯 내 담당 대본</button>
-                            <button data-tab="qa" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-bold text-slate-400 hover:text-white">💬 예상 Q&A</button>
+                            <button data-tab="current" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-extrabold bg-indigo-600 text-white">현재 대본</button>
+                            <button data-tab="mine" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-bold text-slate-400 hover:text-white">내 담당 대본</button>
+                            <button data-tab="qa" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-bold text-slate-400 hover:text-white">예상 Q&A</button>
                         </div>
                         <div class="flex items-center gap-1 pb-1.5 pr-1">
                             <button id="t-font-dec" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">가-</button>
@@ -431,7 +425,7 @@
                                     <p class="text-xs text-slate-500 mt-1">여기를 클릭해 사진을 바로 넣으세요</p>
                                 </div>
                             </div>
-                            <span class="upload-hover-badge absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-lg bg-slate-900/75 text-white text-[11px] font-semibold opacity-0 group-hover:opacity-100 transition">사진 변경</span>
+                            <span class="upload-hover-badge absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-lg bg-slate-900/75 text-white text-[13px] font-semibold opacity-0 group-hover:opacity-100 transition">사진 변경</span>
                         </label>
                     </div>
                 </div>
@@ -637,10 +631,10 @@
                     <div class="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-3xl p-4 sm:p-6">
                         <div class="flex items-center justify-between mb-2">
                             <span class="text-xs font-extrabold text-slate-600">교과서 66쪽 단열 과정 그래프 (압축 방향 적용)</span>
-                            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-rose-100 text-rose-700">빨간 화살표 주목!</span>
+                            <span class="text-[13px] font-bold px-2 py-0.5 rounded bg-rose-100 text-rose-700">빨간 화살표 주목!</span>
                         </div>
 
-                        <svg id="adiabatic-svg" viewBox="0 0 460 310" class="w-full h-auto max-h-[320px] select-none" aria-label="단열 압축 압력 부피 그래프">
+                        <svg id="adiabatic-svg" viewBox="0 0 480 318" class="w-full h-auto max-h-[320px] select-none" aria-label="단열 압축 압력 부피 그래프">
                             <defs>
                                 <marker id="arrow-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                                     <path d="M 0 1 L 10 5 L 0 9 z" fill="#e11d48" />
@@ -657,35 +651,35 @@
                             <!-- 좌표축 -->
                             <line x1="60" y1="265" x2="420" y2="265" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow-axis)" />
                             <line x1="60" y1="265" x2="60" y2="25" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow-axis)" />
-                            <text x="45" y="280" font-size="14" font-weight="700" fill="#475569">0</text>
-                            <text x="18" y="34" font-size="14" font-weight="800" fill="#1e293b">압력(P)</text>
-                            <text x="382" y="290" font-size="14" font-weight="800" fill="#1e293b">부피(V)</text>
+                            <text x="44" y="282" font-size="16" font-weight="700" fill="#475569">0</text>
+                            <text x="14" y="34" font-size="16" font-weight="800" fill="#1e293b">압력(P)</text>
+                            <text x="380" y="292" font-size="16" font-weight="800" fill="#1e293b">부피(V)</text>
 
                             <!-- 등온선 T1 (고온) & T2 (저온) + ③번 온도 상승 그룹 -->
                             <g id="s3-svg-3" class="svg-hl-item">
                                 <path d="M 115 45 Q 190 155 390 190" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 5" />
-                                <text x="395" y="193" font-size="15" font-weight="800" fill="#e11d48">T₁ (고온)</text>
+                                <text x="395" y="193" font-size="17" font-weight="800" fill="#e11d48">T₁ (고온)</text>
 
                                 <path d="M 95 110 Q 175 210 390 235" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 5" />
-                                <text x="395" y="238" font-size="15" font-weight="800" fill="#0284c7">T₂ (저온)</text>
+                                <text x="395" y="238" font-size="17" font-weight="800" fill="#0284c7">T₂ (저온)</text>
 
                                 <circle cx="155" cy="95" r="7" fill="#e11d48" stroke="white" stroke-width="2" />
                                 <g transform="translate(155, 62)">
                                     <circle cx="0" cy="0" r="12" fill="#ea580c" />
-                                    <text x="0" y="4" text-anchor="middle" font-size="12" font-weight="900" fill="white">3</text>
+                                    <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="900" fill="white">3</text>
                                 </g>
-                                <text x="174" y="67" font-size="12" font-weight="800" fill="#ea580c">T₂ → T₁ 온도 상승!</text>
+                                <text x="174" y="67" font-size="14" font-weight="800" fill="#ea580c">T₂ → T₁ 온도 상승!</text>
                             </g>
 
                             <!-- ②번 단열 압축 곡선 & 기체가 받은 일 면적 그룹 -->
                             <g id="s3-svg-2" class="svg-hl-item">
                                 <path d="M 155 95 Q 210 185 310 222 L 310 265 L 155 265 Z" fill="url(#work-area)" />
-                                <text x="200" y="245" font-size="13" font-weight="800" fill="#be123c">받은 일 (W &lt; 0)</text>
+                                <text x="195" y="245" font-size="15" font-weight="800" fill="#be123c">받은 일 (W &lt; 0)</text>
                                 <path d="M 310 222 Q 210 185 155 95" fill="none" stroke="#e11d48" stroke-width="4.5" marker-end="url(#arrow-red)" />
                                 <circle cx="310" cy="222" r="6" fill="#0284c7" stroke="white" stroke-width="2" />
                                 <g transform="translate(235, 165)">
                                     <circle cx="0" cy="0" r="12" fill="#e11d48" />
-                                    <text x="0" y="4" text-anchor="middle" font-size="12" font-weight="900" fill="white">2</text>
+                                    <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="900" fill="white">2</text>
                                 </g>
                             </g>
 
@@ -693,13 +687,13 @@
                             <g id="s3-svg-1" class="svg-hl-item">
                                 <line x1="155" y1="95" x2="155" y2="265" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4 4" />
                                 <line x1="310" y1="222" x2="310" y2="265" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4 4" />
-                                <text x="147" y="286" font-size="14" font-weight="800" fill="#1e293b">V₁</text>
-                                <text x="302" y="286" font-size="14" font-weight="800" fill="#1e293b">V₂</text>
+                                <text x="146" y="286" font-size="16" font-weight="800" fill="#1e293b">V₁</text>
+                                <text x="301" y="286" font-size="16" font-weight="800" fill="#1e293b">V₂</text>
                                 <path d="M 295 294 L 172 294" stroke="#e11d48" stroke-width="2.5" marker-end="url(#arrow-red)" />
-                                <text x="205" y="307" font-size="11" font-weight="800" fill="#e11d48">부피 감소 (ΔV &lt; 0)</text>
+                                <text x="196" y="311" font-size="13" font-weight="800" fill="#e11d48">부피 감소 (ΔV &lt; 0)</text>
                                 <g transform="translate(232, 276)">
                                     <circle cx="0" cy="0" r="11" fill="#0f172a" />
-                                    <text x="0" y="4" text-anchor="middle" font-size="12" font-weight="900" fill="white">1</text>
+                                    <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="900" fill="white">1</text>
                                 </g>
                             </g>
                         </svg>
@@ -782,13 +776,13 @@
                                     <div class="w-11 h-11 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl shrink-0">🥤</div>
                                     <div>
                                         <p class="font-bold text-slate-700 text-xs sm:text-sm">생활 사례 사진 첨부 (선택)</p>
-                                        <p class="text-[11px] text-slate-500">교과서 67쪽 탄산음료 김 또는 타이어 사진 클릭 첨부</p>
+                                        <p class="text-[13px] text-slate-500">교과서 67쪽 탄산음료 김 또는 타이어 사진 클릭 첨부</p>
                                     </div>
                                 </div>
-                                <span class="upload-hover-badge absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-slate-900/75 text-white text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition">사진 변경</span>
+                                <span class="upload-hover-badge absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-slate-900/75 text-white text-[12px] font-semibold opacity-0 group-hover:opacity-100 transition">사진 변경</span>
                             </label>
                             <div class="text-xs text-slate-600 leading-relaxed px-1 space-y-1">
-                                <span class="inline-block px-2 py-0.5 rounded-md bg-purple-100 text-purple-800 font-extrabold text-[11px]">단열 팽창 냉각 사례</span>
+                                <span class="inline-block px-2 py-0.5 rounded-md bg-purple-100 text-purple-800 font-extrabold text-[13px]">단열 팽창 냉각 사례</span>
                                 <p class="font-bold text-slate-800 text-xs sm:text-sm">탄산음료 캔을 열 때 생기는 하얀 김</p>
                                 <p>캔 속 고압 기체가 빠르게 팽창하며 일을 해 온도가 내려가고, 주변 수증기가 응결합니다.</p>
                             </div>
@@ -987,7 +981,6 @@
             const tabletController = document.getElementById('tablet-controller');
             const tabletJoinScreen = document.getElementById('tablet-join-screen');
             const tabletHudScreen = document.getElementById('tablet-hud-screen');
-            const tabletRoomInput = document.getElementById('tablet-room-input');
             const tabletNameList = document.getElementById('tablet-name-list');
             const tConnDot = document.getElementById('t-conn-dot');
             const tMyBadge = document.getElementById('t-my-badge');
@@ -1021,7 +1014,7 @@
             let turnLockEnabled = true;
             let isCleanMode = false;
             let toastTimer = null;
-            let scriptFontSize = 16;
+            let scriptFontSize = 18;
             let navCooldown = false;
 
             // 네트워크 상태 변수
@@ -1117,19 +1110,19 @@
             // 슬라이드별 원격 하이라이트 버튼 및 강조 대상 ID 매핑
             const slideHighlights = [
                 [
-                    { key: 'h1', label: '❓ 탐구 질문 강조', targets: ['s0-h1'] },
-                    { key: 'h2', label: '🗺️ 발표 순서 강조', targets: ['s0-h2'] },
-                    { key: 'h3', label: '🚲 펌프 사진 강조', targets: ['s0-h3'] }
+                    { key: 'h1', label: '탐구 질문 강조', targets: ['s0-h1'] },
+                    { key: 'h2', label: '발표 순서 강조', targets: ['s0-h2'] },
+                    { key: 'h3', label: '펌프 사진 강조', targets: ['s0-h3'] }
                 ],
                 [
-                    { key: 'h1', label: '⚡ Q = ΔU + W 공식', targets: ['s1-h1'] },
-                    { key: 'h2', label: '🟡 Q (열 출입)', targets: ['s1-h2'] },
-                    { key: 'h3', label: '🔴 ΔU (내부 에너지)', targets: ['s1-h3'] },
-                    { key: 'h4', label: '🔵 W (기체의 일)', targets: ['s1-h4'] }
+                    { key: 'h1', label: 'Q = ΔU + W 공식', targets: ['s1-h1'] },
+                    { key: 'h2', label: 'Q (열 출입)', targets: ['s1-h2'] },
+                    { key: 'h3', label: 'ΔU (내부 에너지)', targets: ['s1-h3'] },
+                    { key: 'h4', label: 'W (기체의 일)', targets: ['s1-h4'] }
                 ],
                 [
-                    { key: 'h1', label: '🔥 빠르게: 단열 압축', targets: ['s2-h1'] },
-                    { key: 'h2', label: '❄️ 천천히: 등온 압축', targets: ['s2-h2'] }
+                    { key: 'h1', label: '빠르게: 단열 압축', targets: ['s2-h1'] },
+                    { key: 'h2', label: '천천히: 등온 압축', targets: ['s2-h2'] }
                 ],
                 [
                     { key: 'h1', label: '① 부피 감소 (V₂→V₁)', targets: ['s3-h1'], svg: 's3-svg-1' },
@@ -1137,14 +1130,14 @@
                     { key: 'h3', label: '③ T₂→T₁ 온도 상승', targets: ['s3-h3'], svg: 's3-svg-3' }
                 ],
                 [
-                    { key: 'h1', label: '🔍 마찰 vs 단열 근거', targets: ['s4-h1'] },
-                    { key: 'h2', label: '🧊 조건 A (금속)', targets: ['s4-h2'] },
-                    { key: 'h3', label: '🔥 조건 B (플라스틱)', targets: ['s4-h3'] },
-                    { key: 'h4', label: '🛠️ 해결책 최종 판단', targets: ['s4-h4'] }
+                    { key: 'h1', label: '마찰 vs 단열 근거', targets: ['s4-h1'] },
+                    { key: 'h2', label: '조건 A (금속)', targets: ['s4-h2'] },
+                    { key: 'h3', label: '조건 B (플라스틱)', targets: ['s4-h3'] },
+                    { key: 'h4', label: '해결책 최종 판단', targets: ['s4-h4'] }
                 ],
                 [
-                    { key: 'h1', label: '📢 한 문장 핵심 결론', targets: ['s5-h1'] },
-                    { key: 'h2', label: '📚 출처·AI 활용 표기', targets: ['s5-h2'] }
+                    { key: 'h1', label: '한 문장 핵심 결론', targets: ['s5-h1'] },
+                    { key: 'h2', label: '출처·AI 활용 표기', targets: ['s5-h2'] }
                 ]
             ];
 
@@ -1346,14 +1339,13 @@
                 membersStatusGrid.innerHTML = '';
                 ALL_MEMBERS.forEach((name) => {
                     const isOnline = connected.includes(name);
-                    const isMaster = name === MASTER_NAME;
                     const div = document.createElement('div');
                     div.className = isOnline
                         ? 'rounded-xl p-2 text-center border bg-emerald-50 border-emerald-300 text-emerald-800 shadow-sm'
                         : 'rounded-xl p-2 text-center border bg-slate-50 border-slate-200 text-slate-400';
                     div.innerHTML = `
-                        <div class="text-xs font-black truncate">${isMaster ? '👑' : ''}${name}</div>
-                        <div class="text-[10px] font-bold mt-0.5">${isOnline ? '● 연결됨' : '○ 대기'}</div>
+                        <div class="text-xs font-black truncate">${name}</div>
+                        <div class="text-[12px] font-bold mt-0.5">${isOnline ? '● 연결됨' : '○ 대기'}</div>
                     `;
                     membersStatusGrid.appendChild(div);
                 });
@@ -1399,7 +1391,7 @@
                     broadcastHostState();
                 } else if (data.type === 'CMD_TOGGLE_LOCK' && isMaster) {
                     turnLockEnabled = !turnLockEnabled;
-                    showToast(turnLockEnabled ? '🔒 마스터가 턴제 잠금을 켰습니다.' : '🔓 마스터가 전체 자유 조작을 열었습니다.');
+                    showToast(turnLockEnabled ? '턴제 잠금이 켜졌습니다.' : '전체 자유 조작이 열렸습니다.');
                     broadcastHostState();
                 } else if (data.type === 'CMD_TOGGLE_CLEAN' && isMaster) {
                     setCleanMode(!isCleanMode, false);
@@ -1431,7 +1423,7 @@
                                 renderHostMemberStatus();
                                 broadcastHostState();
                                 if (!isCleanMode) {
-                                    showToast(`${data.name === MASTER_NAME ? '👑 ' : ''}${data.name} 태블릿 연결됨!`);
+                                    showToast(`${data.name} 태블릿 연결됨!`);
                                 }
                             } else {
                                 const entry = hostConnections.get(conn.peer);
@@ -1505,7 +1497,6 @@
                     hostPeer = null;
                 }
                 roomCode = (targetRoom || DEFAULT_ROOM_CODE).trim() || DEFAULT_ROOM_CODE;
-                tabletRoomInput.value = roomCode;
 
                 tabletController.classList.remove('hidden');
                 tabletController.classList.add('flex');
@@ -1520,25 +1511,21 @@
                 const roleDesc = {
                     '이승호': '1번(질문 소개) · 6번(결론 정리)',
                     '송유호': '2번(열역학 제1법칙)',
-                    '장민서': '3번(단열 vs 등온) · 👑 총괄 마스터',
+                    '장민서': '3번(단열 vs 등온)',
                     '강명서': '4번(교과서 66쪽 그래프 해석)',
                     '전성찬': '5번(생활 사례 · 조건 변화 예측)'
                 };
 
                 ALL_MEMBERS.forEach((name) => {
-                    const isMaster = name === MASTER_NAME;
                     const btn = document.createElement('button');
                     btn.type = 'button';
-                    btn.className = isMaster
-                        ? 'w-full p-4 rounded-2xl bg-gradient-to-r from-purple-700 to-indigo-700 hover:from-purple-600 hover:to-indigo-600 border border-purple-400/50 text-left flex items-center justify-between shadow-lg transition active:scale-[0.98]'
-                        : 'w-full p-4 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left flex items-center justify-between transition active:scale-[0.98]';
+                    btn.className = 'w-full p-4 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left flex items-center justify-between transition active:scale-[0.98]';
                     btn.innerHTML = `
                         <div>
                             <div class="text-base sm:text-lg font-black text-white flex items-center gap-1.5">
-                                ${isMaster ? '👑 ' : '🎤 '}${name}
-                                ${isMaster ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 font-black">마스터</span>' : ''}
+                                ${name}
                             </div>
-                            <div class="text-xs ${isMaster ? 'text-purple-200' : 'text-slate-400'} mt-0.5">${roleDesc[name]}</div>
+                            <div class="text-xs text-slate-400 mt-0.5">${roleDesc[name]}</div>
                         </div>
                         <span class="text-indigo-300 font-black text-sm">입장 →</span>
                     `;
@@ -1615,7 +1602,6 @@
             }
 
             function connectTabletAs(name) {
-                roomCode = tabletRoomInput.value.trim() || DEFAULT_ROOM_CODE;
                 myTabletName = name;
                 stopTabletAutoReconnect();
 
@@ -1623,11 +1609,8 @@
                 tabletHudScreen.classList.remove('hidden');
                 tabletHudScreen.classList.add('flex');
 
-                const isMaster = myTabletName === MASTER_NAME;
-                tMyBadge.textContent = isMaster ? `👑 ${myTabletName} (마스터)` : `🎤 ${myTabletName}`;
-                tMyBadge.className = isMaster
-                    ? 'px-2.5 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-amber-500 text-white text-xs font-black truncate'
-                    : 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black truncate';
+                tMyBadge.textContent = myTabletName;
+                tMyBadge.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black truncate';
 
                 renderMyAssignedScripts();
                 updateTabletHUD();
@@ -1690,7 +1673,7 @@
                     btn.className = isActive
                         ? 'p-3 rounded-xl text-xs sm:text-sm font-black bg-amber-400 text-slate-950 shadow-md ring-2 ring-amber-200 transition active:scale-[0.97]'
                         : 'p-3 rounded-xl text-xs sm:text-sm font-bold bg-slate-800 hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed text-slate-100 border border-slate-700 transition active:scale-[0.97]';
-                    btn.textContent = isActive ? `✨ ${opt.label} (켜짐)` : opt.label;
+                    btn.textContent = isActive ? `${opt.label} (켜짐)` : opt.label;
                     btn.addEventListener('click', () => {
                         sendTabletCommand({ type: 'CMD_HIGHLIGHT', key: opt.key });
                     });
@@ -1735,16 +1718,16 @@
 
                 if (isMyTurn) {
                     tTurnBanner.className = 'rounded-2xl p-3.5 sm:p-4 border bg-gradient-to-r from-emerald-700 to-teal-700 border-emerald-400/60 shadow-lg flex items-center justify-between gap-3';
-                    tTurnMsg.textContent = '🎤 지금 내 발표 차례입니다! 슬라이드와 하이라이트를 조작하세요.';
+                    tTurnMsg.textContent = '지금 내 발표 차례입니다! 슬라이드와 하이라이트를 조작하세요.';
                 } else if (isMaster) {
                     tTurnBanner.className = 'rounded-2xl p-3.5 sm:p-4 border bg-gradient-to-r from-purple-800 to-indigo-800 border-purple-400/60 shadow-lg flex items-center justify-between gap-3';
-                    tTurnMsg.textContent = `👑 마스터 권한 활성 — 현재 ${currentSpeaker} 진행 중 (필요 시 즉시 대신 조작 가능)`;
+                    tTurnMsg.textContent = `현재 ${currentSpeaker} 진행 중 (필요 시 즉시 대신 조작 가능)`;
                 } else if (!turnLockEnabled) {
                     tTurnBanner.className = 'rounded-2xl p-3.5 sm:p-4 border bg-sky-900/80 border-sky-500/50 flex items-center justify-between gap-3';
-                    tTurnMsg.textContent = `🔓 마스터가 잠금을 해제했습니다. (현재 발표자: ${currentSpeaker})`;
+                    tTurnMsg.textContent = `잠금이 해제되었습니다. (현재 발표자: ${currentSpeaker})`;
                 } else {
                     tTurnBanner.className = 'rounded-2xl p-3.5 sm:p-4 border bg-slate-900 border-slate-700 flex items-center justify-between gap-3';
-                    tTurnMsg.textContent = `🔒 현재 ${currentSpeaker} 발표 중 (오터치 방지 잠금 — 아래에서 내 대본 미리보기 가능)`;
+                    tTurnMsg.textContent = `현재 ${currentSpeaker} 발표 중 (오터치 방지 잠금 — 아래에서 내 대본 미리보기 가능)`;
                 }
 
                 tBtnPrev.disabled = !canControl || currentSlide === 0;
@@ -1755,12 +1738,12 @@
                 if (isMaster) {
                     tMasterPanel.classList.remove('hidden');
 
-                    tBtnToggleClean.textContent = isCleanMode ? '🛠️ 송출화면 메뉴 보이기' : '🎬 송출화면 버튼 숨기기';
+                    tBtnToggleClean.textContent = isCleanMode ? '송출화면 메뉴 보이기' : '송출화면 버튼 숨기기';
                     tBtnToggleClean.className = isCleanMode
                         ? 'px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow transition'
                         : 'px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-extrabold shadow transition';
 
-                    tBtnToggleLock.textContent = turnLockEnabled ? '🔒 턴제 잠금: 켜짐' : '🔓 턴제 잠금: 해제됨';
+                    tBtnToggleLock.textContent = turnLockEnabled ? '턴제 잠금: 켜짐' : '턴제 잠금: 해제됨';
                     tBtnToggleLock.className = turnLockEnabled
                         ? 'px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-extrabold shadow transition'
                         : 'px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold shadow transition';
@@ -1772,7 +1755,7 @@
                         jBtn.className = idx === currentSlide
                             ? 'p-2 rounded-xl text-xs font-black bg-amber-400 text-slate-950 shadow text-center'
                             : 'p-2 rounded-xl text-xs font-bold bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-purple-700/40 text-center';
-                        jBtn.innerHTML = `<div>${idx + 1}</div><div class="text-[10px] truncate">${presenters[idx]}</div>`;
+                        jBtn.innerHTML = `<div>${idx + 1}</div><div class="text-[12px] truncate">${presenters[idx]}</div>`;
                         jBtn.addEventListener('click', () => triggerSlideNavFromTablet('jump', idx, true));
                         tMasterJumps.appendChild(jBtn);
                     });
@@ -1782,8 +1765,8 @@
                         const isOnline = connectedMemberNames.includes(name);
                         const chip = document.createElement('span');
                         chip.className = isOnline
-                            ? 'px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 text-[11px] font-bold'
-                            : 'px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-slate-500 text-[11px] font-semibold';
+                            ? 'px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 text-[13px] font-bold'
+                            : 'px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-slate-500 text-[13px] font-semibold';
                         chip.textContent = `${isOnline ? '●' : '○'} ${name}`;
                         tMasterMembers.appendChild(chip);
                     });
@@ -1830,19 +1813,6 @@
                 copyTextToClipboard(getTabletShareUrl(), '태블릿 접속 링크가 복사되었습니다!');
             });
 
-            // 태블릿 화면에서 호스트로 복귀
-            document.getElementById('btn-back-to-host').addEventListener('click', () => {
-                stopTabletAutoReconnect();
-                if (tabletPeer) {
-                    try { tabletPeer.destroy(); } catch (e) {}
-                    tabletPeer = null;
-                }
-                appRole = 'host';
-                tabletController.classList.add('hidden');
-                tabletController.classList.remove('flex');
-                initHostPeer();
-            });
-
             // 태블릿 조작 버튼 이벤트
             tBtnPrev.addEventListener('click', () => triggerSlideNavFromTablet('prev'));
             tBtnNext.addEventListener('click', () => triggerSlideNavFromTablet('next'));
@@ -1878,14 +1848,14 @@
 
             // 태블릿 대본 글자 크기 조절
             document.getElementById('t-font-inc').addEventListener('click', () => {
-                if (scriptFontSize < 26) {
+                if (scriptFontSize < 28) {
                     scriptFontSize += 2;
                     tTabCurrent.style.fontSize = `${scriptFontSize}px`;
                     document.querySelectorAll('.my-script-text').forEach((el) => el.style.fontSize = `${scriptFontSize}px`);
                 }
             });
             document.getElementById('t-font-dec').addEventListener('click', () => {
-                if (scriptFontSize > 13) {
+                if (scriptFontSize > 15) {
                     scriptFontSize -= 2;
                     tTabCurrent.style.fontSize = `${scriptFontSize}px`;
                     document.querySelectorAll('.my-script-text').forEach((el) => el.style.fontSize = `${scriptFontSize}px`);
