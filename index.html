@@ -836,7 +836,7 @@
 
                     <!-- 우측: 번호 순서대로 짚어주는 설명 카드 -->
                     <div class="lg:col-span-5 space-y-4">
-                        <h3 class="text-2xl sm:text-3xl lg:text-[36px] font-black text-slate-900 leading-tight">그래프 보는 순서 ① → ② → ③</h3>
+                        <h3 class="text-2xl sm:text-3xl lg:text-[30px] xl:text-[34px] font-black text-slate-900 leading-tight whitespace-nowrap">그래프 보는 순서 ① → ② → ③</h3>
 
                         <div id="s3-h1" class="hl-item flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50 border border-slate-200">
                             <span class="w-9 h-9 rounded-full bg-slate-900 text-white font-black text-lg flex items-center justify-center shrink-0">1</span>
@@ -974,7 +974,7 @@
                     <span class="inline-block px-5 py-2 rounded-full bg-rose-100 text-rose-700 font-extrabold text-base sm:text-lg">
                         오늘 발표 한 문장 정리
                     </span>
-                    <blockquote class="text-3xl sm:text-4xl lg:text-[54px] font-black text-slate-900 leading-[1.28] tracking-tight">
+                    <blockquote class="text-3xl sm:text-4xl lg:text-[46px] font-black text-slate-900 tracking-tight" style="line-height: 1.5;">
                         “자전거 펌프의 발열은 단순한 마찰열이 아니라,<br class="hidden sm:inline">
                         기체가 빠르게 <span class="text-sky-600">일(W)</span>을 받아 <span class="text-rose-600">내부 에너지(ΔU)</span>가 증가하는<br class="hidden sm:inline">
                         <span class="underline decoration-indigo-500 decoration-4 underline-offset-8">열역학 제1법칙의 단열 압축 현상</span>입니다.”
@@ -1837,7 +1837,9 @@
                             currentHighlight = data.highlightKey || 'none';
                             turnLockEnabled = !!data.turnLockEnabled;
                             isCleanMode = !!data.cleanMode;
-                            presentationEnded = !!data.presentationEnded;
+                            if (typeof data.presentationEnded === 'boolean') {
+                                presentationEnded = data.presentationEnded;
+                            }
                             connectedMemberNames = data.connectedNames || [];
                             if (data.customScripts && typeof data.customScripts === 'object') {
                                 let scriptUpdated = false;
@@ -2070,7 +2072,12 @@
                 hlTapCooldown = true;
                 setTimeout(() => { hlTapCooldown = false; }, 320);
 
-                sendTabletCommand({ type: 'CMD_HIGHLIGHT_NEXT' });
+                const idx = options.findIndex((opt) => opt.key === currentHighlight);
+                const nextKey = (idx === -1)
+                    ? options[0].key
+                    : (idx + 1 < options.length ? options[idx + 1].key : 'none');
+
+                sendTabletCommand({ type: 'CMD_HIGHLIGHT', key: nextKey });
             }
 
             function renderTabletHighlightButtons() {
@@ -2355,6 +2362,10 @@
             tBtnNext.addEventListener('click', () => {
                 if (currentSlide === slides.length - 1) {
                     triggerSlideNavFromTablet('finish');
+                    if (myTabletName === '이승호' || myTabletName === MASTER_NAME) {
+                        presentationEnded = true;
+                        updateTabletHUD();
+                    }
                 } else {
                     triggerSlideNavFromTablet('next');
                 }
