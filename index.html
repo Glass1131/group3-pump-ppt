@@ -229,12 +229,12 @@
         #tablet-controller #t-tab-qa .t-qa-label {
             font-size: clamp(0.92rem, 1.9vmin, 1.15rem);
         }
-        #tablet-controller #t-qa-q,
-        #tablet-controller #t-qa-a {
+        #tablet-controller #t-tab-qa .t-qa-q,
+        #tablet-controller #t-tab-qa .t-qa-a {
             font-size: clamp(1.08rem, 2.45vmin, 1.45rem);
             line-height: 1.7;
         }
-        #tablet-controller #t-qa-tip {
+        #tablet-controller #t-tab-qa .t-qa-tip {
             font-size: clamp(0.96rem, 2.1vmin, 1.25rem);
         }
     </style>
@@ -461,20 +461,9 @@
                         <div id="t-tab-mine" class="hidden flex-1 p-4 sm:p-6 space-y-4"></div>
 
                         <!-- 탭 3: 예상 Q&A -->
-                        <div id="t-tab-qa" class="hidden flex-1 p-4 sm:p-6 space-y-3.5 text-sm">
+                        <div id="t-tab-qa" class="hidden flex-1 p-4 sm:p-6 space-y-4 text-sm">
                             <div id="t-qa-selector" class="flex flex-wrap gap-1.5 pb-1"></div>
-                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
-                                <span id="t-qa-q-label" class="t-qa-label text-xs text-amber-400 font-bold block mb-1.5">Q. 예상 질문</span>
-                                <p id="t-qa-q" class="text-white font-extrabold leading-relaxed"></p>
-                            </div>
-                            <div class="bg-indigo-950/50 p-4 rounded-xl border border-indigo-800/60">
-                                <span class="t-qa-label text-xs text-indigo-300 font-bold block mb-1.5">A. 모범 답변</span>
-                                <p id="t-qa-a" class="text-slate-200 leading-relaxed whitespace-pre-line"></p>
-                            </div>
-                            <div class="bg-emerald-950/50 p-4 rounded-xl border border-emerald-800/60">
-                                <span class="t-qa-label text-xs text-emerald-400 font-bold block mb-1">핵심 1줄 팁</span>
-                                <p id="t-qa-tip" class="text-emerald-200 text-xs font-semibold"></p>
-                            </div>
+                            <div id="t-qa-cards" class="space-y-4"></div>
                         </div>
                     </div>
 
@@ -1150,18 +1139,15 @@
             const tTabMine = document.getElementById('t-tab-mine');
             const tTabQa = document.getElementById('t-tab-qa');
             const tQaSelector = document.getElementById('t-qa-selector');
-            const tQaQLabel = document.getElementById('t-qa-q-label');
-            const tQaQ = document.getElementById('t-qa-q');
-            const tQaA = document.getElementById('t-qa-a');
-            const tQaTip = document.getElementById('t-qa-tip');
+            const tQaCards = document.getElementById('t-qa-cards');
 
             const SCRIPT_STORAGE_KEY = 'g3pump_custom_scripts_v1';
-            const memberQaSlideMap = {
-                '이승호': 5,
-                '송유호': 1,
-                '장민서': 2,
-                '강명서': 3,
-                '전성찬': 4
+            const memberQaSlidesMap = {
+                '이승호': [0, 5],
+                '송유호': [1],
+                '장민서': [2],
+                '강명서': [3],
+                '전성찬': [4]
             };
 
             function getAutoScriptFontSize() {
@@ -1183,8 +1169,8 @@
 
             // 태블릿 전용 상태 변수
             let activeTabletTab = 'current';
-            let selectedQaIndex = 0;
-            let autoOpenedQaDone = false;
+            let selectedQaMode = 'mine'; // 'mine' | number(0..5)
+            const triggeredQaMilestones = new Set();
             let lastQaCheckSlide = 0;
             let wholeScreenTapHighlightEnabled = true;
             let isEditingCurrentScript = false;
@@ -1915,11 +1901,29 @@
 
             function renderTabletQaSection() {
                 tQaSelector.innerHTML = '';
-                const myQaIdx = memberQaSlideMap[myTabletName] ?? currentSlide;
+                tQaCards.innerHTML = '';
+                const myQaIndices = memberQaSlidesMap[myTabletName] || [currentSlide];
+
+                if (myQaIndices.length > 1) {
+                    const mineAllBtn = document.createElement('button');
+                    mineAllBtn.type = 'button';
+                    const isMineSelected = selectedQaMode === 'mine';
+                    mineAllBtn.className = isMineSelected
+                        ? 'rounded-lg font-black bg-amber-400 text-slate-950 shadow transition'
+                        : 'rounded-lg font-bold bg-indigo-900/70 hover:bg-indigo-800 text-indigo-200 border border-indigo-500/60 transition';
+                    mineAllBtn.textContent = `${myQaIndices.map((i) => i + 1).join('·')}번 (내 담당 전체)`;
+                    mineAllBtn.addEventListener('click', () => {
+                        selectedQaMode = 'mine';
+                        renderTabletQaSection();
+                    });
+                    tQaSelector.appendChild(mineAllBtn);
+                }
 
                 qaList.forEach((item, idx) => {
-                    const isSelected = idx === selectedQaIndex;
-                    const isMine = idx === myQaIdx;
+                    const isSelected = (myQaIndices.length === 1)
+                        ? (selectedQaMode === 'mine' ? idx === myQaIndices[0] : selectedQaMode === idx)
+                        : (selectedQaMode === idx);
+                    const isMine = myQaIndices.includes(idx);
                     const qBtn = document.createElement('button');
                     qBtn.type = 'button';
                     qBtn.className = isSelected
@@ -1927,24 +1931,46 @@
                         : (isMine
                             ? 'rounded-lg font-bold bg-indigo-900/70 hover:bg-indigo-800 text-indigo-200 border border-indigo-500/60 transition'
                             : 'rounded-lg font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition');
-                    qBtn.textContent = isMine ? `${item.slideNum}번 (내 담당)` : `${item.slideNum}번`;
+                    qBtn.textContent = (myQaIndices.length === 1 && isMine) ? `${item.slideNum}번 (내 담당)` : `${item.slideNum}번`;
                     qBtn.addEventListener('click', () => {
-                        selectedQaIndex = idx;
+                        selectedQaMode = (myQaIndices.length === 1 && idx === myQaIndices[0]) ? 'mine' : idx;
                         renderTabletQaSection();
                     });
                     tQaSelector.appendChild(qBtn);
                 });
 
-                const qa = qaList[selectedQaIndex] || qaList[0];
-                if (qa) {
-                    const isMine = selectedQaIndex === myQaIdx;
-                    tQaQLabel.textContent = isMine
+                const indicesToShow = selectedQaMode === 'mine'
+                    ? myQaIndices
+                    : [typeof selectedQaMode === 'number' ? selectedQaMode : myQaIndices[0]];
+
+                indicesToShow.forEach((idx) => {
+                    const qa = qaList[idx];
+                    if (!qa) return;
+                    const isMine = myQaIndices.includes(idx);
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'space-y-3 rounded-2xl bg-slate-950/60 border border-slate-800 p-3.5 sm:p-4';
+                    wrapper.innerHTML = `
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="t-qa-label text-xs text-amber-400 font-bold block mb-1.5"></span>
+                            <p class="t-qa-q text-white font-extrabold leading-relaxed"></p>
+                        </div>
+                        <div class="bg-indigo-950/50 p-4 rounded-xl border border-indigo-800/60">
+                            <span class="t-qa-label text-xs text-indigo-300 font-bold block mb-1.5">A. 모범 답변</span>
+                            <p class="t-qa-a text-slate-200 leading-relaxed whitespace-pre-line"></p>
+                        </div>
+                        <div class="bg-emerald-950/50 p-4 rounded-xl border border-emerald-800/60">
+                            <span class="t-qa-label text-xs text-emerald-400 font-bold block mb-1">핵심 1줄 팁</span>
+                            <p class="t-qa-tip text-emerald-200 text-xs font-semibold"></p>
+                        </div>
+                    `;
+                    wrapper.querySelector('.t-qa-label').textContent = isMine
                         ? `Q. ${qa.slideNum}번 슬라이드 예상 질문 (${qa.presenter} · 내 담당)`
                         : `Q. ${qa.slideNum}번 슬라이드 예상 질문 (${qa.presenter})`;
-                    tQaQ.textContent = `“${qa.question}”`;
-                    tQaA.textContent = `“${qa.answer}”`;
-                    tQaTip.textContent = qa.tip;
-                }
+                    wrapper.querySelector('.t-qa-q').textContent = `“${qa.question}”`;
+                    wrapper.querySelector('.t-qa-a').textContent = `“${qa.answer}”`;
+                    wrapper.querySelector('.t-qa-tip').textContent = qa.tip;
+                    tQaCards.appendChild(wrapper);
+                });
             }
 
             function saveEditedScript(idx, rawText) {
@@ -2006,11 +2032,11 @@
                 myTabletName = name;
                 stopTabletAutoReconnect();
 
-                autoOpenedQaDone = false;
+                triggeredQaMilestones.clear();
                 lastQaCheckSlide = currentSlide;
                 isEditingCurrentScript = false;
                 editingMineIndices.clear();
-                selectedQaIndex = memberQaSlideMap[name] ?? currentSlide;
+                selectedQaMode = 'mine';
 
                 tabletJoinScreen.classList.add('hidden');
                 tabletHudScreen.classList.remove('hidden');
@@ -2193,30 +2219,44 @@
 
             function checkAutoOpenQa() {
                 if (!myTabletName) return;
-                const myFinishIdx = memberQaSlideMap[myTabletName];
-                if (typeof myFinishIdx !== 'number') return;
+                const myQaIndices = memberQaSlidesMap[myTabletName];
+                if (!myQaIndices || myQaIndices.length === 0) return;
 
                 const slideChanged = currentSlide !== lastQaCheckSlide;
                 lastQaCheckSlide = currentSlide;
 
-                const isBeforeFinish = (myFinishIdx < slides.length - 1)
-                    ? (currentSlide <= myFinishIdx)
-                    : !presentationEnded;
+                // 아직 지나지 않았거나 되감기한 담당 슬라이드 milestone 해제
+                myQaIndices.forEach((idx) => {
+                    const beforeEnd = (idx < slides.length - 1) ? (currentSlide <= idx) : !presentationEnded;
+                    if (beforeEnd) {
+                        triggeredQaMilestones.delete(idx);
+                    }
+                });
 
-                if (isBeforeFinish) {
-                    autoOpenedQaDone = false;
-                    if (slideChanged && presenters[currentSlide] === myTabletName && activeTabletTab === 'qa') {
+                // 본인 발표 차례로 돌아왔고 발표가 끝나지 않았으면 대본 탭으로 복귀
+                const isMyTurnNow = presenters[currentSlide] === myTabletName && !presentationEnded;
+                if (isMyTurnNow) {
+                    if (slideChanged && activeTabletTab === 'qa') {
                         switchTabletTab('current');
                     }
                     return;
                 }
 
-                if (!autoOpenedQaDone) {
-                    autoOpenedQaDone = true;
-                    selectedQaIndex = myFinishIdx;
+                // 완료된 내 슬라이드 중 아직 자동 Q&A를 띄우지 않은 milestone 찾기
+                const newlyFinished = myQaIndices.filter((idx) => {
+                    const finished = (idx < slides.length - 1) ? (currentSlide > idx) : presentationEnded;
+                    return finished && !triggeredQaMilestones.has(idx);
+                });
+
+                if (newlyFinished.length > 0) {
+                    newlyFinished.forEach((idx) => triggeredQaMilestones.add(idx));
+                    selectedQaMode = 'mine';
                     switchTabletTab('qa');
                     renderTabletQaSection();
-                    showToast(`${myFinishIdx + 1}번 발표 완료! 예상 Q&A를 자동으로 띄웠습니다.`);
+                    const label = myQaIndices.length > 1
+                        ? `${myQaIndices.map((i) => i + 1).join('·')}번 예상 Q&A를 띄웠습니다.`
+                        : `${newlyFinished[0] + 1}번 발표 완료! 예상 Q&A를 자동으로 띄웠습니다.`;
+                    showToast(label);
                 }
             }
 
