@@ -20,16 +20,17 @@
                         sans: ['"Noto Sans KR"', 'Inter', 'sans-serif'],
                     },
                     fontSize: {
-                        xs: ['0.875rem', { lineHeight: '1.25rem' }],
-                        sm: ['1rem', { lineHeight: '1.5rem' }],
-                        base: ['1.125rem', { lineHeight: '1.75rem' }],
-                        lg: ['1.25rem', { lineHeight: '1.75rem' }],
-                        xl: ['1.375rem', { lineHeight: '1.875rem' }],
-                        '2xl': ['1.625rem', { lineHeight: '2.125rem' }],
-                        '3xl': ['2rem', { lineHeight: '2.375rem' }],
-                        '4xl': ['2.375rem', { lineHeight: '2.625rem' }],
-                        '5xl': ['3.125rem', { lineHeight: '1.15' }],
-                        '6xl': ['3.875rem', { lineHeight: '1.1' }],
+                        xs: ['0.9375rem', { lineHeight: '1.35rem' }],
+                        sm: ['1.0625rem', { lineHeight: '1.55rem' }],
+                        base: ['1.25rem', { lineHeight: '1.85rem' }],
+                        lg: ['1.375rem', { lineHeight: '1.95rem' }],
+                        xl: ['1.5rem', { lineHeight: '2.05rem' }],
+                        '2xl': ['1.75rem', { lineHeight: '2.25rem' }],
+                        '3xl': ['2.125rem', { lineHeight: '2.5rem' }],
+                        '4xl': ['2.5rem', { lineHeight: '2.85rem' }],
+                        '5xl': ['3.375rem', { lineHeight: '1.15' }],
+                        '6xl': ['4.25rem', { lineHeight: '1.1' }],
+                        '7xl': ['5rem', { lineHeight: '1.05' }],
                     }
                 }
             }
@@ -50,10 +51,10 @@
                 transform: translateY(0);
             }
         }
-        /* 가로 스크롤 방지 및 기본 글자 크기 +2px */
+        /* 가로 스크롤 방지 및 기본 글자 크기 확대 */
         body {
             overflow-x: hidden;
-            font-size: 18px;
+            font-size: 20px;
         }
         /* 발표자 뷰 전용 스크롤바 */
         .custom-scroll::-webkit-scrollbar {
@@ -457,54 +458,54 @@
             <!-- ==================== 슬라이드 1: 표지 & 탐구 질문 (이승호) ==================== -->
             <section class="slide flex-1 p-6 sm:p-10 lg:p-12 flex flex-col justify-between slide-enter" data-slide="0" data-time="30~40초">
                 <div class="flex items-center justify-between gap-2 flex-wrap">
-                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs sm:text-sm border border-indigo-100">
+                    <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-700 font-bold text-sm sm:text-base border border-indigo-100">
                         Ⅱ. 열과 에너지 · 03. 열역학 제1법칙
                     </span>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="text-xs sm:text-sm font-semibold text-slate-400">01 / 06 · 질문 소개</span>
-                        <div class="flex items-center gap-1.5 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-xl text-xs font-bold text-indigo-900 shadow-sm">
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <span class="text-sm sm:text-base font-semibold text-slate-400">01 / 06 · 질문 소개</span>
+                        <div class="flex items-center gap-1.5 bg-indigo-50 border border-indigo-200 px-3.5 py-1.5 rounded-xl text-sm font-bold text-indigo-900 shadow-sm">
                             <span class="text-indigo-600">👤 발표자:</span>
                             <span contenteditable="true" class="presenter-name outline-none focus:ring-2 focus:ring-indigo-400 rounded px-1.5 py-0.5 bg-white font-extrabold text-slate-900 border border-indigo-200" title="클릭해서 발표자 이름 수정">이승호</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center my-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center my-6">
                     <!-- 좌측 텍스트 영역 -->
-                    <div class="lg:col-span-7 space-y-5">
+                    <div class="lg:col-span-7 space-y-6">
                         <div>
-                            <p class="text-rose-600 font-extrabold text-sm sm:text-base mb-2">일상 속 의문에서 출발!</p>
-                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight tracking-tight">
+                            <p class="text-rose-600 font-extrabold text-base sm:text-lg lg:text-xl mb-2">일상 속 의문에서 출발!</p>
+                            <h2 class="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 leading-[1.16] tracking-tight">
                                 자전거 펌프는 왜<br>
                                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-orange-500">빠르게 누르면 뜨거워질까?</span>
                             </h2>
                         </div>
 
                         <!-- 모둠 탐구 질문 박스 -->
-                        <div id="s0-h1" class="hl-item bg-slate-50 border-l-4 border-indigo-600 rounded-2xl p-4 sm:p-5 shadow-sm">
-                            <p class="text-xs font-bold text-indigo-600 uppercase tracking-wider mb-1.5">우리 모둠이 더 알아보고 싶은 질문</p>
-                            <p class="text-slate-800 font-bold text-base sm:text-lg leading-relaxed">
+                        <div id="s0-h1" class="hl-item bg-slate-50 border-l-4 border-indigo-600 rounded-2xl p-5 sm:p-6 shadow-sm">
+                            <p class="text-sm font-bold text-indigo-600 uppercase tracking-wider mb-2">우리 모둠이 더 알아보고 싶은 질문</p>
+                            <p class="text-slate-800 font-bold text-lg sm:text-xl lg:text-2xl leading-relaxed">
                                 “자전거 펌프 아랫부분이 뜨거워지는 주원인은 <span class="text-rose-600 underline decoration-rose-300 decoration-2 underline-offset-4">마찰</span>일까, 공기의 <span class="text-indigo-600 underline decoration-indigo-300 decoration-2 underline-offset-4">단열 압축</span>일까? 압축 속도와 실린더 재질이 달라지면 온도 변화는 어떻게 달라질까?”
                             </p>
                         </div>
 
                         <!-- 발표 순서 로드맵 -->
-                        <div id="s0-h2" class="hl-item flex flex-wrap items-center gap-1.5 text-xs font-semibold text-slate-600 rounded-2xl p-2 -mx-2">
-                            <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white">1. 질문 소개</span>
+                        <div id="s0-h2" class="hl-item flex flex-wrap items-center gap-1.5 text-sm font-semibold text-slate-600 rounded-2xl p-2 -mx-2">
+                            <span class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white">1. 질문 소개</span>
                             <span>→</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-slate-100">2. 핵심 개념</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-100">2. 핵심 개념</span>
                             <span>→</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-slate-100">3. 그래프 해석</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-100">3. 그래프 해석</span>
                             <span>→</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-slate-100">4. 사례·조건 예측</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-100">4. 사례·조건 예측</span>
                             <span>→</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-slate-100">5. 한 문장 정리</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-100">5. 한 문장 정리</span>
                         </div>
                     </div>
 
                     <!-- 우측 펌프 사진 -->
                     <div id="s0-h3" class="hl-item lg:col-span-5 rounded-3xl">
-                        <label class="image-slot-label group relative w-full max-w-[390px] mx-auto aspect-square rounded-3xl border border-slate-200 hover:border-indigo-500 bg-slate-100 shadow-md transition cursor-pointer overflow-hidden flex flex-col items-center justify-center text-center">
+                        <label class="image-slot-label group relative w-full max-w-[430px] mx-auto aspect-square rounded-3xl border border-slate-200 hover:border-indigo-500 bg-slate-100 shadow-md transition cursor-pointer overflow-hidden flex flex-col items-center justify-center text-center">
                             <input type="file" accept="image/*" class="hidden image-uploader" data-target="img-slide-1" data-placeholder="ph-slide-1">
                             <img id="img-slide-1" src="assets/pump.jpg" alt="자전거 펌프 사진" class="w-full h-full object-cover absolute inset-0">
                             <div id="ph-slide-1" class="hidden flex flex-col items-center gap-3 p-4">
@@ -517,20 +518,20 @@
                                     <circle cx="32" cy="44" r="3" class="text-rose-500" fill="currentColor" />
                                 </svg>
                                 <div>
-                                    <p class="font-bold text-slate-700 text-sm sm:text-base">자전거 펌프 사진 첨부</p>
-                                    <p class="text-xs text-slate-500 mt-1">여기를 클릭해 사진을 바로 넣으세요</p>
+                                    <p class="font-bold text-slate-700 text-base">자전거 펌프 사진 첨부</p>
+                                    <p class="text-sm text-slate-500 mt-1">여기를 클릭해 사진을 바로 넣으세요</p>
                                 </div>
                             </div>
-                            <span class="upload-hover-badge absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-lg bg-slate-900/75 text-white text-[13px] font-semibold opacity-0 group-hover:opacity-100 transition">사진 변경</span>
+                            <span class="upload-hover-badge absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-lg bg-slate-900/75 text-white text-[14px] font-semibold opacity-0 group-hover:opacity-100 transition">사진 변경</span>
                         </label>
                     </div>
                 </div>
 
                 <!-- 하단 조원 전체 명단 -->
-                <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm text-slate-500">
+                <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-sm sm:text-base text-slate-500">
                     <div class="flex items-center gap-2">
                         <span class="font-bold text-slate-700">3모둠 조원 전체:</span>
-                        <span contenteditable="true" class="px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-400" title="클릭해서 조원 명단 수정">강명서, 송유호, 이승호, 장민서, 전성찬</span>
+                        <span contenteditable="true" class="px-3 py-1 rounded-lg bg-slate-100 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-400" title="클릭해서 조원 명단 수정">강명서, 송유호, 이승호, 장민서, 전성찬</span>
                     </div>
                     <span class="text-slate-400">2026학년도 2학기 역학과 에너지 수행평가</span>
                 </div>
@@ -539,12 +540,12 @@
             <!-- ==================== 슬라이드 2: 핵심 개념 ① 열역학 제1법칙 (송유호) ==================== -->
             <section class="slide hidden flex-1 p-6 sm:p-10 lg:p-12 flex flex-col justify-between slide-enter" data-slide="1" data-time="1분">
                 <div class="flex items-center justify-between gap-2 flex-wrap">
-                    <span class="px-3.5 py-1.5 rounded-full bg-blue-50 text-blue-700 font-bold text-xs sm:text-sm border border-blue-100">
+                    <span class="px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 font-bold text-sm sm:text-base border border-blue-100">
                         핵심 개념 ① · 교과서 64~65쪽
                     </span>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="text-xs sm:text-sm font-semibold text-slate-400">02 / 06 · 핵심 개념 ①</span>
-                        <div class="flex items-center gap-1.5 bg-blue-50 border border-blue-200 px-3 py-1 rounded-xl text-xs font-bold text-blue-900 shadow-sm">
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <span class="text-sm sm:text-base font-semibold text-slate-400">02 / 06 · 핵심 개념 ①</span>
+                        <div class="flex items-center gap-1.5 bg-blue-50 border border-blue-200 px-3.5 py-1.5 rounded-xl text-sm font-bold text-blue-900 shadow-sm">
                             <span class="text-blue-600">👤 발표자:</span>
                             <span contenteditable="true" class="presenter-name outline-none focus:ring-2 focus:ring-blue-400 rounded px-1.5 py-0.5 bg-white font-extrabold text-slate-900 border border-blue-200" title="클릭해서 발표자 이름 수정">송유호</span>
                         </div>
@@ -553,54 +554,54 @@
 
                 <div class="my-4 space-y-6">
                     <div class="text-center space-y-2">
-                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900">열역학 제1법칙 (에너지 보존 법칙)</h2>
-                        <p class="text-slate-500 text-sm sm:text-base">기체에 들어온 열은 <strong class="text-slate-800">온도를 올리는 데</strong> 쓰이거나 <strong class="text-slate-800">외부에 일을 하는 데</strong> 쓰입니다.</p>
+                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900">열역학 제1법칙 (에너지 보존 법칙)</h2>
+                        <p class="text-slate-500 text-base sm:text-lg lg:text-xl">기체에 들어온 열은 <strong class="text-slate-800">온도를 올리는 데</strong> 쓰이거나 <strong class="text-slate-800">외부에 일을 하는 데</strong> 쓰입니다.</p>
                     </div>
 
                     <!-- 대형 수식 카드 -->
-                    <div id="s1-h1" class="hl-item max-w-2xl mx-auto bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-8 text-center shadow-lg">
-                        <div class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-wider text-white flex items-center justify-center gap-3 sm:gap-5">
+                    <div id="s1-h1" class="hl-item max-w-3xl mx-auto bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-7 sm:p-9 text-center shadow-lg">
+                        <div class="text-5xl sm:text-6xl lg:text-7xl font-black tracking-wider text-white flex items-center justify-center gap-4 sm:gap-6">
                             <span class="text-amber-400">Q</span>
                             <span class="text-slate-400">=</span>
                             <span class="text-rose-400">ΔU</span>
                             <span class="text-slate-400">+</span>
                             <span class="text-sky-400">W</span>
                         </div>
-                        <p class="text-slate-300 text-xs sm:text-sm mt-3">교과서 65쪽 · 기체가 흡수한 열(Q) = 내부 에너지 변화량(ΔU) + 외부에 한 일(W)</p>
+                        <p class="text-slate-300 text-sm sm:text-base lg:text-lg mt-4">교과서 65쪽 · 기체가 흡수한 열(Q) = 내부 에너지 변화량(ΔU) + 외부에 한 일(W)</p>
                     </div>
 
                     <!-- 쉬운 용어 풀이 3카드 -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div id="s1-h2" class="hl-item bg-amber-50 border border-amber-200 rounded-2xl p-5 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="text-2xl font-black text-amber-600">Q (열)</span>
-                                <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-200/70 text-amber-800">열의 출입</span>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div id="s1-h2" class="hl-item bg-amber-50 border border-amber-200 rounded-2xl p-6 space-y-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-2xl lg:text-3xl font-black text-amber-600">Q (열)</span>
+                                <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded-full bg-amber-200/70 text-amber-800 shrink-0">열의 출입</span>
                             </div>
-                            <p class="text-sm text-slate-700 leading-relaxed">
+                            <p class="text-base sm:text-lg text-slate-700 leading-relaxed">
                                 기체가 밖과 주고받는 열에너지입니다.<br>
                                 • 열 흡수: <strong>Q &gt; 0</strong><br>
                                 • 열 방출: <strong>Q &lt; 0</strong>
                             </p>
                         </div>
 
-                        <div id="s1-h3" class="hl-item bg-rose-50 border border-rose-200 rounded-2xl p-5 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="text-2xl font-black text-rose-600">ΔU (내부 에너지)</span>
-                                <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-rose-200/70 text-rose-800">교과서 64쪽</span>
+                        <div id="s1-h3" class="hl-item bg-rose-50 border border-rose-200 rounded-2xl p-6 space-y-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-2xl lg:text-3xl font-black text-rose-600">ΔU (내부 에너지)</span>
+                                <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded-full bg-rose-200/70 text-rose-800 shrink-0">교과서 64쪽</span>
                             </div>
-                            <p class="text-sm text-slate-700 leading-relaxed">
+                            <p class="text-base sm:text-lg text-slate-700 leading-relaxed">
                                 공기 분자들이 바쁘게 움직이는 에너지입니다.<br>
                                 • <strong>절대온도(T)에 비례 (U ∝ T)</strong><br>
                                 • <strong>ΔU &gt; 0</strong> → 공기가 뜨거워짐!
                             </p>
                         </div>
 
-                        <div id="s1-h4" class="hl-item bg-sky-50 border border-sky-200 rounded-2xl p-5 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="text-2xl font-black text-sky-600">W (기체의 일)</span>
-                                <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-sky-200/70 text-sky-800">W = PΔV</span>
+                        <div id="s1-h4" class="hl-item bg-sky-50 border border-sky-200 rounded-2xl p-6 space-y-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-2xl lg:text-3xl font-black text-sky-600">W (기체의 일)</span>
+                                <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded-full bg-sky-200/70 text-sky-800 shrink-0">W = PΔV</span>
                             </div>
-                            <p class="text-sm text-slate-700 leading-relaxed">
+                            <p class="text-base sm:text-lg text-slate-700 leading-relaxed">
                                 기체가 부피를 바꾸며 하는 일입니다.<br>
                                 • 팽창(ΔV &gt; 0): 기체가 일함 (<strong>W &gt; 0</strong>)<br>
                                 • 압축(ΔV &lt; 0): <strong>눌려서 일 받음 (W &lt; 0)</strong>
@@ -609,7 +610,7 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-100 rounded-2xl px-4 py-3 text-center text-xs sm:text-sm font-semibold text-slate-700">
+                <div class="bg-slate-100 rounded-2xl px-5 py-4 text-center text-sm sm:text-base lg:text-lg font-semibold text-slate-700">
                     💡 핵심 포인트: 펌프로 공기를 꾹 누르면 부피가 줄어들어 기체가 외부로부터 <span class="text-sky-700 font-bold">일을 받는다(W &lt; 0)</span>!
                 </div>
             </section>
@@ -617,92 +618,92 @@
             <!-- ==================== 슬라이드 3: 핵심 개념 ② 단열 압축 vs 등온 압축 (장민서) ==================== -->
             <section class="slide hidden flex-1 p-6 sm:p-10 lg:p-12 flex flex-col justify-between slide-enter" data-slide="2" data-time="1분">
                 <div class="flex items-center justify-between gap-2 flex-wrap">
-                    <span class="px-3.5 py-1.5 rounded-full bg-rose-50 text-rose-700 font-bold text-xs sm:text-sm border border-rose-100">
+                    <span class="px-4 py-1.5 rounded-full bg-rose-50 text-rose-700 font-bold text-sm sm:text-base border border-rose-100">
                         핵심 개념 ② · 교과서 66쪽 비교
                     </span>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="text-xs sm:text-sm font-semibold text-slate-400">03 / 06 · 핵심 개념 ②</span>
-                        <div class="flex items-center gap-1.5 bg-rose-50 border border-rose-200 px-3 py-1 rounded-xl text-xs font-bold text-rose-900 shadow-sm">
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <span class="text-sm sm:text-base font-semibold text-slate-400">03 / 06 · 핵심 개념 ②</span>
+                        <div class="flex items-center gap-1.5 bg-rose-50 border border-rose-200 px-3.5 py-1.5 rounded-xl text-sm font-bold text-rose-900 shadow-sm">
                             <span class="text-rose-600">👤 발표자:</span>
                             <span contenteditable="true" class="presenter-name outline-none focus:ring-2 focus:ring-rose-400 rounded px-1.5 py-0.5 bg-white font-extrabold text-slate-900 border border-rose-200" title="클릭해서 발표자 이름 수정">장민서</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="my-4 space-y-5">
+                <div class="my-4 space-y-6">
                     <div class="text-center">
-                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900">압축 속도에 따라 무엇이 달라질까?</h2>
-                        <p class="text-slate-500 text-sm sm:text-base mt-1">공기를 <span class="text-rose-600 font-bold">빠르게</span> 누를 때와 <span class="text-blue-600 font-bold">천천히</span> 누를 때의 열역학 과정 비교</p>
+                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900">압축 속도에 따라 무엇이 달라질까?</h2>
+                        <p class="text-slate-500 text-base sm:text-lg lg:text-xl mt-2">공기를 <span class="text-rose-600 font-bold">빠르게</span> 누를 때와 <span class="text-blue-600 font-bold">천천히</span> 누를 때의 열역학 과정 비교</p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- 단열 압축 카드 -->
-                        <div id="s2-h1" class="hl-item rounded-3xl bg-gradient-to-b from-rose-50 to-orange-50/50 border-2 border-rose-200 p-6 flex flex-col justify-between space-y-4">
+                        <div id="s2-h1" class="hl-item rounded-3xl bg-gradient-to-b from-rose-50 to-orange-50/50 border-2 border-rose-200 p-6 sm:p-7 flex flex-col justify-between space-y-5">
                             <div>
                                 <div class="flex items-center justify-between mb-3">
-                                    <span class="px-3 py-1 rounded-full bg-rose-600 text-white text-xs font-extrabold">빠르게 압축할 때</span>
-                                    <span class="text-rose-700 font-black text-lg">단열 압축</span>
+                                    <span class="px-3.5 py-1 rounded-full bg-rose-600 text-white text-xs sm:text-sm font-extrabold">빠르게 압축할 때</span>
+                                    <span class="text-rose-700 font-black text-xl sm:text-2xl">단열 압축</span>
                                 </div>
-                                <div class="bg-white rounded-2xl p-4 border border-rose-100 text-center font-black text-xl sm:text-2xl text-slate-900">
+                                <div class="bg-white rounded-2xl p-4 sm:p-5 border border-rose-100 text-center font-black text-2xl sm:text-3xl text-slate-900">
                                     Q ≈ 0 &nbsp;→&nbsp; <span class="text-rose-600">ΔU = -W &gt; 0</span>
                                 </div>
                             </div>
 
-                            <ul class="space-y-2.5 text-sm sm:text-base text-slate-700">
-                                <li class="flex items-start gap-2">
+                            <ul class="space-y-3 text-base sm:text-lg lg:text-xl text-slate-700">
+                                <li class="flex items-start gap-2.5">
                                     <span class="text-rose-500 font-bold">①</span>
                                     <span>너무 빨라서 주위와 <strong>열을 주고받을 시간 없음</strong> (Q ≈ 0)</span>
                                 </li>
-                                <li class="flex items-start gap-2">
+                                <li class="flex items-start gap-2.5">
                                     <span class="text-rose-500 font-bold">②</span>
                                     <span>외부에서 꾹 눌러서 기체가 <strong>일을 받음</strong> (W &lt; 0)</span>
                                 </li>
-                                <li class="flex items-start gap-2">
+                                <li class="flex items-start gap-2.5">
                                     <span class="text-rose-500 font-bold">③</span>
                                     <span>받은 일이 전부 <strong>내부 에너지 증가</strong>로 전환됨</span>
                                 </li>
                             </ul>
 
-                            <div class="bg-rose-600 text-white rounded-2xl p-3.5 text-center font-extrabold text-base sm:text-lg shadow-sm">
+                            <div class="bg-rose-600 text-white rounded-2xl p-4 text-center font-extrabold text-lg sm:text-xl shadow-sm">
                                 🔥 결과: 기체 온도 급상승! (펌프가 뜨거워짐)
                             </div>
                         </div>
 
                         <!-- 등온 압축 카드 -->
-                        <div id="s2-h2" class="hl-item rounded-3xl bg-gradient-to-b from-sky-50 to-indigo-50/50 border-2 border-sky-200 p-6 flex flex-col justify-between space-y-4">
+                        <div id="s2-h2" class="hl-item rounded-3xl bg-gradient-to-b from-sky-50 to-indigo-50/50 border-2 border-sky-200 p-6 sm:p-7 flex flex-col justify-between space-y-5">
                             <div>
                                 <div class="flex items-center justify-between mb-3">
-                                    <span class="px-3 py-1 rounded-full bg-sky-600 text-white text-xs font-extrabold">아주 천천히 압축할 때</span>
-                                    <span class="text-sky-700 font-black text-lg">등온 압축</span>
+                                    <span class="px-3.5 py-1 rounded-full bg-sky-600 text-white text-xs sm:text-sm font-extrabold">아주 천천히 압축할 때</span>
+                                    <span class="text-sky-700 font-black text-xl sm:text-2xl">등온 압축</span>
                                 </div>
-                                <div class="bg-white rounded-2xl p-4 border border-sky-100 text-center font-black text-xl sm:text-2xl text-slate-900">
+                                <div class="bg-white rounded-2xl p-4 sm:p-5 border border-sky-100 text-center font-black text-2xl sm:text-3xl text-slate-900">
                                     ΔU = 0 &nbsp;→&nbsp; <span class="text-sky-600">Q = W &lt; 0</span>
                                 </div>
                             </div>
 
-                            <ul class="space-y-2.5 text-sm sm:text-base text-slate-700">
-                                <li class="flex items-start gap-2">
+                            <ul class="space-y-3 text-base sm:text-lg lg:text-xl text-slate-700">
+                                <li class="flex items-start gap-2.5">
                                     <span class="text-sky-500 font-bold">①</span>
                                     <span>천천히 누르면 주위와 <strong>열 교환할 시간 충분</strong></span>
                                 </li>
-                                <li class="flex items-start gap-2">
+                                <li class="flex items-start gap-2.5">
                                     <span class="text-sky-500 font-bold">②</span>
                                     <span>기체가 일을 받은 만큼 <strong>열이 밖으로 방출</strong> (Q &lt; 0)</span>
                                 </li>
-                                <li class="flex items-start gap-2">
+                                <li class="flex items-start gap-2.5">
                                     <span class="text-sky-500 font-bold">③</span>
                                     <span>내부 에너지 변화 없음 (ΔU = 0)</span>
                                 </li>
                             </ul>
 
-                            <div class="bg-sky-600 text-white rounded-2xl p-3.5 text-center font-extrabold text-base sm:text-lg shadow-sm">
+                            <div class="bg-sky-600 text-white rounded-2xl p-4 text-center font-extrabold text-lg sm:text-xl shadow-sm">
                                 ❄️ 결과: 기체 온도 일정 유지! (펌프 안 뜨거워짐)
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-center text-xs sm:text-sm text-slate-500 font-medium">
+                <div class="text-center text-sm sm:text-base text-slate-500 font-medium">
                     교과서 66쪽 '등온 과정'과 '단열 과정' 비교 정리
                 </div>
             </section>
@@ -710,12 +711,12 @@
             <!-- ==================== 슬라이드 4: 교과서 자료 해석 (강명서) ==================== -->
             <section class="slide hidden flex-1 p-6 sm:p-10 lg:p-12 flex flex-col justify-between slide-enter" data-slide="3" data-time="1분 30초">
                 <div class="flex items-center justify-between gap-2 flex-wrap">
-                    <span class="px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs sm:text-sm border border-emerald-100">
+                    <span class="px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-sm sm:text-base border border-emerald-100">
                         교과서 자료 해석 · 66쪽 단열 과정 P-V 그래프
                     </span>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="text-xs sm:text-sm font-semibold text-slate-400">04 / 06 · 자료 해석</span>
-                        <div class="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-xl text-xs font-bold text-emerald-900 shadow-sm">
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <span class="text-sm sm:text-base font-semibold text-slate-400">04 / 06 · 자료 해석</span>
+                        <div class="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-3.5 py-1.5 rounded-xl text-sm font-bold text-emerald-900 shadow-sm">
                             <span class="text-emerald-600">👤 발표자:</span>
                             <span contenteditable="true" class="presenter-name outline-none focus:ring-2 focus:ring-emerald-400 rounded px-1.5 py-0.5 bg-white font-extrabold text-slate-900 border border-emerald-200" title="클릭해서 발표자 이름 수정">강명서</span>
                         </div>
@@ -724,13 +725,13 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center my-4">
                     <!-- 좌측: 교과서 66쪽 단열 압축 그래프 SVG -->
-                    <div class="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-3xl p-4 sm:p-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-xs font-extrabold text-slate-600">교과서 66쪽 단열 과정 그래프 (압축 방향 적용)</span>
-                            <span class="text-[13px] font-bold px-2 py-0.5 rounded bg-rose-100 text-rose-700">빨간 화살표 주목!</span>
+                    <div class="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-3xl p-5 sm:p-6">
+                        <div class="flex items-center justify-between mb-3 gap-2">
+                            <span class="text-sm font-extrabold text-slate-600">교과서 66쪽 단열 과정 그래프 (압축 방향 적용)</span>
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-rose-100 text-rose-700 shrink-0">빨간 화살표 주목!</span>
                         </div>
 
-                        <svg id="adiabatic-svg" viewBox="0 0 480 318" class="w-full h-auto max-h-[320px] select-none" aria-label="단열 압축 압력 부피 그래프">
+                        <svg id="adiabatic-svg" viewBox="0 0 480 318" class="w-full h-auto max-h-[380px] select-none" aria-label="단열 압축 압력 부피 그래프">
                             <defs>
                                 <marker id="arrow-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                                     <path d="M 0 1 L 10 5 L 0 9 z" fill="#e11d48" />
@@ -796,36 +797,36 @@
                     </div>
 
                     <!-- 우측: 번호 순서대로 짚어주는 설명 카드 -->
-                    <div class="lg:col-span-5 space-y-3.5">
-                        <h3 class="text-xl sm:text-2xl font-black text-slate-900">그래프 보는 순서 ① → ② → ③</h3>
+                    <div class="lg:col-span-5 space-y-4">
+                        <h3 class="text-2xl sm:text-3xl font-black text-slate-900">그래프 보는 순서 ① → ② → ③</h3>
 
-                        <div id="s3-h1" class="hl-item flex items-start gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
-                            <span class="w-7 h-7 rounded-full bg-slate-900 text-white font-black text-sm flex items-center justify-center shrink-0">1</span>
+                        <div id="s3-h1" class="hl-item flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                            <span class="w-8 h-8 rounded-full bg-slate-900 text-white font-black text-base flex items-center justify-center shrink-0">1</span>
                             <div>
-                                <p class="font-extrabold text-slate-800 text-sm sm:text-base">가로축(부피) 먼저 보기</p>
-                                <p class="text-xs sm:text-sm text-slate-600 mt-0.5">교과서 원래 그림은 팽창이지만, 펌프질은 압축이므로 부피가 <strong>V₂에서 V₁으로 감소(ΔV &lt; 0)</strong>합니다.</p>
+                                <p class="font-extrabold text-slate-800 text-base sm:text-lg">가로축(부피) 먼저 보기</p>
+                                <p class="text-sm sm:text-base text-slate-600 mt-1">교과서 원래 그림은 팽창이지만, 펌프질은 압축이므로 부피가 <strong>V₂에서 V₁으로 감소(ΔV &lt; 0)</strong>합니다.</p>
                             </div>
                         </div>
 
-                        <div id="s3-h2" class="hl-item flex items-start gap-3 p-3.5 rounded-2xl bg-rose-50 border border-rose-200">
-                            <span class="w-7 h-7 rounded-full bg-rose-600 text-white font-black text-sm flex items-center justify-center shrink-0">2</span>
+                        <div id="s3-h2" class="hl-item flex items-start gap-3.5 p-4 rounded-2xl bg-rose-50 border border-rose-200">
+                            <span class="w-8 h-8 rounded-full bg-rose-600 text-white font-black text-base flex items-center justify-center shrink-0">2</span>
                             <div>
-                                <p class="font-extrabold text-rose-900 text-sm sm:text-base">빨간 화살표 따라 올라가기</p>
-                                <p class="text-xs sm:text-sm text-rose-800/90 mt-0.5">열 출입(Q=0) 없이 외부에서 일을 받으므로(W &lt; 0), 아래쪽 면적만큼의 에너지가 내부 에너지(ΔU)로 쌓입니다.</p>
+                                <p class="font-extrabold text-rose-900 text-base sm:text-lg">빨간 화살표 따라 올라가기</p>
+                                <p class="text-sm sm:text-base text-rose-800/90 mt-1">열 출입(Q=0) 없이 외부에서 일을 받으므로(W &lt; 0), 아래쪽 면적만큼의 에너지가 내부 에너지(ΔU)로 쌓입니다.</p>
                             </div>
                         </div>
 
-                        <div id="s3-h3" class="hl-item flex items-start gap-3 p-3.5 rounded-2xl bg-orange-50 border border-orange-200">
-                            <span class="w-7 h-7 rounded-full bg-orange-600 text-white font-black text-sm flex items-center justify-center shrink-0">3</span>
+                        <div id="s3-h3" class="hl-item flex items-start gap-3.5 p-4 rounded-2xl bg-orange-50 border border-orange-200">
+                            <span class="w-8 h-8 rounded-full bg-orange-600 text-white font-black text-base flex items-center justify-center shrink-0">3</span>
                             <div>
-                                <p class="font-extrabold text-orange-900 text-sm sm:text-base">온도 곡선 점프 확인 (T₂ → T₁)</p>
-                                <p class="text-xs sm:text-sm text-orange-800/90 mt-0.5">낮은 등온선(T₂)에서 높은 등온선(T₁)으로 이동하며 <strong>기체 온도가 급격히 올라감</strong>을 증명합니다.</p>
+                                <p class="font-extrabold text-orange-900 text-base sm:text-lg">온도 곡선 점프 확인 (T₂ → T₁)</p>
+                                <p class="text-sm sm:text-base text-orange-800/90 mt-1">낮은 등온선(T₂)에서 높은 등온선(T₁)으로 이동하며 <strong>기체 온도가 급격히 올라감</strong>을 증명합니다.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-xs sm:text-sm text-slate-500 text-right">
+                <div class="text-sm sm:text-base text-slate-500 text-right">
                     * 근거 자료: 역학과 에너지 교과서 66쪽 '단열 과정'
                 </div>
             </section>
@@ -833,12 +834,12 @@
             <!-- ==================== 슬라이드 5: 생활 사례 & 조건 변화 예측 (전성찬) ==================== -->
             <section class="slide hidden flex-1 p-6 sm:p-10 lg:p-12 flex flex-col justify-between slide-enter" data-slide="4" data-time="1분 30초">
                 <div class="flex items-center justify-between gap-2 flex-wrap">
-                    <span class="px-3.5 py-1.5 rounded-full bg-purple-50 text-purple-700 font-bold text-xs sm:text-sm border border-purple-100">
+                    <span class="px-4 py-1.5 rounded-full bg-purple-50 text-purple-700 font-bold text-sm sm:text-base border border-purple-100">
                         모둠 질문 답변 & 조건 변화 예측 · 교과서 67쪽 연계
                     </span>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="text-xs sm:text-sm font-semibold text-slate-400">05 / 06 · 사례와 근거</span>
-                        <div class="flex items-center gap-1.5 bg-purple-50 border border-purple-200 px-3 py-1 rounded-xl text-xs font-bold text-purple-900 shadow-sm">
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <span class="text-sm sm:text-base font-semibold text-slate-400">05 / 06 · 사례와 근거</span>
+                        <div class="flex items-center gap-1.5 bg-purple-50 border border-purple-200 px-3.5 py-1.5 rounded-xl text-sm font-bold text-purple-900 shadow-sm">
                             <span class="text-purple-600">👤 발표자:</span>
                             <span contenteditable="true" class="presenter-name outline-none focus:ring-2 focus:ring-purple-400 rounded px-1.5 py-0.5 bg-white font-extrabold text-slate-900 border border-purple-200" title="클릭해서 발표자 이름 수정">전성찬</span>
                         </div>
@@ -847,11 +848,11 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 my-4 items-stretch">
                     <!-- 좌측: 마찰열 vs 단열 압축 판단 근거 -->
-                    <div id="s4-h1" class="hl-item lg:col-span-6 bg-slate-50 border border-slate-200 rounded-3xl p-5 flex flex-col justify-between space-y-4">
+                    <div id="s4-h1" class="hl-item lg:col-span-6 bg-slate-50 border border-slate-200 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4">
                         <div>
-                            <span class="inline-block px-2.5 py-1 rounded-lg bg-slate-800 text-white text-xs font-bold mb-2">질문 ① 답변</span>
-                            <h3 class="text-lg sm:text-xl font-black text-slate-900">마찰 때문일까, 단열 압축 때문일까?</h3>
-                            <ul class="mt-3 space-y-2 text-xs sm:text-sm text-slate-700">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-slate-800 text-white text-xs sm:text-sm font-bold mb-2">질문 ① 답변</span>
+                            <h3 class="text-xl sm:text-2xl font-black text-slate-900">마찰 때문일까, 단열 압축 때문일까?</h3>
+                            <ul class="mt-3 space-y-2.5 text-sm sm:text-base text-slate-700">
                                 <li class="flex gap-2">
                                     <span class="text-indigo-600 font-bold">✔</span>
                                     <span><strong>근거 1 (펌프 실험):</strong> 구멍을 열어둔 빈 펌프질보다, 막고 공기를 압축할 때 훨씬 빠르게 뜨거워짐</span>
@@ -864,53 +865,53 @@
                         </div>
 
                         <!-- 생활 사례 사진 (탄산음료 단열 팽창) -->
-                        <div class="flex flex-col sm:flex-row items-center gap-3.5 bg-white rounded-2xl border border-slate-200 p-2.5 shadow-sm">
+                        <div class="flex flex-col sm:flex-row items-center gap-3.5 bg-white rounded-2xl border border-slate-200 p-3 shadow-sm">
                             <label class="image-slot-label group relative w-full sm:w-44 aspect-[1024/938] shrink-0 rounded-xl border border-slate-200 hover:border-purple-500 bg-slate-100 transition cursor-pointer overflow-hidden flex items-center justify-center">
                                 <input type="file" accept="image/*" class="hidden image-uploader" data-target="img-slide-5" data-placeholder="ph-slide-5">
                                 <img id="img-slide-5" src="assets/soda.jpg" alt="탄산음료 단열 팽창 사례 사진" class="w-full h-full object-cover absolute inset-0">
                                 <div id="ph-slide-5" class="hidden flex items-center gap-3 text-left p-3">
                                     <div class="w-11 h-11 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl shrink-0">🥤</div>
                                     <div>
-                                        <p class="font-bold text-slate-700 text-xs sm:text-sm">생활 사례 사진 첨부 (선택)</p>
-                                        <p class="text-[13px] text-slate-500">교과서 67쪽 탄산음료 김 또는 타이어 사진 클릭 첨부</p>
+                                        <p class="font-bold text-slate-700 text-sm">생활 사례 사진 첨부 (선택)</p>
+                                        <p class="text-xs text-slate-500">교과서 67쪽 탄산음료 김 또는 타이어 사진 클릭 첨부</p>
                                     </div>
                                 </div>
-                                <span class="upload-hover-badge absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-slate-900/75 text-white text-[12px] font-semibold opacity-0 group-hover:opacity-100 transition">사진 변경</span>
+                                <span class="upload-hover-badge absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-slate-900/75 text-white text-[13px] font-semibold opacity-0 group-hover:opacity-100 transition">사진 변경</span>
                             </label>
-                            <div class="text-xs text-slate-600 leading-relaxed px-1 space-y-1">
-                                <span class="inline-block px-2 py-0.5 rounded-md bg-purple-100 text-purple-800 font-extrabold text-[13px]">단열 팽창 냉각 사례</span>
-                                <p class="font-bold text-slate-800 text-xs sm:text-sm">탄산음료 캔을 열 때 생기는 하얀 김</p>
+                            <div class="text-xs sm:text-sm text-slate-600 leading-relaxed px-1 space-y-1">
+                                <span class="inline-block px-2 py-0.5 rounded-md bg-purple-100 text-purple-800 font-extrabold text-xs">단열 팽창 냉각 사례</span>
+                                <p class="font-bold text-slate-800 text-sm sm:text-base">탄산음료 캔을 열 때 생기는 하얀 김</p>
                                 <p>캔 속 고압 기체가 빠르게 팽창하며 일을 해 온도가 내려가고, 주변 수증기가 응결합니다.</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- 우측: 조건 변경 시 결과 예측 (실린더 재질 비교) -->
-                    <div class="lg:col-span-6 bg-indigo-50/60 border border-indigo-200 rounded-3xl p-5 flex flex-col justify-between space-y-4">
+                    <div class="lg:col-span-6 bg-indigo-50/60 border border-indigo-200 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4">
                         <div>
-                            <span class="inline-block px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-bold mb-2">질문 ② 조건 변화 예측</span>
-                            <h3 class="text-lg sm:text-xl font-black text-slate-900">조건을 바꾸면? (실린더 재질 비교)</h3>
+                            <span class="inline-block px-3 py-1 rounded-lg bg-indigo-600 text-white text-xs sm:text-sm font-bold mb-2">질문 ② 조건 변화 예측</span>
+                            <h3 class="text-xl sm:text-2xl font-black text-slate-900">조건을 바꾸면? (실린더 재질 비교)</h3>
 
-                            <div class="mt-3 space-y-3">
-                                <div id="s4-h2" class="hl-item bg-white rounded-2xl p-3.5 border border-sky-200">
-                                    <p class="font-extrabold text-sky-700 text-sm">조건 A: 금속 실린더 (열전도 ↑) + 천천히 압축</p>
-                                    <p class="text-xs sm:text-sm text-slate-600 mt-1">내부 열이 금속 벽을 통해 밖으로 잘 빠져나감 → <strong>등온 압축</strong>에 가까워져 과열 방지!</p>
+                            <div class="mt-3 space-y-3.5">
+                                <div id="s4-h2" class="hl-item bg-white rounded-2xl p-4 border border-sky-200">
+                                    <p class="font-extrabold text-sky-700 text-base sm:text-lg">조건 A: 금속 실린더 (열전도 ↑) + 천천히 압축</p>
+                                    <p class="text-sm sm:text-base text-slate-600 mt-1">내부 열이 금속 벽을 통해 밖으로 잘 빠져나감 → <strong>등온 압축</strong>에 가까워져 과열 방지!</p>
                                 </div>
 
-                                <div id="s4-h3" class="hl-item bg-white rounded-2xl p-3.5 border border-rose-200">
-                                    <p class="font-extrabold text-rose-700 text-sm">조건 B: 두꺼운 플라스틱/단열재 (열전도 ↓)</p>
-                                    <p class="text-xs sm:text-sm text-slate-600 mt-1">천천히 눌러도 열이 빠져나가지 못함(Q ≈ 0) → <strong>단열 압축</strong>처럼 내부 온도가 계속 상승!</p>
+                                <div id="s4-h3" class="hl-item bg-white rounded-2xl p-4 border border-rose-200">
+                                    <p class="font-extrabold text-rose-700 text-base sm:text-lg">조건 B: 두꺼운 플라스틱/단열재 (열전도 ↓)</p>
+                                    <p class="text-sm sm:text-base text-slate-600 mt-1">천천히 눌러도 열이 빠져나가지 못함(Q ≈ 0) → <strong>단열 압축</strong>처럼 내부 온도가 계속 상승!</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="s4-h4" class="hl-item bg-indigo-600 text-white rounded-2xl p-3.5 text-xs sm:text-sm font-bold leading-relaxed">
+                        <div id="s4-h4" class="hl-item bg-indigo-600 text-white rounded-2xl p-4 text-sm sm:text-base font-bold leading-relaxed">
                             🛠️ 해결책 비교 판단: 과열을 막으려면 <u>금속 재질·방열판 설계</u>로 열 방출을 돕고, <u>천천히 펌핑</u>하는 것이 가장 효과적입니다.
                         </div>
                     </div>
                 </div>
 
-                <div class="text-xs sm:text-sm text-slate-500 text-right">
+                <div class="text-sm text-slate-500 text-right">
                     * 융합적 사고: 열전도 조건 변경에 따른 결과 예측 및 펌프 설계 적용
                 </div>
             </section>
@@ -918,12 +919,12 @@
             <!-- ==================== 슬라이드 6: 한 문장 정리 & 출처/AI 표기 (이승호) ==================== -->
             <section class="slide hidden flex-1 p-6 sm:p-10 lg:p-12 flex flex-col justify-between slide-enter" data-slide="5" data-time="30~40초">
                 <div class="flex items-center justify-between gap-2 flex-wrap">
-                    <span class="px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-700 font-bold text-xs sm:text-sm">
+                    <span class="px-4 py-1.5 rounded-full bg-slate-100 text-slate-700 font-bold text-sm sm:text-base">
                         결론 및 출처 안내
                     </span>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="text-xs sm:text-sm font-semibold text-slate-400">06 / 06 · 한 문장 정리</span>
-                        <div class="flex items-center gap-1.5 bg-slate-100 border border-slate-300 px-3 py-1 rounded-xl text-xs font-bold text-slate-800 shadow-sm">
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <span class="text-sm sm:text-base font-semibold text-slate-400">06 / 06 · 한 문장 정리</span>
+                        <div class="flex items-center gap-1.5 bg-slate-100 border border-slate-300 px-3.5 py-1.5 rounded-xl text-sm font-bold text-slate-800 shadow-sm">
                             <span class="text-indigo-600">👤 발표자:</span>
                             <span contenteditable="true" class="presenter-name outline-none focus:ring-2 focus:ring-indigo-400 rounded px-1.5 py-0.5 bg-white font-extrabold text-slate-900 border border-slate-300" title="클릭해서 발표자 이름 수정">이승호</span>
                         </div>
@@ -931,22 +932,22 @@
                 </div>
 
                 <!-- 중앙 핵심 결론 -->
-                <div id="s5-h1" class="hl-item my-8 max-w-4xl mx-auto text-center space-y-6 rounded-3xl p-6">
-                    <span class="inline-block px-4 py-1.5 rounded-full bg-rose-100 text-rose-700 font-extrabold text-xs sm:text-sm">
+                <div id="s5-h1" class="hl-item my-8 max-w-5xl mx-auto text-center space-y-6 rounded-3xl p-6 sm:p-8">
+                    <span class="inline-block px-5 py-2 rounded-full bg-rose-100 text-rose-700 font-extrabold text-sm sm:text-base">
                         오늘 발표 한 문장 정리
                     </span>
-                    <blockquote class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 leading-snug tracking-tight">
+                    <blockquote class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-snug tracking-tight">
                         “자전거 펌프의 발열은 단순한 마찰열이 아니라,<br class="hidden sm:inline">
                         기체가 빠르게 <span class="text-sky-600">일(W)</span>을 받아 <span class="text-rose-600">내부 에너지(ΔU)</span>가 증가하는<br class="hidden sm:inline">
                         <span class="underline decoration-indigo-500 decoration-4 underline-offset-8">열역학 제1법칙의 단열 압축 현상</span>입니다.”
                     </blockquote>
-                    <p class="text-slate-500 font-semibold text-base sm:text-lg pt-2">
+                    <p class="text-slate-500 font-semibold text-lg sm:text-xl lg:text-2xl pt-2">
                         경청해 주셔서 감사합니다. 궁금한 점을 질문해 주세요!
                     </p>
                 </div>
 
                 <!-- 하단 필수 표기 (자료 출처 & AI 활용 1줄) -->
-                <div id="s5-h2" class="hl-item bg-slate-50 border border-slate-200 rounded-2xl p-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-600">
+                <div id="s5-h2" class="hl-item bg-slate-50 border border-slate-200 rounded-2xl p-5 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm sm:text-base text-slate-600">
                     <div>
                         <p class="font-extrabold text-slate-800 mb-1">📚 참고 자료 및 확인 근거</p>
                         <p>2026학년도 2학년 역학과 에너지 교과서 64~67쪽 (내부 에너지, 열역학 제1법칙, 단열·등온 과정 그래프, 일상생활 사례)</p>
@@ -1107,7 +1108,7 @@
 
             function getAutoScriptFontSize() {
                 const basis = Math.min(window.innerWidth, window.innerHeight * 0.9);
-                return Math.round(Math.min(30, Math.max(19, basis * 0.03)));
+                return Math.round(Math.min(34, Math.max(21, basis * 0.034)));
             }
 
             // 공통 상태 변수
