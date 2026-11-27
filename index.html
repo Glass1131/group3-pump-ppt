@@ -183,10 +183,16 @@
         }
         #tablet-controller .t-panel-title,
         #tablet-controller #t-hl-reset,
+        #tablet-controller #t-hl-tap-mode-btn,
         #tablet-controller #t-btn-toggle-clean,
         #tablet-controller #t-btn-toggle-lock,
         #tablet-controller .t-members-label {
             font-size: clamp(0.9rem, 1.9vmin, 1.18rem);
+        }
+        #tablet-controller #t-hl-next-pad {
+            font-size: clamp(1rem, 2.3vmin, 1.45rem);
+            padding: clamp(0.85rem, 1.8vmin, 1.3rem) 1rem;
+            touch-action: manipulation;
         }
         #tablet-controller #t-hl-buttons button {
             font-size: clamp(0.95rem, 2.05vmin, 1.25rem);
@@ -204,14 +210,21 @@
             padding: 0.2rem 0.6rem;
         }
         #tablet-controller .t-tab-btn,
+        #tablet-controller #t-btn-edit-script,
         #tablet-controller #t-font-dec,
         #tablet-controller #t-font-inc {
             font-size: clamp(0.95rem, 2.05vmin, 1.25rem);
             padding: clamp(0.5rem, 1.1vmin, 0.75rem) clamp(0.75rem, 1.6vmin, 1.15rem);
         }
-        #tablet-controller #t-tab-current,
-        #tablet-controller .my-script-text {
+        #tablet-controller #t-tab-current-text,
+        #tablet-controller #t-script-textarea,
+        #tablet-controller .my-script-text,
+        #tablet-controller .my-script-textarea {
             line-height: 1.75;
+        }
+        #tablet-controller #t-qa-selector button {
+            font-size: clamp(0.85rem, 1.75vmin, 1.08rem);
+            padding: 0.35rem 0.75rem;
         }
         #tablet-controller #t-tab-qa .t-qa-label {
             font-size: clamp(0.92rem, 1.9vmin, 1.15rem);
@@ -365,14 +378,22 @@
 
                     <!-- 3. 원격 하이라이트 인터랙션 패널 (장민서 전용) -->
                     <div id="t-hl-panel" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-3.5 space-y-2.5 shrink-0">
-                        <div class="flex items-center justify-between gap-2">
+                        <div class="flex items-center justify-between gap-2 flex-wrap">
                             <span class="t-panel-title text-xs font-extrabold text-amber-400 flex items-center gap-1.5">
-                                화면 강조 하이라이트 (학교 화면 실시간 강조)
+                                화면 강조 하이라이트 (터치로 순서 강조)
                             </span>
-                            <button id="t-hl-reset" class="text-[13px] font-bold px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-slate-300 border border-slate-700 transition">
-                                강조 끄기
-                            </button>
+                            <div class="flex items-center gap-1.5">
+                                <button id="t-hl-tap-mode-btn" type="button" class="text-[13px] font-bold px-3 py-1 rounded-lg bg-indigo-600/80 hover:bg-indigo-500 text-white transition">
+                                    화면 터치: 켜짐
+                                </button>
+                                <button id="t-hl-reset" type="button" class="text-[13px] font-bold px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-slate-300 border border-slate-700 transition">
+                                    강조 끄기
+                                </button>
+                            </div>
                         </div>
+                        <button id="t-hl-next-pad" type="button" class="w-full rounded-xl bg-amber-400/15 hover:bg-amber-400/25 border-2 border-amber-400/60 text-amber-200 font-black transition active:scale-[0.99] text-center">
+                            터치해서 다음 하이라이트 켜기
+                        </button>
                         <div id="t-hl-buttons" class="grid grid-cols-2 sm:grid-cols-3 gap-2">
                             <!-- 현재 슬라이드에 맞는 하이라이트 버튼 동적 생성 -->
                         </div>
@@ -416,22 +437,34 @@
                                 <button data-tab="mine" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-bold text-slate-400 hover:text-white">내 담당 대본</button>
                                 <button data-tab="qa" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-bold text-slate-400 hover:text-white">예상 Q&A</button>
                             </div>
-                            <div class="flex items-center gap-1 pb-1.5 pr-1">
-                                <button id="t-font-dec" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">가-</button>
-                                <button id="t-font-inc" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">가+</button>
+                            <div class="flex items-center gap-1.5 pb-1.5 pr-1">
+                                <button id="t-btn-edit-script" type="button" class="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white transition">대본 수정</button>
+                                <button id="t-font-dec" type="button" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">가-</button>
+                                <button id="t-font-inc" type="button" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">가+</button>
                             </div>
                         </div>
 
                         <!-- 탭 1: 현재 슬라이드 대본 -->
-                        <div id="t-tab-current" class="flex-1 p-4 sm:p-6 text-slate-100 text-base leading-relaxed whitespace-pre-line font-medium"></div>
+                        <div id="t-tab-current" class="flex-1 p-4 sm:p-6 text-slate-100 text-base font-medium flex flex-col">
+                            <div id="t-tab-current-text" class="whitespace-pre-line"></div>
+                            <div id="t-tab-current-editor" class="hidden flex-1 flex flex-col gap-3" data-no-tap-hl="true">
+                                <textarea id="t-script-textarea" class="w-full flex-1 min-h-[240px] bg-slate-950 text-slate-100 border-2 border-indigo-500 rounded-xl p-4 outline-none resize-y font-medium"></textarea>
+                                <div class="flex items-center justify-end gap-2 flex-wrap">
+                                    <button id="t-btn-reset-script" type="button" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-sm font-bold transition">원래대로</button>
+                                    <button id="t-btn-cancel-script" type="button" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-sm font-bold transition">취소</button>
+                                    <button id="t-btn-save-script" type="button" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-black shadow transition">저장</button>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- 탭 2: 내 담당 슬라이드 대본 (대기 중 연습용) -->
                         <div id="t-tab-mine" class="hidden flex-1 p-4 sm:p-6 space-y-4"></div>
 
-                        <!-- 탭 3: 현재 슬라이드 예상 Q&A -->
+                        <!-- 탭 3: 예상 Q&A -->
                         <div id="t-tab-qa" class="hidden flex-1 p-4 sm:p-6 space-y-3.5 text-sm">
+                            <div id="t-qa-selector" class="flex flex-wrap gap-1.5 pb-1"></div>
                             <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
-                                <span class="t-qa-label text-xs text-amber-400 font-bold block mb-1.5">Q. 현재 슬라이드 예상 질문</span>
+                                <span id="t-qa-q-label" class="t-qa-label text-xs text-amber-400 font-bold block mb-1.5">Q. 예상 질문</span>
                                 <p id="t-qa-q" class="text-white font-extrabold leading-relaxed"></p>
                             </div>
                             <div class="bg-indigo-950/50 p-4 rounded-xl border border-indigo-800/60">
@@ -732,11 +765,11 @@
                     <!-- 좌측: 교과서 66쪽 단열 압축 그래프 SVG -->
                     <div class="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-3xl p-5 sm:p-6">
                         <div class="flex items-center justify-between mb-3 gap-2">
-                            <span class="text-sm font-extrabold text-slate-600">교과서 66쪽 단열 과정 그래프 (압축 방향 적용)</span>
-                            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-rose-100 text-rose-700 shrink-0">빨간 화살표 주목!</span>
+                            <span class="text-base font-extrabold text-slate-700">교과서 66쪽 단열 과정 그래프 (압축 방향 적용)</span>
+                            <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded bg-rose-100 text-rose-700 shrink-0">빨간 화살표 주목!</span>
                         </div>
 
-                        <svg id="adiabatic-svg" viewBox="0 0 480 318" class="w-full h-auto max-h-[380px] select-none" aria-label="단열 압축 압력 부피 그래프">
+                        <svg id="adiabatic-svg" viewBox="0 0 490 322" class="w-full h-auto max-h-[400px] select-none" aria-label="단열 압축 압력 부피 그래프">
                             <defs>
                                 <marker id="arrow-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                                     <path d="M 0 1 L 10 5 L 0 9 z" fill="#e11d48" />
@@ -753,35 +786,35 @@
                             <!-- 좌표축 -->
                             <line x1="60" y1="265" x2="420" y2="265" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow-axis)" />
                             <line x1="60" y1="265" x2="60" y2="25" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow-axis)" />
-                            <text x="44" y="282" font-size="16" font-weight="700" fill="#475569">0</text>
-                            <text x="78" y="27" font-size="16" font-weight="800" fill="#1e293b">압력(P)</text>
-                            <text x="380" y="292" font-size="16" font-weight="800" fill="#1e293b">부피(V)</text>
+                            <text x="42" y="284" font-size="17" font-weight="700" fill="#475569">0</text>
+                            <text x="78" y="27" font-size="17" font-weight="800" fill="#1e293b">압력(P)</text>
+                            <text x="380" y="294" font-size="17" font-weight="800" fill="#1e293b">부피(V)</text>
 
                             <!-- 등온선 T1 (고온) & T2 (저온) + ③번 온도 상승 그룹 -->
                             <g id="s3-svg-3" class="svg-hl-item">
                                 <path d="M 115 45 Q 190 155 390 190" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 5" />
-                                <text x="395" y="193" font-size="17" font-weight="800" fill="#e11d48">T₁ (고온)</text>
+                                <text x="394" y="194" font-size="18" font-weight="800" fill="#e11d48">T₁ (고온)</text>
 
                                 <path d="M 95 110 Q 175 210 390 235" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 5" />
-                                <text x="395" y="238" font-size="17" font-weight="800" fill="#0284c7">T₂ (저온)</text>
+                                <text x="394" y="239" font-size="18" font-weight="800" fill="#0284c7">T₂ (저온)</text>
 
                                 <circle cx="155" cy="95" r="7" fill="#e11d48" stroke="white" stroke-width="2" />
                                 <g transform="translate(155, 62)">
                                     <circle cx="0" cy="0" r="12" fill="#ea580c" />
-                                    <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="900" fill="white">3</text>
+                                    <text x="0" y="5" text-anchor="middle" font-size="15" font-weight="900" fill="white">3</text>
                                 </g>
-                                <text x="174" y="67" font-size="14" font-weight="800" fill="#ea580c">T₂ → T₁ 온도 상승!</text>
+                                <text x="174" y="67" font-size="15" font-weight="800" fill="#ea580c">T₂ → T₁ 온도 상승!</text>
                             </g>
 
                             <!-- ②번 단열 압축 곡선 & 기체가 받은 일 면적 그룹 -->
                             <g id="s3-svg-2" class="svg-hl-item">
                                 <path d="M 155 95 Q 210 185 310 222 L 310 265 L 155 265 Z" fill="url(#work-area)" />
-                                <text x="195" y="245" font-size="15" font-weight="800" fill="#be123c">받은 일 (W &lt; 0)</text>
+                                <text x="190" y="245" font-size="16" font-weight="800" fill="#be123c">받은 일 (W &lt; 0)</text>
                                 <path d="M 310 222 Q 210 185 155 95" fill="none" stroke="#e11d48" stroke-width="4.5" marker-end="url(#arrow-red)" />
                                 <circle cx="310" cy="222" r="6" fill="#0284c7" stroke="white" stroke-width="2" />
                                 <g transform="translate(235, 165)">
                                     <circle cx="0" cy="0" r="12" fill="#e11d48" />
-                                    <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="900" fill="white">2</text>
+                                    <text x="0" y="5" text-anchor="middle" font-size="15" font-weight="900" fill="white">2</text>
                                 </g>
                             </g>
 
@@ -789,13 +822,13 @@
                             <g id="s3-svg-1" class="svg-hl-item">
                                 <line x1="155" y1="95" x2="155" y2="265" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4 4" />
                                 <line x1="310" y1="222" x2="310" y2="265" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4 4" />
-                                <text x="146" y="286" font-size="16" font-weight="800" fill="#1e293b">V₁</text>
-                                <text x="301" y="286" font-size="16" font-weight="800" fill="#1e293b">V₂</text>
-                                <path d="M 295 294 L 172 294" stroke="#e11d48" stroke-width="2.5" marker-end="url(#arrow-red)" />
-                                <text x="196" y="311" font-size="13" font-weight="800" fill="#e11d48">부피 감소 (ΔV &lt; 0)</text>
+                                <text x="145" y="287" font-size="17" font-weight="800" fill="#1e293b">V₁</text>
+                                <text x="300" y="287" font-size="17" font-weight="800" fill="#1e293b">V₂</text>
+                                <path d="M 295 295 L 172 295" stroke="#e11d48" stroke-width="2.5" marker-end="url(#arrow-red)" />
+                                <text x="188" y="314" font-size="14" font-weight="800" fill="#e11d48">부피 감소 (ΔV &lt; 0)</text>
                                 <g transform="translate(232, 276)">
                                     <circle cx="0" cy="0" r="11" fill="#0f172a" />
-                                    <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="900" fill="white">1</text>
+                                    <text x="0" y="5" text-anchor="middle" font-size="15" font-weight="900" fill="white">1</text>
                                 </g>
                             </g>
                         </svg>
@@ -803,35 +836,35 @@
 
                     <!-- 우측: 번호 순서대로 짚어주는 설명 카드 -->
                     <div class="lg:col-span-5 space-y-4">
-                        <h3 class="text-2xl sm:text-3xl font-black text-slate-900">그래프 보는 순서 ① → ② → ③</h3>
+                        <h3 class="text-2xl sm:text-3xl lg:text-[36px] font-black text-slate-900 leading-tight">그래프 보는 순서 ① → ② → ③</h3>
 
                         <div id="s3-h1" class="hl-item flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                            <span class="w-8 h-8 rounded-full bg-slate-900 text-white font-black text-base flex items-center justify-center shrink-0">1</span>
+                            <span class="w-9 h-9 rounded-full bg-slate-900 text-white font-black text-lg flex items-center justify-center shrink-0">1</span>
                             <div>
-                                <p class="font-extrabold text-slate-800 text-base sm:text-lg">가로축(부피) 먼저 보기</p>
-                                <p class="text-sm sm:text-base text-slate-600 mt-1">교과서 원래 그림은 팽창이지만, 펌프질은 압축이므로 부피가 <strong>V₂에서 V₁으로 감소(ΔV &lt; 0)</strong>합니다.</p>
+                                <p class="font-extrabold text-slate-800 text-lg sm:text-xl">가로축(부피) 먼저 보기</p>
+                                <p class="text-base sm:text-lg text-slate-600 mt-1 leading-relaxed">교과서 원래 그림은 팽창이지만, 펌프질은 압축이므로 부피가 <strong class="whitespace-nowrap">V₂에서 V₁으로</strong> <span class="whitespace-nowrap"><strong>감소(ΔV &lt; 0)</strong>합니다.</span></p>
                             </div>
                         </div>
 
                         <div id="s3-h2" class="hl-item flex items-start gap-3.5 p-4 rounded-2xl bg-rose-50 border border-rose-200">
-                            <span class="w-8 h-8 rounded-full bg-rose-600 text-white font-black text-base flex items-center justify-center shrink-0">2</span>
+                            <span class="w-9 h-9 rounded-full bg-rose-600 text-white font-black text-lg flex items-center justify-center shrink-0">2</span>
                             <div>
-                                <p class="font-extrabold text-rose-900 text-base sm:text-lg">빨간 화살표 따라 올라가기</p>
-                                <p class="text-sm sm:text-base text-rose-800/90 mt-1">열 출입(Q=0) 없이 외부에서 일을 <span class="whitespace-nowrap">받으므로(W &lt; 0),</span> 아래쪽 면적만큼의 에너지가 내부 에너지(ΔU)로 쌓입니다.</p>
+                                <p class="font-extrabold text-rose-900 text-lg sm:text-xl">빨간 화살표 따라 올라가기</p>
+                                <p class="text-base sm:text-lg text-rose-800/90 mt-1 leading-relaxed">열 출입(Q=0) 없이 외부에서 일을 <span class="whitespace-nowrap">받으므로(W &lt; 0),</span> 아래쪽 면적만큼의 에너지가 내부 에너지(ΔU)로 쌓입니다.</p>
                             </div>
                         </div>
 
                         <div id="s3-h3" class="hl-item flex items-start gap-3.5 p-4 rounded-2xl bg-orange-50 border border-orange-200">
-                            <span class="w-8 h-8 rounded-full bg-orange-600 text-white font-black text-base flex items-center justify-center shrink-0">3</span>
+                            <span class="w-9 h-9 rounded-full bg-orange-600 text-white font-black text-lg flex items-center justify-center shrink-0">3</span>
                             <div>
-                                <p class="font-extrabold text-orange-900 text-base sm:text-lg">온도 곡선 점프 확인 (T₂ → T₁)</p>
-                                <p class="text-sm sm:text-base text-orange-800/90 mt-1">낮은 등온선(T₂)에서 높은 등온선(T₁)으로 이동하며 <strong>기체 온도가 급격히 올라감</strong>을 증명합니다.</p>
+                                <p class="font-extrabold text-orange-900 text-lg sm:text-xl">온도 곡선 점프 확인 (T₂ → T₁)</p>
+                                <p class="text-base sm:text-lg text-orange-800/90 mt-1 leading-relaxed">낮은 등온선(T₂)에서 높은 등온선(T₁)으로 이동하며 <strong>기체 온도가 급격히 올라감</strong>을 증명합니다.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-sm sm:text-base text-slate-500 text-right">
+                <div class="text-base text-slate-500 text-right">
                     * 근거 자료: 역학과 에너지 교과서 66쪽 '단열 과정'
                 </div>
             </section>
@@ -855,9 +888,9 @@
                     <!-- 좌측: 마찰열 vs 단열 압축 판단 근거 -->
                     <div id="s4-h1" class="hl-item lg:col-span-6 bg-slate-50 border border-slate-200 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4">
                         <div>
-                            <span class="inline-block px-3 py-1 rounded-lg bg-slate-800 text-white text-xs sm:text-sm font-bold mb-2">질문 ① 답변</span>
-                            <h3 class="text-xl sm:text-2xl font-black text-slate-900">마찰 때문일까, 단열 압축 때문일까?</h3>
-                            <ul class="mt-3 space-y-2.5 text-sm sm:text-base text-slate-700">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-slate-800 text-white text-sm font-bold mb-2">질문 ① 답변</span>
+                            <h3 class="text-2xl sm:text-[28px] font-black text-slate-900 leading-snug">마찰 때문일까, 단열 압축 때문일까?</h3>
+                            <ul class="mt-3 space-y-2.5 text-base sm:text-[19px] text-slate-700 leading-relaxed">
                                 <li class="flex gap-2">
                                     <span class="text-indigo-600 font-bold">✔</span>
                                     <span><strong>근거 1 (펌프 실험):</strong> 구멍을 열어둔 빈 펌프질보다, 막고 공기를 압축할 때 훨씬 빠르게 뜨거워짐</span>
@@ -877,15 +910,15 @@
                                 <div id="ph-slide-5" class="hidden flex items-center gap-3 text-left p-3">
                                     <div class="w-11 h-11 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl shrink-0">🥤</div>
                                     <div>
-                                        <p class="font-bold text-slate-700 text-sm">생활 사례 사진 첨부 (선택)</p>
-                                        <p class="text-xs text-slate-500">교과서 67쪽 탄산음료 김 또는 타이어 사진 클릭 첨부</p>
+                                        <p class="font-bold text-slate-700 text-base">생활 사례 사진 첨부 (선택)</p>
+                                        <p class="text-sm text-slate-500">교과서 67쪽 탄산음료 김 또는 타이어 사진 클릭 첨부</p>
                                     </div>
                                 </div>
                                 <span class="upload-hover-badge absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-slate-900/75 text-white text-[13px] font-semibold opacity-0 group-hover:opacity-100 transition">사진 변경</span>
                             </label>
-                            <div class="text-xs sm:text-sm text-slate-600 leading-relaxed px-1 space-y-1">
-                                <span class="inline-block px-2 py-0.5 rounded-md bg-purple-100 text-purple-800 font-extrabold text-xs">단열 팽창 냉각 사례</span>
-                                <p class="font-bold text-slate-800 text-sm sm:text-base">탄산음료 캔을 열 때 생기는 하얀 김</p>
+                            <div class="text-sm sm:text-base text-slate-600 leading-relaxed px-1 space-y-1">
+                                <span class="inline-block px-2.5 py-0.5 rounded-md bg-purple-100 text-purple-800 font-extrabold text-xs sm:text-sm">단열 팽창 냉각 사례</span>
+                                <p class="font-bold text-slate-800 text-base sm:text-lg">탄산음료 캔을 열 때 생기는 하얀 김</p>
                                 <p>캔 속 고압 기체가 빠르게 팽창하며 일을 해 온도가 내려가고, 주변 수증기가 응결합니다.</p>
                             </div>
                         </div>
@@ -894,29 +927,29 @@
                     <!-- 우측: 조건 변경 시 결과 예측 (실린더 재질 비교) -->
                     <div class="lg:col-span-6 bg-indigo-50/60 border border-indigo-200 rounded-3xl p-5 sm:p-6 flex flex-col justify-between space-y-4">
                         <div>
-                            <span class="inline-block px-3 py-1 rounded-lg bg-indigo-600 text-white text-xs sm:text-sm font-bold mb-2">질문 ② 조건 변화 예측</span>
-                            <h3 class="text-xl sm:text-2xl font-black text-slate-900">조건을 바꾸면? (실린더 재질 비교)</h3>
+                            <span class="inline-block px-3 py-1 rounded-lg bg-indigo-600 text-white text-sm font-bold mb-2">질문 ② 조건 변화 예측</span>
+                            <h3 class="text-2xl sm:text-[28px] font-black text-slate-900 leading-snug">조건을 바꾸면? (실린더 재질 비교)</h3>
 
                             <div class="mt-3 space-y-3.5">
                                 <div id="s4-h2" class="hl-item bg-white rounded-2xl p-4 border border-sky-200">
-                                    <p class="font-extrabold text-sky-700 text-base sm:text-lg">조건 A: 금속 실린더 (열전도 ↑) + 천천히 압축</p>
-                                    <p class="text-sm sm:text-base text-slate-600 mt-1">내부 열이 금속 벽을 통해 밖으로 잘 빠져나감 → <strong>등온 압축</strong>에 가까워져 과열 방지!</p>
+                                    <p class="font-extrabold text-sky-700 text-lg sm:text-xl">조건 A: 금속 실린더 (열전도 ↑) + 천천히 압축</p>
+                                    <p class="text-base sm:text-[19px] text-slate-600 mt-1 leading-relaxed">내부 열이 금속 벽을 통해 밖으로 잘 빠져나감 → <strong>등온 압축</strong>에 가까워져 과열 방지!</p>
                                 </div>
 
                                 <div id="s4-h3" class="hl-item bg-white rounded-2xl p-4 border border-rose-200">
-                                    <p class="font-extrabold text-rose-700 text-base sm:text-lg">조건 B: 두꺼운 플라스틱/단열재 (열전도 ↓)</p>
-                                    <p class="text-sm sm:text-base text-slate-600 mt-1">천천히 눌러도 열이 빠져나가지 못함(Q ≈ 0) → <strong>단열 압축</strong>처럼 내부 온도가 계속 상승!</p>
+                                    <p class="font-extrabold text-rose-700 text-lg sm:text-xl">조건 B: 두꺼운 플라스틱/단열재 (열전도 ↓)</p>
+                                    <p class="text-base sm:text-[19px] text-slate-600 mt-1 leading-relaxed">천천히 눌러도 열이 빠져나가지 못함(Q ≈ 0) → <strong>단열 압축</strong>처럼 내부 온도가 계속 상승!</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="s4-h4" class="hl-item bg-indigo-600 text-white rounded-2xl p-4 text-sm sm:text-base font-bold leading-relaxed">
+                        <div id="s4-h4" class="hl-item bg-indigo-600 text-white rounded-2xl p-4 text-base sm:text-lg font-bold leading-relaxed">
                             🛠️ 해결책 비교 판단: 과열을 막으려면 <u>금속 재질·방열판 설계</u>로 열 방출을 돕고, <u>천천히 펌핑</u>하는 것이 가장 효과적입니다.
                         </div>
                     </div>
                 </div>
 
-                <div class="text-sm text-slate-500 text-right">
+                <div class="text-base text-slate-500 text-right">
                     * 융합적 사고: 열전도 조건 변경에 따른 결과 예측 및 펌프 설계 적용
                 </div>
             </section>
@@ -937,22 +970,22 @@
                 </div>
 
                 <!-- 중앙 핵심 결론 -->
-                <div id="s5-h1" class="hl-item my-8 max-w-6xl mx-auto text-center space-y-6 rounded-3xl p-6 sm:p-8">
-                    <span class="inline-block px-5 py-2 rounded-full bg-rose-100 text-rose-700 font-extrabold text-sm sm:text-base">
+                <div id="s5-h1" class="hl-item my-6 max-w-6xl mx-auto text-center space-y-6 rounded-3xl p-6 sm:p-8">
+                    <span class="inline-block px-5 py-2 rounded-full bg-rose-100 text-rose-700 font-extrabold text-base sm:text-lg">
                         오늘 발표 한 문장 정리
                     </span>
-                    <blockquote class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-snug tracking-tight">
+                    <blockquote class="text-3xl sm:text-4xl lg:text-[54px] font-black text-slate-900 leading-[1.28] tracking-tight">
                         “자전거 펌프의 발열은 단순한 마찰열이 아니라,<br class="hidden sm:inline">
                         기체가 빠르게 <span class="text-sky-600">일(W)</span>을 받아 <span class="text-rose-600">내부 에너지(ΔU)</span>가 증가하는<br class="hidden sm:inline">
                         <span class="underline decoration-indigo-500 decoration-4 underline-offset-8">열역학 제1법칙의 단열 압축 현상</span>입니다.”
                     </blockquote>
-                    <p class="text-slate-500 font-semibold text-lg sm:text-xl lg:text-2xl pt-2">
+                    <p class="text-slate-500 font-semibold text-xl sm:text-2xl lg:text-[28px] pt-2">
                         경청해 주셔서 감사합니다. 궁금한 점을 질문해 주세요!
                     </p>
                 </div>
 
                 <!-- 하단 필수 표기 (자료 출처 & AI 활용 1줄) -->
-                <div id="s5-h2" class="hl-item bg-slate-50 border border-slate-200 rounded-2xl p-5 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm sm:text-base text-slate-600">
+                <div id="s5-h2" class="hl-item bg-slate-50 border border-slate-200 rounded-2xl p-5 grid grid-cols-1 md:grid-cols-2 gap-4 text-base sm:text-lg text-slate-600 leading-relaxed">
                     <div>
                         <p class="font-extrabold text-slate-800 mb-1">📚 참고 자료 및 확인 근거</p>
                         <p>2026학년도 2학년 역학과 에너지 교과서 64~67쪽 (내부 에너지, 열역학 제1법칙, 단열·등온 과정 그래프, 일상생활 사례)</p>
@@ -1097,6 +1130,8 @@
             const tBtnPrev = document.getElementById('t-btn-prev');
             const tBtnNext = document.getElementById('t-btn-next');
             const tHlPanel = document.getElementById('t-hl-panel');
+            const tHlTapModeBtn = document.getElementById('t-hl-tap-mode-btn');
+            const tHlNextPad = document.getElementById('t-hl-next-pad');
             const tHlButtons = document.getElementById('t-hl-buttons');
             const tHlReset = document.getElementById('t-hl-reset');
             const tMasterPanel = document.getElementById('t-master-panel');
@@ -1105,11 +1140,29 @@
             const tMasterJumps = document.getElementById('t-master-jumps');
             const tMasterMembers = document.getElementById('t-master-members');
             const tTabCurrent = document.getElementById('t-tab-current');
+            const tTabCurrentText = document.getElementById('t-tab-current-text');
+            const tTabCurrentEditor = document.getElementById('t-tab-current-editor');
+            const tScriptTextarea = document.getElementById('t-script-textarea');
+            const tBtnEditScript = document.getElementById('t-btn-edit-script');
+            const tBtnSaveScript = document.getElementById('t-btn-save-script');
+            const tBtnResetScript = document.getElementById('t-btn-reset-script');
+            const tBtnCancelScript = document.getElementById('t-btn-cancel-script');
             const tTabMine = document.getElementById('t-tab-mine');
             const tTabQa = document.getElementById('t-tab-qa');
+            const tQaSelector = document.getElementById('t-qa-selector');
+            const tQaQLabel = document.getElementById('t-qa-q-label');
             const tQaQ = document.getElementById('t-qa-q');
             const tQaA = document.getElementById('t-qa-a');
             const tQaTip = document.getElementById('t-qa-tip');
+
+            const SCRIPT_STORAGE_KEY = 'g3pump_custom_scripts_v1';
+            const memberQaSlideMap = {
+                '이승호': 5,
+                '송유호': 1,
+                '장민서': 2,
+                '강명서': 3,
+                '전성찬': 4
+            };
 
             function getAutoScriptFontSize() {
                 const basis = Math.min(window.innerWidth, window.innerHeight * 0.9);
@@ -1121,10 +1174,23 @@
             let currentHighlight = 'none';
             let turnLockEnabled = true;
             let isCleanMode = false;
+            let presentationEnded = false;
             let toastTimer = null;
             let scriptFontManual = false;
             let scriptFontSize = getAutoScriptFontSize();
             let navCooldown = false;
+            let hlTapCooldown = false;
+
+            // 태블릿 전용 상태 변수
+            let activeTabletTab = 'current';
+            let selectedQaIndex = 0;
+            let autoOpenedQaDone = false;
+            let lastQaCheckSlide = 0;
+            let wholeScreenTapHighlightEnabled = true;
+            let isEditingCurrentScript = false;
+            let editingCurrentSlideIdx = 0;
+            const editingMineIndices = new Set();
+            const hostCustomScripts = {};
 
             // 네트워크 상태 변수
             let appRole = 'host'; // 'host' | 'tablet'
@@ -1149,8 +1215,8 @@
                 "이승호"
             ];
 
-            // 슬라이드별 6분 분량 확장 발표 대본
-            const scripts = [
+            // 슬라이드별 6분 분량 확장 발표 기본 대본
+            const DEFAULT_SCRIPTS = [
                 // 1번 슬라이드: 이승호 (약 35~40초)
                 "안녕하세요! 3모둠의 첫 발표를 맡은 이승호입니다. 저희 3모둠은 강명서, 송유호, 이승호, 장민서, 전성찬 총 다섯 명이 함께 '자전거 펌프와 열역학 제1법칙'을 주제로 탐구했습니다.\n\n먼저 전체 발표 순서를 말씀드리겠습니다. 제가 탐구 질문을 소개한 뒤, 송유호 학생과 장민서 학생이 핵심 개념을 설명하고, 강명서 학생이 교과서 그래프를 해석해 드립니다. 이어서 전성찬 학생이 생활 사례와 조건 변화 예측을 발표한 뒤, 마지막에 제가 한 문장으로 깔끔하게 정리하겠습니다.\n\n여러분도 자전거 바퀴에 바람이 빠져서 펌프질을 급하게 여러 번 해본 적 있으실 겁니다. 그때 무심코 펌프 아랫부분을 만져보면 깜짝 놀랄 정도로 뜨거워져 있는데요. 저희는 여기서 출발해 '펌프가 뜨거워지는 주원인이 단순히 마찰 때문인지, 아니면 공기의 단열 압축 때문인지, 그리고 압축 속도와 실린더 재질이 달라지면 온도 변화는 어떻게 달라질지'를 깊이 탐구해 보았습니다. 먼저 송유호 학생이 핵심 개념을 설명하겠습니다.",
 
@@ -1169,6 +1235,39 @@
                 // 6번 슬라이드: 이승호 (약 35~40초)
                 "네, 마지막으로 오늘 3모둠의 발표를 한 문장으로 정리하겠습니다.\n\n'자전거 펌프의 발열은 단순한 마찰열이 아니라, 기체가 빠르게 일 W를 받아 내부 에너지 ΔU가 증가하는 열역학 제1법칙의 대표적인 단열 압축 현상입니다.'\n\n발표에서 열역학 제1법칙과 단열·등온 압축의 차이, 교과서 66쪽 그래프의 압축 방향 해석, 그리고 실린더 재질 조건에 따른 결과 예측까지 함께 살펴보았습니다.\n\n저희가 참고한 자료는 역학과 에너지 교과서 64쪽부터 67쪽까지이며, 탐구 질문 아이디어와 대본·슬라이드 초안 구성에 AI를 활용한 뒤 교과서 개념과 66쪽 그래프 방향을 모둠원들과 직접 검증하고 수정했습니다.\n\n이상으로 3모둠 발표를 모두 마치겠습니다. 끝까지 경청해 주셔서 감사합니다. 궁금한 점이 있으시면 편하게 질문해 주세요!"
             ];
+
+            const scripts = [...DEFAULT_SCRIPTS];
+
+            function loadCustomScriptsFromStorage() {
+                try {
+                    const raw = localStorage.getItem(SCRIPT_STORAGE_KEY);
+                    if (!raw) return;
+                    const parsed = JSON.parse(raw);
+                    if (parsed && typeof parsed === 'object') {
+                        Object.keys(parsed).forEach((k) => {
+                            const idx = Number(k);
+                            if (Number.isInteger(idx) && idx >= 0 && idx < DEFAULT_SCRIPTS.length && typeof parsed[k] === 'string') {
+                                scripts[idx] = parsed[k];
+                                hostCustomScripts[idx] = parsed[k];
+                            }
+                        });
+                    }
+                } catch (e) {}
+            }
+
+            function saveCustomScriptsToStorage() {
+                try {
+                    const map = {};
+                    scripts.forEach((txt, idx) => {
+                        if (txt !== DEFAULT_SCRIPTS[idx]) {
+                            map[idx] = txt;
+                        }
+                    });
+                    localStorage.setItem(SCRIPT_STORAGE_KEY, JSON.stringify(map));
+                } catch (e) {}
+            }
+
+            loadCustomScriptsFromStorage();
 
             // 슬라이드별(1~6번) 예상 Q&A 데이터
             const qaList = [
@@ -1370,16 +1469,30 @@
                 });
             }
 
+            function updateHostNavButtons() {
+                btnPrev.disabled = currentSlide === 0;
+                if (currentSlide === slides.length - 1) {
+                    btnNext.disabled = presentationEnded;
+                    btnNext.textContent = presentationEnded ? '발표 완료' : '발표 종료 →';
+                } else {
+                    btnNext.disabled = false;
+                    btnNext.textContent = '다음 →';
+                }
+            }
+
             /**
              * 슬라이드 전환 (송출 화면 갱신 + 연결된 모든 태블릿에 상태 브로드캐스트)
              */
-            function goToSlide(index, broadcast = true, keepHighlight = false) {
+            function goToSlide(index, broadcast = true, keepHighlight = false, keepEnded = false) {
                 if (index < 0 || index >= slides.length) return;
                 const slideChanged = index !== currentSlide;
                 currentSlide = index;
 
                 if (slideChanged && !keepHighlight) {
                     currentHighlight = 'none';
+                }
+                if (slideChanged && !keepEnded) {
+                    presentationEnded = false;
                 }
 
                 slides.forEach((slide, idx) => {
@@ -1404,8 +1517,7 @@
                         : 'w-2.5 h-2.5 rounded-full bg-slate-600 hover:bg-slate-400 transition-all duration-300';
                 });
 
-                btnPrev.disabled = currentSlide === 0;
-                btnNext.disabled = currentSlide === slides.length - 1;
+                updateHostNavButtons();
 
                 scriptContent.textContent = scripts[currentSlide];
                 scriptPresenterBadge.textContent = `👤 발표자: ${presenters[currentSlide]}`;
@@ -1467,6 +1579,8 @@
                     highlightKey: currentHighlight,
                     turnLockEnabled: turnLockEnabled,
                     cleanMode: isCleanMode,
+                    presentationEnded: presentationEnded,
+                    customScripts: hostCustomScripts,
                     connectedNames: getConnectedNamesUnique()
                 };
                 hostConnections.forEach(({ conn }) => {
@@ -1478,6 +1592,35 @@
 
             function handleHostCommand(senderName, data) {
                 const isMaster = senderName === MASTER_NAME;
+
+                if (data.type === 'CMD_UPDATE_SCRIPT' && typeof data.slideIndex === 'number' && typeof data.text === 'string') {
+                    const idx = data.slideIndex;
+                    if (idx >= 0 && idx < scripts.length) {
+                        scripts[idx] = data.text;
+                        hostCustomScripts[idx] = data.text;
+                        saveCustomScriptsToStorage();
+                        if (idx === currentSlide) {
+                            scriptContent.textContent = scripts[currentSlide];
+                        }
+                        broadcastHostState();
+                    }
+                    return;
+                }
+
+                if (data.type === 'CMD_RESET_SCRIPT' && typeof data.slideIndex === 'number') {
+                    const idx = data.slideIndex;
+                    if (idx >= 0 && idx < DEFAULT_SCRIPTS.length) {
+                        scripts[idx] = DEFAULT_SCRIPTS[idx];
+                        delete hostCustomScripts[idx];
+                        saveCustomScriptsToStorage();
+                        if (idx === currentSlide) {
+                            scriptContent.textContent = scripts[currentSlide];
+                        }
+                        broadcastHostState();
+                    }
+                    return;
+                }
+
                 const isCurrentSpeaker = presenters[currentSlide] === senderName;
                 const isAuthorized = isMaster || !turnLockEnabled || isCurrentSpeaker;
 
@@ -1488,14 +1631,33 @@
                     if (!data.force && now - lastRemoteNavTime < 650) return;
                     lastRemoteNavTime = now;
 
+                    if (data.action === 'finish') {
+                        if (currentSlide === slides.length - 1 && !presentationEnded) {
+                            presentationEnded = true;
+                            applyHighlight('none');
+                            updateHostNavButtons();
+                            broadcastHostState();
+                        }
+                        return;
+                    }
+
                     let target = currentSlide;
                     if (data.action === 'next') target = currentSlide + 1;
                     else if (data.action === 'prev') target = currentSlide - 1;
                     else if (data.action === 'jump' && typeof data.index === 'number') target = data.index;
 
-                    goToSlide(target, true, false);
+                    goToSlide(target, true, false, false);
                 } else if (data.type === 'CMD_HIGHLIGHT') {
                     const nextKey = (currentHighlight === data.key) ? 'none' : data.key;
+                    applyHighlight(nextKey);
+                    broadcastHostState();
+                } else if (data.type === 'CMD_HIGHLIGHT_NEXT') {
+                    const options = slideHighlights[currentSlide] || [];
+                    if (options.length === 0) return;
+                    const idx = options.findIndex((opt) => opt.key === currentHighlight);
+                    const nextKey = (idx === -1)
+                        ? options[0].key
+                        : (idx + 1 < options.length ? options[idx + 1].key : 'none');
                     applyHighlight(nextKey);
                     broadcastHostState();
                 } else if (data.type === 'CMD_TOGGLE_LOCK' && isMaster) {
@@ -1675,8 +1837,27 @@
                             currentHighlight = data.highlightKey || 'none';
                             turnLockEnabled = !!data.turnLockEnabled;
                             isCleanMode = !!data.cleanMode;
+                            presentationEnded = !!data.presentationEnded;
                             connectedMemberNames = data.connectedNames || [];
-                            goToSlide(data.slideIndex, false, true);
+                            if (data.customScripts && typeof data.customScripts === 'object') {
+                                let scriptUpdated = false;
+                                Object.keys(data.customScripts).forEach((k) => {
+                                    const idx = Number(k);
+                                    if (Number.isInteger(idx) && idx >= 0 && idx < scripts.length && typeof data.customScripts[k] === 'string') {
+                                        if (scripts[idx] !== data.customScripts[k]) {
+                                            scripts[idx] = data.customScripts[k];
+                                            scriptUpdated = true;
+                                        }
+                                    }
+                                });
+                                if (scriptUpdated) {
+                                    saveCustomScriptsToStorage();
+                                    if (editingMineIndices.size === 0) {
+                                        renderMyAssignedScripts();
+                                    }
+                                }
+                            }
+                            goToSlide(data.slideIndex, false, true, true);
                             updateTabletHUD();
                         }
                     });
@@ -1710,9 +1891,124 @@
                 }, 3000);
             }
 
+            function switchTabletTab(target) {
+                activeTabletTab = target;
+                document.querySelectorAll('.t-tab-btn').forEach((b) => {
+                    b.className = b.dataset.tab === target
+                        ? 't-tab-btn px-3 py-2 rounded-t-xl text-xs font-extrabold bg-indigo-600 text-white'
+                        : 't-tab-btn px-3 py-2 rounded-t-xl text-xs font-bold text-slate-400 hover:text-white';
+                });
+
+                if (target === 'current') {
+                    tTabCurrent.classList.remove('hidden');
+                    tTabCurrent.classList.add('flex');
+                } else {
+                    tTabCurrent.classList.add('hidden');
+                    tTabCurrent.classList.remove('flex');
+                }
+                tTabMine.classList.toggle('hidden', target !== 'mine');
+                tTabQa.classList.toggle('hidden', target !== 'qa');
+                tBtnEditScript.classList.toggle('hidden', target !== 'current');
+            }
+
+            function renderTabletQaSection() {
+                tQaSelector.innerHTML = '';
+                const myQaIdx = memberQaSlideMap[myTabletName] ?? currentSlide;
+
+                qaList.forEach((item, idx) => {
+                    const isSelected = idx === selectedQaIndex;
+                    const isMine = idx === myQaIdx;
+                    const qBtn = document.createElement('button');
+                    qBtn.type = 'button';
+                    qBtn.className = isSelected
+                        ? 'rounded-lg font-black bg-amber-400 text-slate-950 shadow transition'
+                        : (isMine
+                            ? 'rounded-lg font-bold bg-indigo-900/70 hover:bg-indigo-800 text-indigo-200 border border-indigo-500/60 transition'
+                            : 'rounded-lg font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition');
+                    qBtn.textContent = isMine ? `${item.slideNum}번 (내 담당)` : `${item.slideNum}번`;
+                    qBtn.addEventListener('click', () => {
+                        selectedQaIndex = idx;
+                        renderTabletQaSection();
+                    });
+                    tQaSelector.appendChild(qBtn);
+                });
+
+                const qa = qaList[selectedQaIndex] || qaList[0];
+                if (qa) {
+                    const isMine = selectedQaIndex === myQaIdx;
+                    tQaQLabel.textContent = isMine
+                        ? `Q. ${qa.slideNum}번 슬라이드 예상 질문 (${qa.presenter} · 내 담당)`
+                        : `Q. ${qa.slideNum}번 슬라이드 예상 질문 (${qa.presenter})`;
+                    tQaQ.textContent = `“${qa.question}”`;
+                    tQaA.textContent = `“${qa.answer}”`;
+                    tQaTip.textContent = qa.tip;
+                }
+            }
+
+            function saveEditedScript(idx, rawText) {
+                const cleanText = rawText.trim();
+                if (!cleanText) {
+                    showToast('대본 내용이 비어 있을 수 없습니다.');
+                    return false;
+                }
+                scripts[idx] = cleanText;
+                hostCustomScripts[idx] = cleanText;
+                saveCustomScriptsToStorage();
+                scriptContent.textContent = scripts[currentSlide];
+
+                if (tabletConn && tabletConn.open) {
+                    sendTabletCommand({ type: 'CMD_UPDATE_SCRIPT', slideIndex: idx, text: cleanText });
+                }
+                showToast(`${idx + 1}번 슬라이드 대본이 저장되었습니다.`);
+                return true;
+            }
+
+            function resetEditedScript(idx) {
+                scripts[idx] = DEFAULT_SCRIPTS[idx];
+                delete hostCustomScripts[idx];
+                saveCustomScriptsToStorage();
+                scriptContent.textContent = scripts[currentSlide];
+
+                if (tabletConn && tabletConn.open) {
+                    sendTabletCommand({ type: 'CMD_RESET_SCRIPT', slideIndex: idx });
+                }
+                showToast(`${idx + 1}번 슬라이드 대본을 기본값으로 되돌렸습니다.`);
+            }
+
+            function openCurrentScriptEditor() {
+                isEditingCurrentScript = true;
+                editingCurrentSlideIdx = currentSlide;
+                tScriptTextarea.value = scripts[editingCurrentSlideIdx];
+                tScriptTextarea.style.fontSize = `${scriptFontSize}px`;
+                tTabCurrentText.classList.add('hidden');
+                tTabCurrentEditor.classList.remove('hidden');
+                tTabCurrentEditor.classList.add('flex');
+                tBtnEditScript.textContent = `${editingCurrentSlideIdx + 1}번 편집 중`;
+                tScriptTextarea.focus();
+            }
+
+            function closeCurrentScriptEditor() {
+                isEditingCurrentScript = false;
+                tTabCurrentEditor.classList.add('hidden');
+                tTabCurrentEditor.classList.remove('flex');
+                tTabCurrentText.classList.remove('hidden');
+                tBtnEditScript.textContent = '대본 수정';
+                tTabCurrentText.textContent = scripts[currentSlide];
+            }
+
+            function isAnyScriptEditing() {
+                return isEditingCurrentScript || editingMineIndices.size > 0;
+            }
+
             function connectTabletAs(name) {
                 myTabletName = name;
                 stopTabletAutoReconnect();
+
+                autoOpenedQaDone = false;
+                lastQaCheckSlide = currentSlide;
+                isEditingCurrentScript = false;
+                editingMineIndices.clear();
+                selectedQaIndex = memberQaSlideMap[name] ?? currentSlide;
 
                 tabletJoinScreen.classList.add('hidden');
                 tabletHudScreen.classList.remove('hidden');
@@ -1721,6 +2017,8 @@
                 tMyBadge.textContent = myTabletName;
                 tMyBadge.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black truncate';
 
+                closeCurrentScriptEditor();
+                switchTabletTab('current');
                 renderMyAssignedScripts();
                 updateTabletHUD();
 
@@ -1765,15 +2063,43 @@
                 sendTabletCommand({ type: 'CMD_SLIDE', action, index, force });
             }
 
+            function triggerNextHighlightFromTablet() {
+                if (myTabletName !== MASTER_NAME) return;
+                const options = slideHighlights[currentSlide] || [];
+                if (options.length === 0 || hlTapCooldown) return;
+                hlTapCooldown = true;
+                setTimeout(() => { hlTapCooldown = false; }, 320);
+
+                sendTabletCommand({ type: 'CMD_HIGHLIGHT_NEXT' });
+            }
+
             function renderTabletHighlightButtons() {
                 const isMaster = myTabletName === MASTER_NAME;
                 const isMyTurn = presenters[currentSlide] === myTabletName;
                 const canControl = isMaster || !turnLockEnabled || isMyTurn;
 
-                tHlReset.disabled = !canControl || currentHighlight === 'none';
-                tHlButtons.innerHTML = '';
-
                 const options = slideHighlights[currentSlide] || [];
+                const activeIdx = options.findIndex((opt) => opt.key === currentHighlight);
+
+                tHlReset.disabled = !canControl || currentHighlight === 'none';
+                tHlNextPad.disabled = !canControl || options.length === 0;
+                if (options.length === 0) {
+                    tHlNextPad.textContent = '강조 항목이 없습니다';
+                } else if (activeIdx === -1) {
+                    tHlNextPad.textContent = `터치해서 다음 하이라이트 켜기 (1 / ${options.length} · ${options[0].label})`;
+                } else if (activeIdx + 1 < options.length) {
+                    const nextOpt = options[activeIdx + 1];
+                    tHlNextPad.textContent = `다음 하이라이트 켜기 (${activeIdx + 2} / ${options.length} · ${nextOpt.label})`;
+                } else {
+                    tHlNextPad.textContent = `마지막 강조 켜짐 (${options.length} / ${options.length}) · 터치 시 강조 끄기`;
+                }
+
+                tHlTapModeBtn.textContent = wholeScreenTapHighlightEnabled ? '화면 터치: 켜짐' : '화면 터치: 꺼짐';
+                tHlTapModeBtn.className = wholeScreenTapHighlightEnabled
+                    ? 'text-[13px] font-bold px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition'
+                    : 'text-[13px] font-bold px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition';
+
+                tHlButtons.innerHTML = '';
                 options.forEach((opt) => {
                     const isActive = currentHighlight === opt.key;
                     const btn = document.createElement('button');
@@ -1798,18 +2124,93 @@
                 });
 
                 myIndices.forEach((idx) => {
+                    const isEditing = editingMineIndices.has(idx);
                     const card = document.createElement('div');
-                    card.className = 'bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2';
+                    card.className = 'bg-slate-950 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3';
                     card.innerHTML = `
-                        <div class="flex items-center justify-between">
-                            <span class="px-2.5 py-0.5 rounded-lg bg-indigo-600 text-white text-xs font-black">${idx + 1}번 슬라이드 (내 발표)</span>
-                            <span class="text-xs font-bold text-emerald-400">권장: ${slides[idx].dataset.time}</span>
+                        <div class="flex items-center justify-between gap-2 flex-wrap">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-0.5 rounded-lg bg-indigo-600 text-white text-xs font-black">${idx + 1}번 슬라이드 (내 발표)</span>
+                                <span class="text-xs font-bold text-emerald-400">권장: ${slides[idx].dataset.time}</span>
+                            </div>
+                            <button type="button" class="mine-edit-btn px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 transition">${isEditing ? '편집 중' : '수정'}</button>
                         </div>
-                        <p class="my-script-text text-slate-100 leading-relaxed whitespace-pre-line font-medium" style="font-size:${scriptFontSize}px"></p>
+                        <p class="my-script-text ${isEditing ? 'hidden' : ''} text-slate-100 leading-relaxed whitespace-pre-line font-medium" style="font-size:${scriptFontSize}px"></p>
+                        <div class="mine-editor ${isEditing ? 'flex' : 'hidden'} flex-col gap-2.5" data-no-tap-hl="true">
+                            <textarea class="my-script-textarea w-full min-h-[200px] bg-slate-900 text-slate-100 border-2 border-indigo-500 rounded-xl p-3.5 outline-none resize-y font-medium" style="font-size:${scriptFontSize}px"></textarea>
+                            <div class="flex items-center justify-end gap-2 flex-wrap">
+                                <button type="button" class="mine-reset-btn px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold transition">원래대로</button>
+                                <button type="button" class="mine-cancel-btn px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold transition">취소</button>
+                                <button type="button" class="mine-save-btn px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black transition">저장</button>
+                            </div>
+                        </div>
                     `;
-                    card.querySelector('.my-script-text').textContent = scripts[idx];
+                    const textEl = card.querySelector('.my-script-text');
+                    const textareaEl = card.querySelector('.my-script-textarea');
+                    textEl.textContent = scripts[idx];
+                    textareaEl.value = scripts[idx];
+
+                    card.querySelector('.mine-edit-btn').addEventListener('click', () => {
+                        if (editingMineIndices.has(idx)) {
+                            editingMineIndices.delete(idx);
+                        } else {
+                            editingMineIndices.add(idx);
+                        }
+                        renderMyAssignedScripts();
+                    });
+                    card.querySelector('.mine-cancel-btn').addEventListener('click', () => {
+                        editingMineIndices.delete(idx);
+                        renderMyAssignedScripts();
+                    });
+                    card.querySelector('.mine-reset-btn').addEventListener('click', () => {
+                        resetEditedScript(idx);
+                        editingMineIndices.delete(idx);
+                        renderMyAssignedScripts();
+                        if (idx === currentSlide && !isEditingCurrentScript) {
+                            tTabCurrentText.textContent = scripts[currentSlide];
+                        }
+                    });
+                    card.querySelector('.mine-save-btn').addEventListener('click', () => {
+                        if (saveEditedScript(idx, textareaEl.value)) {
+                            editingMineIndices.delete(idx);
+                            renderMyAssignedScripts();
+                            if (idx === currentSlide && !isEditingCurrentScript) {
+                                tTabCurrentText.textContent = scripts[currentSlide];
+                            }
+                        }
+                    });
+
                     tTabMine.appendChild(card);
                 });
+            }
+
+            function checkAutoOpenQa() {
+                if (!myTabletName) return;
+                const myFinishIdx = memberQaSlideMap[myTabletName];
+                if (typeof myFinishIdx !== 'number') return;
+
+                const slideChanged = currentSlide !== lastQaCheckSlide;
+                lastQaCheckSlide = currentSlide;
+
+                const isBeforeFinish = (myFinishIdx < slides.length - 1)
+                    ? (currentSlide <= myFinishIdx)
+                    : !presentationEnded;
+
+                if (isBeforeFinish) {
+                    autoOpenedQaDone = false;
+                    if (slideChanged && presenters[currentSlide] === myTabletName && activeTabletTab === 'qa') {
+                        switchTabletTab('current');
+                    }
+                    return;
+                }
+
+                if (!autoOpenedQaDone) {
+                    autoOpenedQaDone = true;
+                    selectedQaIndex = myFinishIdx;
+                    switchTabletTab('qa');
+                    renderTabletQaSection();
+                    showToast(`${myFinishIdx + 1}번 발표 완료! 예상 Q&A를 자동으로 띄웠습니다.`);
+                }
             }
 
             function updateTabletHUD() {
@@ -1823,9 +2224,12 @@
                 tSlideTime.textContent = slides[currentSlide].dataset.time;
                 tNextSpeaker.textContent = presenters[currentSlide + 1]
                     ? `${presenters[currentSlide + 1]} (${currentSlide + 2}번)`
-                    : '발표 종료';
+                    : (presentationEnded ? '발표 완료' : '질의응답');
 
-                if (isMyTurn) {
+                if (presentationEnded && currentSlide === slides.length - 1) {
+                    tTurnBanner.className = 'rounded-2xl p-3.5 sm:p-4 border bg-gradient-to-r from-amber-700 to-rose-700 border-amber-400/60 shadow-lg flex items-center justify-between gap-3';
+                    tTurnMsg.textContent = '모든 발표가 끝났습니다! 예상 Q&A를 확인하세요.';
+                } else if (isMyTurn) {
                     tTurnBanner.className = 'rounded-2xl p-3.5 sm:p-4 border bg-gradient-to-r from-emerald-700 to-teal-700 border-emerald-400/60 shadow-lg flex items-center justify-between gap-3';
                     tTurnMsg.textContent = isMaster
                         ? '지금 내 발표 차례입니다! 슬라이드와 하이라이트를 조작하세요.'
@@ -1842,7 +2246,18 @@
                 }
 
                 tBtnPrev.disabled = !canControl || currentSlide === 0;
-                tBtnNext.disabled = !canControl || currentSlide === slides.length - 1;
+
+                if (currentSlide === slides.length - 1) {
+                    tBtnNext.disabled = !canControl || presentationEnded;
+                    tBtnNext.textContent = presentationEnded ? '발표 완료' : '발표 종료 · Q&A 보기 →';
+                    tBtnNext.className = presentationEnded
+                        ? 'py-4 rounded-2xl bg-slate-800 opacity-50 cursor-not-allowed font-black text-base sm:text-lg text-slate-300 transition flex items-center justify-center gap-1.5 shadow'
+                        : 'py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed font-black text-base sm:text-lg text-white transition flex items-center justify-center gap-1.5 shadow-lg';
+                } else {
+                    tBtnNext.disabled = !canControl;
+                    tBtnNext.textContent = '다음 슬라이드 →';
+                    tBtnNext.className = 'py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed font-black text-base sm:text-lg text-white transition flex items-center justify-center gap-1.5 shadow-lg';
+                }
 
                 if (isMaster) {
                     tHlPanel.classList.remove('hidden');
@@ -1886,15 +2301,14 @@
                     tMasterPanel.classList.add('hidden');
                 }
 
-                tTabCurrent.textContent = scripts[currentSlide];
-                tTabCurrent.style.fontSize = `${scriptFontSize}px`;
-
-                const qa = qaList[currentSlide];
-                if (qa) {
-                    tQaQ.textContent = `“${qa.question}”`;
-                    tQaA.textContent = `“${qa.answer}”`;
-                    tQaTip.textContent = qa.tip;
+                if (!isEditingCurrentScript) {
+                    tTabCurrentText.textContent = scripts[currentSlide];
                 }
+                tTabCurrentText.style.fontSize = `${scriptFontSize}px`;
+                tScriptTextarea.style.fontSize = `${scriptFontSize}px`;
+
+                renderTabletQaSection();
+                checkAutoOpenQa();
             }
 
             /* =====================================================================
@@ -1902,7 +2316,18 @@
              * ===================================================================== */
 
             btnPrev.addEventListener('click', () => goToSlide(currentSlide - 1, true));
-            btnNext.addEventListener('click', () => goToSlide(currentSlide + 1, true));
+            btnNext.addEventListener('click', () => {
+                if (currentSlide === slides.length - 1) {
+                    if (!presentationEnded) {
+                        presentationEnded = true;
+                        applyHighlight('none');
+                        updateHostNavButtons();
+                        broadcastHostState();
+                    }
+                } else {
+                    goToSlide(currentSlide + 1, true);
+                }
+            });
 
             // 순수 PPT 모드 시작 버튼 (상단 바 & 모달)
             document.getElementById('btn-start-clean').addEventListener('click', () => setCleanMode(true, true));
@@ -1927,8 +2352,41 @@
 
             // 태블릿 조작 버튼 이벤트
             tBtnPrev.addEventListener('click', () => triggerSlideNavFromTablet('prev'));
-            tBtnNext.addEventListener('click', () => triggerSlideNavFromTablet('next'));
+            tBtnNext.addEventListener('click', () => {
+                if (currentSlide === slides.length - 1) {
+                    triggerSlideNavFromTablet('finish');
+                } else {
+                    triggerSlideNavFromTablet('next');
+                }
+            });
+            tHlNextPad.addEventListener('click', () => triggerNextHighlightFromTablet());
+            tHlTapModeBtn.addEventListener('click', () => {
+                wholeScreenTapHighlightEnabled = !wholeScreenTapHighlightEnabled;
+                renderTabletHighlightButtons();
+            });
             tHlReset.addEventListener('click', () => sendTabletCommand({ type: 'CMD_HIGHLIGHT', key: 'none' }));
+
+            // [장민서 전용] 태블릿 화면 어디든(버튼·입력창·스크롤 제외) 가볍게 터치 시 순서대로 하이라이트 켜기
+            let tapStartX = 0;
+            let tapStartY = 0;
+            let tapStartTarget = null;
+            tabletHudScreen.addEventListener('pointerdown', (e) => {
+                if (e.button !== 0 && e.pointerType === 'mouse') return;
+                tapStartX = e.clientX;
+                tapStartY = e.clientY;
+                tapStartTarget = e.target;
+            }, { passive: true });
+            tabletHudScreen.addEventListener('pointerup', (e) => {
+                if (appRole !== 'tablet' || myTabletName !== MASTER_NAME || !wholeScreenTapHighlightEnabled) return;
+                if (isAnyScriptEditing()) return;
+                if (document.activeElement && (document.activeElement.tagName === 'TEXTAREA' || document.activeElement.tagName === 'INPUT')) return;
+                const moved = Math.hypot(e.clientX - tapStartX, e.clientY - tapStartY);
+                if (moved > 12) return;
+                const hitTarget = tapStartTarget || e.target;
+                if (hitTarget && hitTarget.closest('button, input, textarea, select, a, label, [data-no-tap-hl]')) return;
+                triggerNextHighlightFromTablet();
+            });
+
             tBtnToggleLock.addEventListener('click', () => sendTabletCommand({ type: 'CMD_TOGGLE_LOCK' }));
             tBtnToggleClean.addEventListener('click', () => sendTabletCommand({ type: 'CMD_TOGGLE_CLEAN' }));
             tBtnReconnect.addEventListener('click', () => connectTabletAs(myTabletName));
@@ -1938,6 +2396,8 @@
                     try { tabletPeer.destroy(); } catch (e) {}
                     tabletPeer = null;
                 }
+                closeCurrentScriptEditor();
+                editingMineIndices.clear();
                 tabletHudScreen.classList.add('hidden');
                 tabletHudScreen.classList.remove('flex');
                 tabletJoinScreen.classList.remove('hidden');
@@ -1946,22 +2406,36 @@
             // 태블릿 대본/Q&A 탭 전환
             document.querySelectorAll('.t-tab-btn').forEach((btn) => {
                 btn.addEventListener('click', () => {
-                    const target = btn.dataset.tab;
-                    document.querySelectorAll('.t-tab-btn').forEach((b) => {
-                        b.className = b.dataset.tab === target
-                            ? 't-tab-btn px-3 py-2 rounded-t-xl text-xs font-extrabold bg-indigo-600 text-white'
-                            : 't-tab-btn px-3 py-2 rounded-t-xl text-xs font-bold text-slate-400 hover:text-white';
-                    });
-                    tTabCurrent.classList.toggle('hidden', target !== 'current');
-                    tTabMine.classList.toggle('hidden', target !== 'mine');
-                    tTabQa.classList.toggle('hidden', target !== 'qa');
+                    switchTabletTab(btn.dataset.tab);
                 });
+            });
+
+            // 현재 대본 수정/저장/초기화
+            tBtnEditScript.addEventListener('click', () => {
+                if (isEditingCurrentScript) {
+                    closeCurrentScriptEditor();
+                } else {
+                    openCurrentScriptEditor();
+                }
+            });
+            tBtnCancelScript.addEventListener('click', () => closeCurrentScriptEditor());
+            tBtnResetScript.addEventListener('click', () => {
+                resetEditedScript(editingCurrentSlideIdx);
+                closeCurrentScriptEditor();
+                renderMyAssignedScripts();
+            });
+            tBtnSaveScript.addEventListener('click', () => {
+                if (saveEditedScript(editingCurrentSlideIdx, tScriptTextarea.value)) {
+                    closeCurrentScriptEditor();
+                    renderMyAssignedScripts();
+                }
             });
 
             // 태블릿 대본 글자 크기 조절
             function applyTabletScriptFontSize() {
-                tTabCurrent.style.fontSize = `${scriptFontSize}px`;
-                document.querySelectorAll('.my-script-text').forEach((el) => el.style.fontSize = `${scriptFontSize}px`);
+                tTabCurrentText.style.fontSize = `${scriptFontSize}px`;
+                tScriptTextarea.style.fontSize = `${scriptFontSize}px`;
+                document.querySelectorAll('.my-script-text, .my-script-textarea').forEach((el) => el.style.fontSize = `${scriptFontSize}px`);
             }
             document.getElementById('t-font-inc').addEventListener('click', () => {
                 if (scriptFontSize < 38) {
@@ -1987,11 +2461,20 @@
             // PC 키보드 제어 (순수 PPT 모드에서도 비상용으로 작동, M/ESC로 메뉴 복귀)
             document.addEventListener('keydown', (e) => {
                 if (appRole === 'tablet') return;
-                if (document.activeElement && (document.activeElement.isContentEditable || document.activeElement.tagName === 'INPUT')) return;
+                if (document.activeElement && (document.activeElement.isContentEditable || document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
 
                 if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
                     e.preventDefault();
-                    goToSlide(currentSlide + 1, true);
+                    if (currentSlide === slides.length - 1) {
+                        if (!presentationEnded) {
+                            presentationEnded = true;
+                            applyHighlight('none');
+                            updateHostNavButtons();
+                            broadcastHostState();
+                        }
+                    } else {
+                        goToSlide(currentSlide + 1, true);
+                    }
                 } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
                     e.preventDefault();
                     goToSlide(currentSlide - 1, true);
