@@ -128,29 +128,9 @@
         </div>
 
         <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-            <!-- 태블릿 접속 링크 바로 복사 -->
-            <button id="btn-quick-copy-link" class="px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs sm:text-sm font-black shadow transition flex items-center gap-1">
-                🔗 링크
-            </button>
-
             <!-- 조원 연결 현황 모달 -->
             <button id="btn-open-link-modal" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-100 text-xs sm:text-sm font-bold transition">
                 👥 연결 현황
-            </button>
-
-            <!-- 이 기기를 태블릿 리모컨 모드로 테스트/전환 -->
-            <button id="btn-switch-tablet" class="px-3 py-1.5 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 text-xs sm:text-sm font-bold transition">
-                🎛️ 태블릿 모드
-            </button>
-
-            <!-- 발표 대본 토글 (연습용) -->
-            <button id="btn-script" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs sm:text-sm font-semibold transition">
-                📝 대본
-            </button>
-
-            <!-- 예상 Q&A 모달 버튼 -->
-            <button id="btn-qa" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300 text-xs sm:text-sm font-semibold transition">
-                💬 Q&A
             </button>
 
             <!-- 핵심: 순수 PPT 모드 시작 (모든 버튼·바 완전 숨김 + 전체화면) -->
@@ -183,7 +163,7 @@
                 </div>
                 <!-- file:// 경고 (로컬 파일로 열었을 때만 표시) -->
                 <p id="file-protocol-warning" class="hidden text-[11px] text-rose-600 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2 font-semibold leading-relaxed">
-                    현재 내 컴퓨터 파일(file://)로 열려 있습니다. GitHub Pages에 올려서 접속하면 카톡방 링크로 태블릿 5대가 자동 연결됩니다. (지금 테스트하려면 새 탭에서 이 파일을 열고 상단 '🎛️ 태블릿 모드'를 눌러 보세요!)
+                    현재 내 컴퓨터 파일(file://)로 열려 있습니다. GitHub Pages에 올려서 접속하면 카톡방 링크로 태블릿 5대가 자동 연결됩니다. (테스트하려면 주소 뒤에 ?mode=tablet 을 붙여 접속해 보세요!)
                 </p>
             </div>
 
@@ -1833,14 +1813,6 @@
             document.getElementById('btn-start-clean').addEventListener('click', () => setCleanMode(true, true));
             document.getElementById('modal-start-clean-btn').addEventListener('click', () => setCleanMode(true, true));
 
-            // 태블릿 링크 1클릭 복사
-            document.getElementById('btn-quick-copy-link').addEventListener('click', () => {
-                copyTextToClipboard(
-                    getTabletShareUrl(),
-                    '태블릿 접속 링크 복사 완료! 조원들에게 공유하세요.'
-                );
-            });
-
             // 연결 현황 모달
             function openLinkModal() {
                 renderHostMemberStatus();
@@ -1858,8 +1830,7 @@
                 copyTextToClipboard(getTabletShareUrl(), '태블릿 접속 링크가 복사되었습니다!');
             });
 
-            // 수동 태블릿 모드 전환 / 복귀
-            document.getElementById('btn-switch-tablet').addEventListener('click', () => enterTabletMode(roomCode));
+            // 태블릿 화면에서 호스트로 복귀
             document.getElementById('btn-back-to-host').addEventListener('click', () => {
                 stopTabletAutoReconnect();
                 if (tabletPeer) {
@@ -1992,10 +1963,7 @@
                 });
             });
 
-            // 일반 대본 드로어 열기/닫기
-            document.getElementById('btn-script').addEventListener('click', () => {
-                scriptPanel.classList.toggle('hidden');
-            });
+            // 일반 대본 드로어 닫기
             document.getElementById('close-script').addEventListener('click', () => {
                 scriptPanel.classList.add('hidden');
             });
@@ -2031,10 +1999,6 @@
                 qaTabs.appendChild(tabBtn);
             });
 
-            document.getElementById('btn-qa').addEventListener('click', () => {
-                renderQA(currentSlide);
-                qaModal.classList.remove('hidden');
-            });
             document.getElementById('close-qa').addEventListener('click', () => qaModal.classList.add('hidden'));
             document.getElementById('close-qa-btn').addEventListener('click', () => qaModal.classList.add('hidden'));
             qaModal.addEventListener('click', (e) => {
