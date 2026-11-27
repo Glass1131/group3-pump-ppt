@@ -124,6 +124,100 @@
             from { filter: drop-shadow(0 0 4px rgba(225, 29, 72, 0.6)); }
             to { filter: drop-shadow(0 0 14px rgba(244, 63, 94, 1)); }
         }
+
+        /* ==================== 태블릿 화면 비율·해상도 자동 반응형 스케일링 ==================== */
+        #tablet-controller .t-member-btn {
+            padding: clamp(1rem, 2.3vmin, 1.65rem) clamp(1.15rem, 2.6vmin, 1.85rem);
+        }
+        #tablet-controller .t-member-name {
+            font-size: clamp(1.35rem, 3.2vmin, 2.1rem);
+            line-height: 1.25;
+        }
+        #tablet-controller .t-member-role {
+            font-size: clamp(0.95rem, 2.1vmin, 1.3rem);
+            line-height: 1.4;
+        }
+        #tablet-controller .t-member-enter {
+            font-size: clamp(1rem, 2.2vmin, 1.35rem);
+        }
+
+        #tablet-hud-screen > header {
+            padding: clamp(0.65rem, 1.4vmin, 1rem) clamp(0.9rem, 2.2vmin, 1.5rem);
+        }
+        #tablet-controller #t-my-badge,
+        #tablet-controller #t-conn-label,
+        #tablet-controller #t-btn-reconnect,
+        #tablet-controller #t-btn-change-user {
+            font-size: clamp(0.92rem, 1.95vmin, 1.2rem);
+        }
+        #tablet-controller #t-turn-banner {
+            padding: clamp(0.9rem, 2vmin, 1.45rem) clamp(1rem, 2.2vmin, 1.6rem);
+        }
+        #tablet-controller #t-slide-num {
+            font-size: clamp(1.35rem, 3.3vmin, 2.1rem);
+        }
+        #tablet-controller #t-current-speaker,
+        #tablet-controller #t-slide-time,
+        #tablet-controller #t-turn-msg,
+        #tablet-controller #t-next-speaker {
+            font-size: clamp(0.98rem, 2.2vmin, 1.35rem);
+        }
+        #tablet-controller #t-next-label {
+            font-size: clamp(0.82rem, 1.7vmin, 1.05rem);
+        }
+        #tablet-controller #t-btn-prev,
+        #tablet-controller #t-btn-next {
+            font-size: clamp(1.15rem, 2.6vmin, 1.7rem);
+            padding-top: clamp(0.95rem, 2.1dvh, 1.65rem);
+            padding-bottom: clamp(0.95rem, 2.1dvh, 1.65rem);
+        }
+        #tablet-controller #t-hl-panel,
+        #tablet-controller #t-master-panel {
+            padding: clamp(0.9rem, 1.9vmin, 1.35rem);
+        }
+        #tablet-controller .t-panel-title,
+        #tablet-controller #t-hl-reset,
+        #tablet-controller #t-btn-toggle-clean,
+        #tablet-controller #t-btn-toggle-lock,
+        #tablet-controller .t-members-label {
+            font-size: clamp(0.9rem, 1.9vmin, 1.18rem);
+        }
+        #tablet-controller #t-hl-buttons button {
+            font-size: clamp(0.95rem, 2.05vmin, 1.25rem);
+            padding: clamp(0.75rem, 1.6vmin, 1.1rem);
+        }
+        #tablet-controller #t-master-jumps button {
+            padding: clamp(0.5rem, 1.2vmin, 0.85rem) 0.4rem;
+            font-size: clamp(0.98rem, 2.1vmin, 1.3rem);
+        }
+        #tablet-controller #t-master-jumps button .t-jump-name {
+            font-size: clamp(0.8rem, 1.65vmin, 1.05rem);
+        }
+        #tablet-controller #t-master-members span {
+            font-size: clamp(0.85rem, 1.75vmin, 1.1rem);
+            padding: 0.2rem 0.6rem;
+        }
+        #tablet-controller .t-tab-btn,
+        #tablet-controller #t-font-dec,
+        #tablet-controller #t-font-inc {
+            font-size: clamp(0.95rem, 2.05vmin, 1.25rem);
+            padding: clamp(0.5rem, 1.1vmin, 0.75rem) clamp(0.75rem, 1.6vmin, 1.15rem);
+        }
+        #tablet-controller #t-tab-current,
+        #tablet-controller .my-script-text {
+            line-height: 1.75;
+        }
+        #tablet-controller #t-tab-qa .t-qa-label {
+            font-size: clamp(0.92rem, 1.9vmin, 1.15rem);
+        }
+        #tablet-controller #t-qa-q,
+        #tablet-controller #t-qa-a {
+            font-size: clamp(1.08rem, 2.45vmin, 1.45rem);
+            line-height: 1.7;
+        }
+        #tablet-controller #t-qa-tip {
+            font-size: clamp(0.96rem, 2.1vmin, 1.25rem);
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-900 font-sans min-h-screen flex flex-col justify-between selection:bg-indigo-200">
@@ -207,11 +301,11 @@
     <div id="tablet-controller" class="hidden fixed inset-0 bg-slate-950 text-slate-100 flex-col z-50 overflow-hidden">
 
         <!-- [STEP 1] 이름 선택 화면 -->
-        <div id="tablet-join-screen" class="flex-1 overflow-y-auto p-5 sm:p-8 flex flex-col items-center justify-center">
-            <div class="w-full max-w-md space-y-6">
+        <div id="tablet-join-screen" class="flex-1 overflow-y-auto p-4 sm:p-8 flex flex-col items-center justify-center">
+            <div class="w-full max-w-2xl space-y-5">
                 <!-- 5명 이름 선택 버튼 -->
-                <div class="space-y-2.5">
-                    <div id="tablet-name-list" class="grid grid-cols-1 gap-2.5">
+                <div class="space-y-3">
+                    <div id="tablet-name-list" class="grid grid-cols-1 gap-3 sm:gap-3.5">
                         <!-- JS로 5명 버튼 렌더링 -->
                     </div>
                 </div>
@@ -222,128 +316,130 @@
         <div id="tablet-hud-screen" class="hidden flex-1 flex-col overflow-hidden">
             <!-- 태블릿 상단 상태 바 -->
             <header class="bg-slate-900 border-b border-slate-800 px-3 sm:px-5 py-2.5 flex items-center justify-between gap-2 shrink-0">
-                <div class="flex items-center gap-2 min-w-0">
-                    <span id="t-conn-dot" class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse shrink-0"></span>
-                    <span id="t-my-badge" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black truncate">이름</span>
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <span id="t-conn-dot" class="w-3 h-3 rounded-full bg-amber-400 animate-pulse shrink-0"></span>
+                    <span id="t-my-badge" class="px-3 py-1 rounded-lg bg-indigo-600 text-white text-xs font-black truncate">이름</span>
                     <span id="t-conn-label" class="text-[13px] font-semibold text-slate-400 truncate">연결 중...</span>
                 </div>
-                <div class="flex items-center gap-1.5 shrink-0">
-                    <button id="t-btn-reconnect" class="hidden px-2.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold">재연결</button>
-                    <button id="t-btn-change-user" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold">이름 변경</button>
+                <div class="flex items-center gap-2 shrink-0">
+                    <button id="t-btn-reconnect" class="hidden px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold">재연결</button>
+                    <button id="t-btn-change-user" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold">이름 변경</button>
                 </div>
             </header>
 
             <!-- 태블릿 본문 -->
-            <div class="flex-1 overflow-y-auto custom-scroll p-3 sm:p-4 space-y-3 max-w-4xl w-full mx-auto">
+            <div class="flex-1 overflow-y-auto custom-scroll p-3 sm:p-5">
+                <div class="w-full max-w-6xl mx-auto min-h-full flex flex-col gap-3 sm:gap-4">
 
-                <!-- 1. 현재 발표 상태 & 턴제 잠금 배너 -->
-                <div id="t-turn-banner" class="rounded-2xl p-3.5 sm:p-4 border transition-all flex items-center justify-between gap-3">
-                    <div>
-                        <div class="flex items-center gap-2 flex-wrap">
-                            <span id="t-slide-num" class="text-lg sm:text-xl font-black text-white">01 / 06</span>
-                            <span id="t-current-speaker" class="px-2.5 py-0.5 rounded-lg bg-white/15 text-white text-xs sm:text-sm font-black">발표자: 이승호</span>
-                            <span id="t-slide-time" class="text-[13px] font-bold px-2 py-0.5 rounded bg-black/25 text-white/90">30~40초</span>
+                    <!-- 1. 현재 발표 상태 & 턴제 잠금 배너 -->
+                    <div id="t-turn-banner" class="rounded-2xl p-3.5 sm:p-4 border transition-all flex items-center justify-between gap-3 shrink-0">
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span id="t-slide-num" class="text-lg sm:text-xl font-black text-white">01 / 06</span>
+                                <span id="t-current-speaker" class="px-2.5 py-0.5 rounded-lg bg-white/15 text-white text-xs sm:text-sm font-black">발표자: 이승호</span>
+                                <span id="t-slide-time" class="text-[13px] font-bold px-2 py-0.5 rounded bg-black/25 text-white/90">30~40초</span>
+                            </div>
+                            <p id="t-turn-msg" class="text-xs sm:text-sm font-bold mt-1.5">상태 확인 중...</p>
                         </div>
-                        <p id="t-turn-msg" class="text-xs sm:text-sm font-bold mt-1.5">상태 확인 중...</p>
+                        <div class="text-right shrink-0">
+                            <span id="t-next-label" class="text-[12px] text-white/70 block">다음 차례</span>
+                            <span id="t-next-speaker" class="text-xs sm:text-sm font-black text-amber-300">송유호</span>
+                        </div>
                     </div>
-                    <div class="text-right shrink-0">
-                        <span class="text-[12px] text-white/70 block">다음 차례</span>
-                        <span id="t-next-speaker" class="text-xs sm:text-sm font-black text-amber-300">송유호</span>
-                    </div>
-                </div>
 
-                <!-- 2. 슬라이드 넘김 메인 컨트롤 (턴제 잠금 적용) -->
-                <div class="grid grid-cols-2 gap-2.5">
-                    <button id="t-btn-prev" class="py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed border border-slate-700 font-black text-base sm:text-lg text-white transition flex items-center justify-center gap-1.5 shadow">
-                        ← 이전 슬라이드
-                    </button>
-                    <button id="t-btn-next" class="py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed font-black text-base sm:text-lg text-white transition flex items-center justify-center gap-1.5 shadow-lg">
-                        다음 슬라이드 →
-                    </button>
-                </div>
-
-                <!-- 3. 원격 하이라이트 인터랙션 패널 -->
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3.5 space-y-2.5">
-                    <div class="flex items-center justify-between gap-2">
-                        <span class="text-xs font-extrabold text-amber-400 flex items-center gap-1.5">
-                            ✨ 화면 강조 하이라이트 (학교 화면 실시간 강조)
-                        </span>
-                        <button id="t-hl-reset" class="text-[13px] font-bold px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-slate-300 border border-slate-700 transition">
-                            강조 끄기
+                    <!-- 2. 슬라이드 넘김 메인 컨트롤 (턴제 잠금 적용) -->
+                    <div class="grid grid-cols-2 gap-3 shrink-0">
+                        <button id="t-btn-prev" class="py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed border border-slate-700 font-black text-base sm:text-lg text-white transition flex items-center justify-center gap-1.5 shadow">
+                            ← 이전 슬라이드
+                        </button>
+                        <button id="t-btn-next" class="py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed font-black text-base sm:text-lg text-white transition flex items-center justify-center gap-1.5 shadow-lg">
+                            다음 슬라이드 →
                         </button>
                     </div>
-                    <div id="t-hl-buttons" class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        <!-- 현재 슬라이드에 맞는 하이라이트 버튼 동적 생성 -->
-                    </div>
-                </div>
 
-                <!-- 4. [장민서 전용] 진행 제어 패널 -->
-                <div id="t-master-panel" class="hidden bg-gradient-to-br from-purple-950/85 to-indigo-950/65 border border-purple-500/40 rounded-2xl p-3.5 space-y-3">
-                    <div class="flex items-center justify-between flex-wrap gap-2">
-                        <span class="text-xs font-black text-amber-300 flex items-center gap-1.5">
-                            진행 제어
-                        </span>
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <button id="t-btn-toggle-clean" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-extrabold shadow transition">
-                                송출화면 버튼 숨기기
-                            </button>
-                            <button id="t-btn-toggle-lock" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-extrabold shadow transition">
-                                턴제 잠금: 켜짐
+                    <!-- 3. 원격 하이라이트 인터랙션 패널 (장민서 전용) -->
+                    <div id="t-hl-panel" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-3.5 space-y-2.5 shrink-0">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="t-panel-title text-xs font-extrabold text-amber-400 flex items-center gap-1.5">
+                                화면 강조 하이라이트 (학교 화면 실시간 강조)
+                            </span>
+                            <button id="t-hl-reset" class="text-[13px] font-bold px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-slate-300 border border-slate-700 transition">
+                                강조 끄기
                             </button>
                         </div>
-                    </div>
-
-                    <!-- 슬라이드 1~6 즉시 점프 -->
-                    <div id="t-master-jumps" class="grid grid-cols-6 gap-1.5">
-                        <!-- 1~6번 점프 버튼 -->
-                    </div>
-
-                    <!-- 조원 5명 실시간 연결 상태 -->
-                    <div class="flex items-center justify-between gap-2 flex-wrap pt-1 border-t border-purple-800/50">
-                        <span class="text-[13px] font-bold text-purple-200">연결된 조원:</span>
-                        <div id="t-master-members" class="flex items-center gap-1.5 flex-wrap">
-                            <!-- 동적 생성 -->
+                        <div id="t-hl-buttons" class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                            <!-- 현재 슬라이드에 맞는 하이라이트 버튼 동적 생성 -->
                         </div>
                     </div>
+
+                    <!-- 4. [장민서 전용] 진행 제어 패널 -->
+                    <div id="t-master-panel" class="hidden bg-gradient-to-br from-purple-950/85 to-indigo-950/65 border border-purple-500/40 rounded-2xl p-3.5 space-y-3 shrink-0">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <span class="t-panel-title text-xs font-black text-amber-300 flex items-center gap-1.5">
+                                진행 제어
+                            </span>
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <button id="t-btn-toggle-clean" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-extrabold shadow transition">
+                                    송출화면 버튼 숨기기
+                                </button>
+                                <button id="t-btn-toggle-lock" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-extrabold shadow transition">
+                                    턴제 잠금: 켜짐
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 슬라이드 1~6 즉시 점프 -->
+                        <div id="t-master-jumps" class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                            <!-- 1~6번 점프 버튼 -->
+                        </div>
+
+                        <!-- 조원 5명 실시간 연결 상태 -->
+                        <div class="flex items-center justify-between gap-2 flex-wrap pt-1.5 border-t border-purple-800/50">
+                            <span class="t-members-label text-[13px] font-bold text-purple-200">연결된 조원:</span>
+                            <div id="t-master-members" class="flex items-center gap-1.5 flex-wrap">
+                                <!-- 동적 생성 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. 대본 & 내 담당 대본 & 예상 Q&A 탭 영역 (잠금 상태에서도 항상 열람 가능!) -->
+                    <div id="t-script-card" class="flex-1 min-h-[280px] bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col">
+                        <div class="flex items-center justify-between border-b border-slate-800 px-2.5 pt-2 gap-1 flex-wrap shrink-0">
+                            <div class="flex items-center gap-1">
+                                <button data-tab="current" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-extrabold bg-indigo-600 text-white">현재 대본</button>
+                                <button data-tab="mine" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-bold text-slate-400 hover:text-white">내 담당 대본</button>
+                                <button data-tab="qa" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-bold text-slate-400 hover:text-white">예상 Q&A</button>
+                            </div>
+                            <div class="flex items-center gap-1 pb-1.5 pr-1">
+                                <button id="t-font-dec" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">가-</button>
+                                <button id="t-font-inc" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">가+</button>
+                            </div>
+                        </div>
+
+                        <!-- 탭 1: 현재 슬라이드 대본 -->
+                        <div id="t-tab-current" class="flex-1 p-4 sm:p-6 text-slate-100 text-base leading-relaxed whitespace-pre-line font-medium"></div>
+
+                        <!-- 탭 2: 내 담당 슬라이드 대본 (대기 중 연습용) -->
+                        <div id="t-tab-mine" class="hidden flex-1 p-4 sm:p-6 space-y-4"></div>
+
+                        <!-- 탭 3: 현재 슬라이드 예상 Q&A -->
+                        <div id="t-tab-qa" class="hidden flex-1 p-4 sm:p-6 space-y-3.5 text-sm">
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                                <span class="t-qa-label text-xs text-amber-400 font-bold block mb-1.5">Q. 현재 슬라이드 예상 질문</span>
+                                <p id="t-qa-q" class="text-white font-extrabold leading-relaxed"></p>
+                            </div>
+                            <div class="bg-indigo-950/50 p-4 rounded-xl border border-indigo-800/60">
+                                <span class="t-qa-label text-xs text-indigo-300 font-bold block mb-1.5">A. 모범 답변</span>
+                                <p id="t-qa-a" class="text-slate-200 leading-relaxed whitespace-pre-line"></p>
+                            </div>
+                            <div class="bg-emerald-950/50 p-4 rounded-xl border border-emerald-800/60">
+                                <span class="t-qa-label text-xs text-emerald-400 font-bold block mb-1">핵심 1줄 팁</span>
+                                <p id="t-qa-tip" class="text-emerald-200 text-xs font-semibold"></p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-
-                <!-- 5. 대본 & 내 담당 대본 & 예상 Q&A 탭 영역 (잠금 상태에서도 항상 열람 가능!) -->
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col">
-                    <div class="flex items-center justify-between border-b border-slate-800 px-2 pt-2 gap-1 flex-wrap">
-                        <div class="flex items-center gap-1">
-                            <button data-tab="current" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-extrabold bg-indigo-600 text-white">현재 대본</button>
-                            <button data-tab="mine" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-bold text-slate-400 hover:text-white">내 담당 대본</button>
-                            <button data-tab="qa" class="t-tab-btn px-3 py-2 rounded-t-xl text-xs font-bold text-slate-400 hover:text-white">예상 Q&A</button>
-                        </div>
-                        <div class="flex items-center gap-1 pb-1.5 pr-1">
-                            <button id="t-font-dec" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">가-</button>
-                            <button id="t-font-inc" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">가+</button>
-                        </div>
-                    </div>
-
-                    <!-- 탭 1: 현재 슬라이드 대본 -->
-                    <div id="t-tab-current" class="p-4 text-slate-100 text-base leading-relaxed whitespace-pre-line font-medium min-h-[200px]"></div>
-
-                    <!-- 탭 2: 내 담당 슬라이드 대본 (대기 중 연습용) -->
-                    <div id="t-tab-mine" class="hidden p-4 space-y-4 min-h-[200px]"></div>
-
-                    <!-- 탭 3: 현재 슬라이드 예상 Q&A -->
-                    <div id="t-tab-qa" class="hidden p-4 space-y-3 min-h-[200px] text-sm">
-                        <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800">
-                            <span class="text-xs text-amber-400 font-bold block mb-1">Q. 현재 슬라이드 예상 질문</span>
-                            <p id="t-qa-q" class="text-white font-extrabold leading-relaxed"></p>
-                        </div>
-                        <div class="bg-indigo-950/50 p-3.5 rounded-xl border border-indigo-800/60">
-                            <span class="text-xs text-indigo-300 font-bold block mb-1">A. 모범 답변</span>
-                            <p id="t-qa-a" class="text-slate-200 leading-relaxed whitespace-pre-line"></p>
-                        </div>
-                        <div class="bg-emerald-950/50 p-3.5 rounded-xl border border-emerald-800/60">
-                            <span class="text-xs text-emerald-400 font-bold block mb-0.5">💡 핵심 1줄 팁</span>
-                            <p id="t-qa-tip" class="text-emerald-200 text-xs font-semibold"></p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
@@ -994,6 +1090,7 @@
             const tNextSpeaker = document.getElementById('t-next-speaker');
             const tBtnPrev = document.getElementById('t-btn-prev');
             const tBtnNext = document.getElementById('t-btn-next');
+            const tHlPanel = document.getElementById('t-hl-panel');
             const tHlButtons = document.getElementById('t-hl-buttons');
             const tHlReset = document.getElementById('t-hl-reset');
             const tMasterPanel = document.getElementById('t-master-panel');
@@ -1008,13 +1105,19 @@
             const tQaA = document.getElementById('t-qa-a');
             const tQaTip = document.getElementById('t-qa-tip');
 
+            function getAutoScriptFontSize() {
+                const basis = Math.min(window.innerWidth, window.innerHeight * 0.9);
+                return Math.round(Math.min(30, Math.max(19, basis * 0.03)));
+            }
+
             // 공통 상태 변수
             let currentSlide = 0;
             let currentHighlight = 'none';
             let turnLockEnabled = true;
             let isCleanMode = false;
             let toastTimer = null;
-            let scriptFontSize = 18;
+            let scriptFontManual = false;
+            let scriptFontSize = getAutoScriptFontSize();
             let navCooldown = false;
 
             // 네트워크 상태 변수
@@ -1241,7 +1344,7 @@
                     }
                 }
 
-                if (appRole === 'tablet') {
+                if (appRole === 'tablet' && myTabletName === MASTER_NAME) {
                     renderTabletHighlightButtons();
                 }
             }
@@ -1519,15 +1622,15 @@
                 ALL_MEMBERS.forEach((name) => {
                     const btn = document.createElement('button');
                     btn.type = 'button';
-                    btn.className = 'w-full p-4 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left flex items-center justify-between transition active:scale-[0.98]';
+                    btn.className = 't-member-btn w-full rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-left flex items-center justify-between gap-4 transition active:scale-[0.98]';
                     btn.innerHTML = `
                         <div>
-                            <div class="text-base sm:text-lg font-black text-white flex items-center gap-1.5">
+                            <div class="t-member-name font-black text-white flex items-center gap-1.5">
                                 ${name}
                             </div>
-                            <div class="text-xs text-slate-400 mt-0.5">${roleDesc[name]}</div>
+                            <div class="t-member-role text-slate-400 mt-1">${roleDesc[name]}</div>
                         </div>
-                        <span class="text-indigo-300 font-black text-sm">입장 →</span>
+                        <span class="t-member-enter text-indigo-300 font-black shrink-0">입장 →</span>
                     `;
                     btn.addEventListener('click', () => connectTabletAs(name));
                     tabletNameList.appendChild(btn);
@@ -1718,7 +1821,9 @@
 
                 if (isMyTurn) {
                     tTurnBanner.className = 'rounded-2xl p-3.5 sm:p-4 border bg-gradient-to-r from-emerald-700 to-teal-700 border-emerald-400/60 shadow-lg flex items-center justify-between gap-3';
-                    tTurnMsg.textContent = '지금 내 발표 차례입니다! 슬라이드와 하이라이트를 조작하세요.';
+                    tTurnMsg.textContent = isMaster
+                        ? '지금 내 발표 차례입니다! 슬라이드와 하이라이트를 조작하세요.'
+                        : '지금 내 발표 차례입니다! 슬라이드 버튼을 눌러 넘기세요.';
                 } else if (isMaster) {
                     tTurnBanner.className = 'rounded-2xl p-3.5 sm:p-4 border bg-gradient-to-r from-purple-800 to-indigo-800 border-purple-400/60 shadow-lg flex items-center justify-between gap-3';
                     tTurnMsg.textContent = `현재 ${currentSpeaker} 진행 중 (필요 시 즉시 대신 조작 가능)`;
@@ -1733,9 +1838,9 @@
                 tBtnPrev.disabled = !canControl || currentSlide === 0;
                 tBtnNext.disabled = !canControl || currentSlide === slides.length - 1;
 
-                renderTabletHighlightButtons();
-
                 if (isMaster) {
+                    tHlPanel.classList.remove('hidden');
+                    renderTabletHighlightButtons();
                     tMasterPanel.classList.remove('hidden');
 
                     tBtnToggleClean.textContent = isCleanMode ? '송출화면 메뉴 보이기' : '송출화면 버튼 숨기기';
@@ -1755,7 +1860,7 @@
                         jBtn.className = idx === currentSlide
                             ? 'p-2 rounded-xl text-xs font-black bg-amber-400 text-slate-950 shadow text-center'
                             : 'p-2 rounded-xl text-xs font-bold bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-purple-700/40 text-center';
-                        jBtn.innerHTML = `<div>${idx + 1}</div><div class="text-[12px] truncate">${presenters[idx]}</div>`;
+                        jBtn.innerHTML = `<div>${idx + 1}</div><div class="t-jump-name text-[12px] truncate">${presenters[idx]}</div>`;
                         jBtn.addEventListener('click', () => triggerSlideNavFromTablet('jump', idx, true));
                         tMasterJumps.appendChild(jBtn);
                     });
@@ -1771,6 +1876,7 @@
                         tMasterMembers.appendChild(chip);
                     });
                 } else {
+                    tHlPanel.classList.add('hidden');
                     tMasterPanel.classList.add('hidden');
                 }
 
@@ -1847,18 +1953,28 @@
             });
 
             // 태블릿 대본 글자 크기 조절
+            function applyTabletScriptFontSize() {
+                tTabCurrent.style.fontSize = `${scriptFontSize}px`;
+                document.querySelectorAll('.my-script-text').forEach((el) => el.style.fontSize = `${scriptFontSize}px`);
+            }
             document.getElementById('t-font-inc').addEventListener('click', () => {
-                if (scriptFontSize < 28) {
+                if (scriptFontSize < 38) {
+                    scriptFontManual = true;
                     scriptFontSize += 2;
-                    tTabCurrent.style.fontSize = `${scriptFontSize}px`;
-                    document.querySelectorAll('.my-script-text').forEach((el) => el.style.fontSize = `${scriptFontSize}px`);
+                    applyTabletScriptFontSize();
                 }
             });
             document.getElementById('t-font-dec').addEventListener('click', () => {
-                if (scriptFontSize > 15) {
+                if (scriptFontSize > 16) {
+                    scriptFontManual = true;
                     scriptFontSize -= 2;
-                    tTabCurrent.style.fontSize = `${scriptFontSize}px`;
-                    document.querySelectorAll('.my-script-text').forEach((el) => el.style.fontSize = `${scriptFontSize}px`);
+                    applyTabletScriptFontSize();
+                }
+            });
+            window.addEventListener('resize', () => {
+                if (!scriptFontManual && appRole === 'tablet') {
+                    scriptFontSize = getAutoScriptFontSize();
+                    applyTabletScriptFontSize();
                 }
             });
 
