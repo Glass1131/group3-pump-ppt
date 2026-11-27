@@ -56,6 +56,11 @@
             overflow-x: hidden;
             font-size: 20px;
         }
+        /* 슬라이드 한글 단어 중간 줄바꿈 방지 */
+        .slide {
+            word-break: keep-all;
+            overflow-wrap: break-word;
+        }
         /* 발표자 뷰 전용 스크롤바 */
         .custom-scroll::-webkit-scrollbar {
             width: 6px;
@@ -490,16 +495,16 @@
                         </div>
 
                         <!-- 발표 순서 로드맵 -->
-                        <div id="s0-h2" class="hl-item flex flex-wrap items-center gap-1.5 text-sm font-semibold text-slate-600 rounded-2xl p-2 -mx-2">
-                            <span class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white">1. 질문 소개</span>
+                        <div id="s0-h2" class="hl-item flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-600 rounded-2xl p-2 -mx-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white whitespace-nowrap">1. 질문 소개</span>
                             <span>→</span>
-                            <span class="px-3 py-1.5 rounded-lg bg-slate-100">2. 핵심 개념</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 whitespace-nowrap">2. 핵심 개념</span>
                             <span>→</span>
-                            <span class="px-3 py-1.5 rounded-lg bg-slate-100">3. 그래프 해석</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 whitespace-nowrap">3. 그래프 해석</span>
                             <span>→</span>
-                            <span class="px-3 py-1.5 rounded-lg bg-slate-100">4. 사례·조건 예측</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 whitespace-nowrap">4. 사례·조건 예측</span>
                             <span>→</span>
-                            <span class="px-3 py-1.5 rounded-lg bg-slate-100">5. 한 문장 정리</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 whitespace-nowrap">5. 한 문장 정리</span>
                         </div>
                     </div>
 
@@ -559,7 +564,7 @@
                     </div>
 
                     <!-- 대형 수식 카드 -->
-                    <div id="s1-h1" class="hl-item max-w-3xl mx-auto bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-7 sm:p-9 text-center shadow-lg">
+                    <div id="s1-h1" class="hl-item max-w-4xl mx-auto bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-7 sm:p-9 text-center shadow-lg">
                         <div class="text-5xl sm:text-6xl lg:text-7xl font-black tracking-wider text-white flex items-center justify-center gap-4 sm:gap-6">
                             <span class="text-amber-400">Q</span>
                             <span class="text-slate-400">=</span>
@@ -572,39 +577,39 @@
 
                     <!-- 쉬운 용어 풀이 3카드 -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        <div id="s1-h2" class="hl-item bg-amber-50 border border-amber-200 rounded-2xl p-6 space-y-3">
+                        <div id="s1-h2" class="hl-item bg-amber-50 border border-amber-200 rounded-2xl p-5 xl:p-6 space-y-3">
                             <div class="flex items-center justify-between gap-2">
-                                <span class="text-2xl lg:text-3xl font-black text-amber-600">Q (열)</span>
-                                <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded-full bg-amber-200/70 text-amber-800 shrink-0">열의 출입</span>
+                                <span class="text-xl xl:text-2xl font-black text-amber-600 whitespace-nowrap">Q (열)</span>
+                                <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded-full bg-amber-200/70 text-amber-800 whitespace-nowrap shrink-0">열의 출입</span>
                             </div>
                             <p class="text-base sm:text-lg text-slate-700 leading-relaxed">
                                 기체가 밖과 주고받는 열에너지입니다.<br>
-                                • 열 흡수: <strong>Q &gt; 0</strong><br>
-                                • 열 방출: <strong>Q &lt; 0</strong>
+                                • 열 흡수: <strong class="whitespace-nowrap">Q &gt; 0</strong><br>
+                                • 열 방출: <strong class="whitespace-nowrap">Q &lt; 0</strong>
                             </p>
                         </div>
 
-                        <div id="s1-h3" class="hl-item bg-rose-50 border border-rose-200 rounded-2xl p-6 space-y-3">
+                        <div id="s1-h3" class="hl-item bg-rose-50 border border-rose-200 rounded-2xl p-5 xl:p-6 space-y-3">
                             <div class="flex items-center justify-between gap-2">
-                                <span class="text-2xl lg:text-3xl font-black text-rose-600">ΔU (내부 에너지)</span>
-                                <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded-full bg-rose-200/70 text-rose-800 shrink-0">교과서 64쪽</span>
+                                <span class="text-xl xl:text-2xl font-black text-rose-600 whitespace-nowrap">ΔU (내부 에너지)</span>
+                                <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded-full bg-rose-200/70 text-rose-800 whitespace-nowrap shrink-0">교과서 64쪽</span>
                             </div>
                             <p class="text-base sm:text-lg text-slate-700 leading-relaxed">
                                 공기 분자들이 바쁘게 움직이는 에너지입니다.<br>
-                                • <strong>절대온도(T)에 비례 (U ∝ T)</strong><br>
-                                • <strong>ΔU &gt; 0</strong> → 공기가 뜨거워짐!
+                                • <strong class="whitespace-nowrap">절대온도(T)에 비례 (U ∝ T)</strong><br>
+                                • <strong class="whitespace-nowrap">ΔU &gt; 0</strong> → 공기가 뜨거워짐!
                             </p>
                         </div>
 
-                        <div id="s1-h4" class="hl-item bg-sky-50 border border-sky-200 rounded-2xl p-6 space-y-3">
+                        <div id="s1-h4" class="hl-item bg-sky-50 border border-sky-200 rounded-2xl p-5 xl:p-6 space-y-3">
                             <div class="flex items-center justify-between gap-2">
-                                <span class="text-2xl lg:text-3xl font-black text-sky-600">W (기체의 일)</span>
-                                <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded-full bg-sky-200/70 text-sky-800 shrink-0">W = PΔV</span>
+                                <span class="text-xl xl:text-2xl font-black text-sky-600 whitespace-nowrap">W (기체의 일)</span>
+                                <span class="text-xs sm:text-sm font-bold px-2.5 py-0.5 rounded-full bg-sky-200/70 text-sky-800 whitespace-nowrap shrink-0">W = PΔV</span>
                             </div>
                             <p class="text-base sm:text-lg text-slate-700 leading-relaxed">
                                 기체가 부피를 바꾸며 하는 일입니다.<br>
-                                • 팽창(ΔV &gt; 0): 기체가 일함 (<strong>W &gt; 0</strong>)<br>
-                                • 압축(ΔV &lt; 0): <strong>눌려서 일 받음 (W &lt; 0)</strong>
+                                • 팽창(ΔV &gt; 0): 기체가 일함 <span class="whitespace-nowrap">(<strong>W &gt; 0</strong>)</span><br>
+                                • 압축(ΔV &lt; 0): <strong>눌려서 일 받음</strong> <span class="whitespace-nowrap"><strong>(W &lt; 0)</strong></span>
                             </p>
                         </div>
                     </div>
@@ -652,11 +657,11 @@
                             <ul class="space-y-3 text-base sm:text-lg lg:text-xl text-slate-700">
                                 <li class="flex items-start gap-2.5">
                                     <span class="text-rose-500 font-bold">①</span>
-                                    <span>너무 빨라서 주위와 <strong>열을 주고받을 시간 없음</strong> (Q ≈ 0)</span>
+                                    <span>너무 빨라서 주위와 <strong>열을 주고받을 시간 없음</strong> <span class="whitespace-nowrap">(Q ≈ 0)</span></span>
                                 </li>
                                 <li class="flex items-start gap-2.5">
                                     <span class="text-rose-500 font-bold">②</span>
-                                    <span>외부에서 꾹 눌러서 기체가 <strong>일을 받음</strong> (W &lt; 0)</span>
+                                    <span>외부에서 꾹 눌러서 기체가 <strong>일을 받음</strong> <span class="whitespace-nowrap">(W &lt; 0)</span></span>
                                 </li>
                                 <li class="flex items-start gap-2.5">
                                     <span class="text-rose-500 font-bold">③</span>
@@ -664,7 +669,7 @@
                                 </li>
                             </ul>
 
-                            <div class="bg-rose-600 text-white rounded-2xl p-4 text-center font-extrabold text-lg sm:text-xl shadow-sm">
+                            <div class="bg-rose-600 text-white rounded-2xl px-3.5 py-4 text-center font-extrabold text-base lg:text-lg xl:text-xl shadow-sm">
                                 🔥 결과: 기체 온도 급상승! (펌프가 뜨거워짐)
                             </div>
                         </div>
@@ -688,15 +693,15 @@
                                 </li>
                                 <li class="flex items-start gap-2.5">
                                     <span class="text-sky-500 font-bold">②</span>
-                                    <span>기체가 일을 받은 만큼 <strong>열이 밖으로 방출</strong> (Q &lt; 0)</span>
+                                    <span>기체가 일을 받은 만큼 <strong>열이 밖으로 방출</strong> <span class="whitespace-nowrap">(Q &lt; 0)</span></span>
                                 </li>
                                 <li class="flex items-start gap-2.5">
                                     <span class="text-sky-500 font-bold">③</span>
-                                    <span>내부 에너지 변화 없음 (ΔU = 0)</span>
+                                    <span>내부 에너지 변화 없음 <span class="whitespace-nowrap">(ΔU = 0)</span></span>
                                 </li>
                             </ul>
 
-                            <div class="bg-sky-600 text-white rounded-2xl p-4 text-center font-extrabold text-lg sm:text-xl shadow-sm">
+                            <div class="bg-sky-600 text-white rounded-2xl px-3.5 py-4 text-center font-extrabold text-base lg:text-lg xl:text-xl shadow-sm">
                                 ❄️ 결과: 기체 온도 일정 유지! (펌프 안 뜨거워짐)
                             </div>
                         </div>
@@ -749,7 +754,7 @@
                             <line x1="60" y1="265" x2="420" y2="265" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow-axis)" />
                             <line x1="60" y1="265" x2="60" y2="25" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow-axis)" />
                             <text x="44" y="282" font-size="16" font-weight="700" fill="#475569">0</text>
-                            <text x="72" y="28" font-size="16" font-weight="800" fill="#1e293b">압력(P)</text>
+                            <text x="78" y="27" font-size="16" font-weight="800" fill="#1e293b">압력(P)</text>
                             <text x="380" y="292" font-size="16" font-weight="800" fill="#1e293b">부피(V)</text>
 
                             <!-- 등온선 T1 (고온) & T2 (저온) + ③번 온도 상승 그룹 -->
@@ -812,7 +817,7 @@
                             <span class="w-8 h-8 rounded-full bg-rose-600 text-white font-black text-base flex items-center justify-center shrink-0">2</span>
                             <div>
                                 <p class="font-extrabold text-rose-900 text-base sm:text-lg">빨간 화살표 따라 올라가기</p>
-                                <p class="text-sm sm:text-base text-rose-800/90 mt-1">열 출입(Q=0) 없이 외부에서 일을 받으므로(W &lt; 0), 아래쪽 면적만큼의 에너지가 내부 에너지(ΔU)로 쌓입니다.</p>
+                                <p class="text-sm sm:text-base text-rose-800/90 mt-1">열 출입(Q=0) 없이 외부에서 일을 <span class="whitespace-nowrap">받으므로(W &lt; 0),</span> 아래쪽 면적만큼의 에너지가 내부 에너지(ΔU)로 쌓입니다.</p>
                             </div>
                         </div>
 
@@ -932,7 +937,7 @@
                 </div>
 
                 <!-- 중앙 핵심 결론 -->
-                <div id="s5-h1" class="hl-item my-8 max-w-5xl mx-auto text-center space-y-6 rounded-3xl p-6 sm:p-8">
+                <div id="s5-h1" class="hl-item my-8 max-w-6xl mx-auto text-center space-y-6 rounded-3xl p-6 sm:p-8">
                     <span class="inline-block px-5 py-2 rounded-full bg-rose-100 text-rose-700 font-extrabold text-sm sm:text-base">
                         오늘 발표 한 문장 정리
                     </span>
